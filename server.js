@@ -5,7 +5,7 @@ const cors = require('cors')
 
 
 const authns =  require('./src/routes/authns')
-
+const studentRoutes =  require('./src/routes/students')
 const connectDB = require('./src/db')
 
 
@@ -26,6 +26,8 @@ connectDB()
 
 
 // Routes
+
+app.use('/', studentRoutes)
 app.use('/api/authn', authns)
 
 app.get('/', (req, res) => {

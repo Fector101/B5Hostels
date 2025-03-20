@@ -7,6 +7,10 @@ const studentSchema = new mongoose.Schema({
   password: { type: String, required: true },
   gender: { type: String, required: true },
   level: { type: String, required: true },
+  
+  room: { type: String, required: true },
+  date_booked: { type: String, required: true }
+  
 
 });
 

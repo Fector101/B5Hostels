@@ -1,9 +1,11 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken')
+const cookieParser = require("cookie-parser")
 const Student = require('../models/Student');
 
 const router = express.Router();
-
+router.use(cookieParser())
 
 router.post('/signup', async (req, res) => {
     try {
@@ -21,6 +23,8 @@ router.post('/signup', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10)
         user = new Student({ name, matric_no, email, password: hashedPassword,gender,level })
         await user.save()
+                    const token = jwt.sign({ id: student.id,level, email,gender, username: student.name, matric_no }, process.env.JWT_SECRET, { expiresIn: '1h' })
+            res.cookie('userInfo', token, { httpOnly: true, secure: true, maxAge: 3600000 }); // 1 hour
 
         res.status(201).json({ ok: true, msg: 'Student registered successfully' })
 

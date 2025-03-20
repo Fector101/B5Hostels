@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/index.css" />
+        <link rel="stylesheet" href="css/header.css" />
+        <link rel="stylesheet" href="css/room.css" />
+        <script defer src="js/room.js"></script>
+        <title>change to room tile</title>
+
+    </head>
+    <body>
+        <header>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 32 32"
+                style="
+                    display: block;
+                    margin-right: 20px;
+                    fill: none;
+                    height: 16px;
+                    width: 16px;
+                    stroke: currentcolor;
+                    stroke-width: 3px;
+                    overflow: visible;
+                "
+                aria-hidden="true"
+                role="presentation"
+                focusable="false"
+            >
+                <g fill="none"><path d="M2 16h28M2 24h28M2 8h28"></path></g>
+            </svg>
+            <a id="brand" href="/">B5 Homes</a>
+            <nav>
+                <div class="link-box">
+                    <a href="/" class="active">Lists</a>
+                </div>
+                <div class="link-box">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 32 32"
+                        aria-hidden="true"
+                        role="presentation"
+                        focusable="false"
+                    >
+                        <path
+                            d="M16 .7C7.56.7.7 7.56.7 16S7.56 31.3 16 31.3 31.3 24.44 31.3 16 24.44.7 16 .7zm0 28c-4.02 0-7.6-1.88-9.93-4.81a12.43 12.43 0 0 1 6.45-4.4A6.5 6.5 0 0 1 9.5 14a6.5 6.5 0 0 1 13 0 6.51 6.51 0 0 1-3.02 5.5 12.42 12.42 0 0 1 6.45 4.4A12.67 12.67 0 0 1 16 28.7z"
+                        ></path>
+                    </svg>
+                    <a class=""> Profile </a>
+                </div>
+            </nav>
+        </header>
+
+        <section class="first-section">
+            <div class="room-picture"></div>
+            <div class="booking">
+                <h3>₦ 12,000</h3>
+                <ol class="vaild-date">
+                    <li>
+                        <p>CHECK-IN</p>
+                        <p>12-01-2025</p>
+                    </li>
+                    <li>
+                        <p>CHECK-OUT</p>
+                        <p>15-01-2026</p>
+                    </li>
+                </ol>
+                
+                <ol class="fees-box">
+                    <li>
+                        <p>Hostel Fee</p>
+                        <p>₦ 6,000</p>
+                    </li>
+                    <li>
+                        <p>Room Chagers</p>
+                        <p>₦ 3,000</p>
+                    </li>
+                    <li>
+                        <p>Maintancence Fee</p>
+                        <p>₦ 3,000</p>
+                    </li>
+                </ol>
+                <button id="pay">Make Payment</button>
+            </div>
+        </section>
+        <section class="room-details">
+            <div class="info-box">
+                <h3>Details</h3>
+                <div class="about-room">
+                    <p>
+                        A four bunker room per occupant with tight Security,24/7 electricity and fast network for for all occupant and comfortable study desk.
+                    </p>
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>About</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="rule">
+                                <td>Amenities</td>
+                                <td>Wi-Fi, Study Desk, Air Conditioning</td>
+                            </tr>
+                            <tr class="rule">
+                                <td>Location</td>
+                                <td>Inside campus, Close to Library</td>
+                            </tr>
+                            <tr class="rule">
+                                <td>Rules & Policies</td>
+                                <td>No Smoking, No Pets, Guest Hours</td>
+                            </tr>
+                            <tr class="rule">
+                                <td>Security Features</td>
+                                <td>Gated Entry, Security Personnel</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    
+                </div>
+                <div class="room-highlight">
+                    <div class="short-text-box">
+                        <svg class="room-badge" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2l144 0c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48l-97.5 0c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3l0-38.3 0-48 0-24.9c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192l64 0c17.7 0 32 14.3 32 32l0 224c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32-14.3-32-32L0 224c0-17.7 14.3-32 32-32z"/></svg>
+                        <p>
+                            One of the most preferred hostels by students for comfort and affordability.
+                        </p>
+                    </div>
+                    <div class="room-rating">
+                        <span class="rating-score">4.8</span>
+                        <span class="stars">★★★★★</span>
+                        <span class="reviews">120 Reviews</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

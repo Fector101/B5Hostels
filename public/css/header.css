@@ -1,0 +1,60 @@
+
+header{
+    font-family: "Playfair Display", serif;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    /* box-shadow: 1px 1px 1px 1px rgba(171, 170, 170, 0.605); */
+    margin: 0.6rem;
+    height: 2.9375rem;
+    border-radius: 1rem;
+}
+header > svg{
+    /* Menu btn */
+    margin-block: 0.5rem;
+}
+header #brand{
+    margin-right: auto;
+    font-size: 23px;
+    padding-block: 0.5rem;
+    text-decoration: none;
+    color: black;
+}
+header nav{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: 100%;
+
+}
+header nav .link-box{
+    position: relative;
+    top: 3px;
+    justify-content: baseline;
+    display: flex;
+    height: 30px;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+}
+header nav .link-box svg{
+    height: 100%;
+    /* width: 25px; */
+    display: flex;
+    fill: rgba(128, 128, 128, 0.603);
+    border-radius: 50%;
+}
+header nav a{
+    color: grey;
+    font-family: sans-serif;
+}
+header nav a.active{
+    color: black;
+}
+
+@media screen and (max-width:500px) {
+    header h1{
+        font-size: 21px;
+    }
+
+}

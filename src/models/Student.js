@@ -8,8 +8,8 @@ const studentSchema = new mongoose.Schema({
   gender: { type: String, required: true },
   level: { type: String, required: true },
   
-  room: { type: String, required: true },
-  date_booked: { type: String, required: true }
+  room: { type: String, required: false },
+  date_booked: { type: String, required: false }
   
 
 });

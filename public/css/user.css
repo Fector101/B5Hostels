@@ -1,5 +1,4 @@
-
-.filter-box{
+.filter-box {
     display: flex;
     gap: 10px;
     padding: 10px 20px;
@@ -7,14 +6,16 @@
     font-weight: 500;
     justify-content: end;
 }
-section ol{
+
+section ol {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
 
 }
-.room{
+
+.room {
     display: flex;
     flex-direction: column;
     width: 200px;
@@ -36,8 +37,9 @@ section ol{
     width: 100%;
     height: 100%;
     background: rgba(51, 50, 50, 0.111);
-  }
-.room .gender-icon{
+}
+
+.room .gender-icon {
     height: 28px;
     width: 25px;
     fill: rgb(211, 239, 234);
@@ -49,7 +51,8 @@ section ol{
     margin: 0.5rem;
 
 }
-.room .content{
+
+.room .content {
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -58,13 +61,15 @@ section ol{
     /* height: 80px; */
     background-color: rgba(128, 128, 128, 0.57);
 }
-.room .content .room-name{
+
+.room .content .room-name {
     /* color: #302828; */
     /* background-color: #acacac; */
     /* width: max-content; */
     /* padding: 3px 5px;
     border-radius: 5px; */
 }
+
 .room .content ol {
     /* height: 10px; */
     display: flex;
@@ -73,7 +78,8 @@ section ol{
     list-style: none;
     gap: 4px;
 }
-.room .icon-box{
+
+.room .icon-box {
     /* width: 40px; */
     height: 23px;
     background-color: rgb(175, 250, 175);
@@ -84,28 +90,41 @@ section ol{
     align-items: center;
     gap: 5px;
 }
-.room .icon-box.bad{
+
+.room .icon-box.bad {
     background-color: #f29090;
 }
 
-.room .content ol svg{
+.room .content ol svg {
     height: 100%;
     /* font-size: 15px; */
     width: 13px;
     fill: rgb(57, 80, 56);
 }
 
-.room button{
+.room a.room-btn {
+    z-index: 2;
     background-color: rgb(236, 234, 234);
     width: 100px;
     height: 35px;
     margin: 0 auto;
     border-radius: 15px;
     border-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: inherit;
     /* border: 1px solid grey; */
 }
+
+.room .room-btn:hover {
+    background-color: rgb(254, 217, 238);
+    cursor: pointer;
+}
+
 @media screen and (max-width:500px) {
-    .room{
+    .room {
         width: 85%;
     }
 

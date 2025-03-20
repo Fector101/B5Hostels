@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const path = require('path')
 
 
 const verifyToken = (req, res, next) => {

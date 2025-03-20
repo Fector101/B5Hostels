@@ -37,13 +37,9 @@ app.get('/', (req, res) => {
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/pages/login.html'))
 });
-app.get('/room', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/pages/room.html'))
-});
-
-app.get('/home', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/pages/lists.html'))
-});
+// app.get('/home', (req, res) => {
+//     res.sendFile(path.join(__dirname, '/public/pages/lists.html'))
+// });
 
 app.get('/payment-portal', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/pages/payment.html'))

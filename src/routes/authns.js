@@ -23,7 +23,7 @@ router.post('/signup', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10)
         user = new Student({ name, matric_no, email, password: hashedPassword,gender,level })
         await user.save()
-                    const token = jwt.sign({ id: student.id,level, email,gender, username: student.name, matric_no }, process.env.JWT_SECRET, { expiresIn: '1h' })
+                    const token = jwt.sign({ id: user.id,level, email,gender, username: user.name, matric_no }, process.env.JWT_SECRET, { expiresIn: '1h' })
             res.cookie('userInfo', token, { httpOnly: true, secure: true, maxAge: 3600000 }); // 1 hour
 
         res.status(201).json({ ok: true, msg: 'Student registered successfully' })

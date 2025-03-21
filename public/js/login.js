@@ -31,11 +31,13 @@ document.getElementById("login-form").addEventListener("submit", async function 
             showNotification(result.msg || "Login successful", "success");
 
         } else {
+removeSpinner()
             showNotification(result.msg || "Login failed", "error");
         }
         console.log(result)
     } catch (error) {
         console.log(error)
+removeSpinner()
         showNotification(`Server error. Try again later.`, "error");
     }
 });

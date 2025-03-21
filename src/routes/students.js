@@ -45,7 +45,7 @@ router.get('/dashboard', verifyToken, (req, res) => {
     // Data save in token always save in `req.user`
     // console.log(req)
     // console.log(userInfo)
-    res.render('dashboard', { page_title:'dashboard',name: userInfo.name, room: userInfo.room || 'None', date_booked: userInfo.date_booked || 'not booked' });
+    res.render('dashboard', { page_title:'dashboard',name: userInfo.name.split(' ')[0], room: userInfo.room || 'Nil', date_booked: userInfo.date_booked || 'not booked' });
 })
 
 router.get("/room/:title", async (req, res) => {
@@ -54,7 +54,7 @@ router.get("/room/:title", async (req, res) => {
     const roomData = await Room.findOne({ title });
     // getRoomWithStudents(roomData._id)
     if (roomData) {
-        res.render("room", { page_title:'dashboard',title: roomData.title,occupants:roomData.occupants})//, description: roomData.description });
+        res.render("room", { img_path: roomData.img, page_title:'dashboard',title: roomData.title,occupants:roomData.occupants})//, description: roomData.description });
     } else {
         res.status(404).render("room", { title: "Room Not Found", description: "This room does not exist." });
     }

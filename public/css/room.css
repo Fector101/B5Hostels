@@ -21,7 +21,7 @@ section {
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
-    background-image: url(../imgs/img19.jpg);
+    /* background-image: url(../imgs/img19.jpg); */
     animation: my_anim 1.2s ease-in-out infinite;
     box-shadow: 1px 1px 3px 3px #31303059;
     overflow: hidden;
@@ -119,7 +119,7 @@ section {
 }
 
 .booking button {
-    background: #000;
+    background: #6a0dad;
     color: white;
     height: 40px;
     width: 110px;

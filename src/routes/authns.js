@@ -73,7 +73,7 @@ router.post("/login", async (req, res) => {
             matric_no: user.matric_no,
             room: user.room,
             level: user.level,
-            dated_booked,
+            days_left,
             total_paid,
         };
         console.log(data)

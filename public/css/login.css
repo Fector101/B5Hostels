@@ -39,7 +39,7 @@ input, select {
 .signin-btn {
     width: 100%;
     padding: 10px;
-    background-color: black;
+    background-color: var(--btn-bg);
     color: white;
     border: none;
     border-radius: 5px;

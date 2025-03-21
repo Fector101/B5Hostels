@@ -47,7 +47,7 @@ router.get("/dashboard", verifyToken, (req, res) => {
         matric_no: userInfo.matric_no,
         level: userInfo.level,
         room: userInfo.room || "Nil",
-        date_booked: userInfo.days_left || "not booked",
+        date_booked: userInfo.days_left || 0,
         total_paid: userInfo.total_paid || "Nil"
     };
     res.render("dashboard", data);

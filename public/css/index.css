@@ -12,3 +12,24 @@ body {
 div.display-none{
   display: none;
 }
+
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px;
+  background-color: #333;
+  color: white;
+  border-radius: 5px;
+  display: none;
+  animation: fadeIn 0.5s;
+  z-index: 3;
+}
+
+.notification.success { background-color: green; }
+.notification.error { background-color: red; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

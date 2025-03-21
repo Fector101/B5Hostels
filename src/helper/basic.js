@@ -4,6 +4,7 @@ const path = require('path')
 
 const verifyToken = (req, res, next) => {
     const userInfo = req.cookies.userInfo;
+    // console.log('userInfo: ', userInfo)
     if (!userInfo) return res.status(401).sendFile(path.join(__dirname, '../../public/pages/login.html'));
     // if (!userInfo) return res.status(401).json({ error: 'Access denied' });
 

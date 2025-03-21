@@ -8,7 +8,8 @@ function addSpinner(){
 }
 
 document.getElementById("login-form").addEventListener("submit", async function (event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
+    addSpinner()
 
     const formData = new FormData(this);
     const data = Object.fromEntries(formData.entries()); // Convert form data to JSON object

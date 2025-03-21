@@ -3,50 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Hostel Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+   <title> <%= name %> Profile</title>
     <link rel="stylesheet" href="css/header.css" />
-
 </head>
-<body class="bg-gray-100">
+<body>
+
     <%- include("header") -%>
-
-    <div class="max-w-4xl mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
-        <!-- Header -->
-        <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">🏠 Student Hostel Dashboard</h2>
-
-        <!-- User Info -->
-        <div class="bg-blue-100 p-4 rounded-lg mb-4">
-            <h3 class="text-lg font-semibold text-blue-800">👤 Student Info</h3>
-            <p class="text-gray-700"><strong>Name:</strong> <%= name %></p>
-            <p class="text-gray-700"><strong>Room Number:</strong> <%= room %></p>
-            <p class="text-gray-700"><strong>Check-in Date:</strong> <%= date_booked %></p>
+    <div class="dashboard">
+        <!-- Profile Section -->
+        <div class="profile">
+            <img src="profile.jpg" alt="User Profile">
+            <h2>Hi,  <%= name %></h2>
+            <p>FT23CMP0040</p>
         </div>
 
-        <!-- Room Details -->
-        <div class="bg-gray-100 p-4 rounded-lg mb-4">
-            <h3 class="text-lg font-semibold text-gray-800">🛏️ Room Details</h3>
-            <p><strong>Amenities:</strong> Wi-Fi, Study Desk, Air Conditioning</p>
-            <p><strong>Security:</strong> 24/7 Security, Gated Entry</p>
+        <!-- Progress Section -->
+        <div class="progress-section">
+            <div class="progress-info">
+                <span class="level">Days Completed</span>
+                <span class="progress-text">220/300 Days</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 73%;"></div>
+            </div>
         </div>
 
-        <!-- Payment Status -->
-        <div class="bg-green-100 p-4 rounded-lg mb-4">
-            <h3 class="text-lg font-semibold text-green-800">💰 Payment Status</h3>
-            <p><strong>Amount Paid:</strong> $500</p>
-            <p><strong>Next Payment Due:</strong> 10th April 2025</p>
-            <button class="mt-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Make Payment</button>
+        <!-- Stats Section -->
+        <div class="stats">
+            <div class="stat-box">
+                <p>100</p>
+                <span>Level</span>
+            </div>
+            <div class="stat-box">
+              
+        <p> <%= room %></p>
+        <span>Hostel Room</span>
+              
+            </div>
+            <div class="stat-box">
+              <p>
+                $500k
+              </p>
+              <span>
+                Paid Dues
+              </span>
+            </div>
         </div>
 
-        <!-- Rules & Policies -->
-        <div class="bg-red-100 p-4 rounded-lg">
-            <h3 class="text-lg font-semibold text-red-800">📜 Rules & Policies</h3>
-            <ul class="list-disc ml-6 text-gray-700">
-                <li>No Smoking</li>
-                <li>No Pets Allowed</li>
-                <li>Guest Hours: 10 AM - 8 PM</li>
-            </ul>
-        </div>
+<div class="room-details">
+  <h3>Room Details</h3>
+  <p><strong>Location:</strong> New Hostel</p>
+  <p><strong>Amenities:</strong> Wi-Fi, Study Desk, Air Conditioning</p>
+  <p><strong>Security:</strong> 24/7 Security, Gated Entry</p>
+</div>
+
+<!-- Roommates Section -->
+<div class="roommates">
+  <h3>Roommates</h3>
+  <div class="roommate-list">
+    <div class="roommate">
+      <img src="profile.jpg" alt="John Doe">
+      <p>John</p>
     </div>
+    <div class="roommate">
+      <img src="profile.jpg" alt="Sarah Lee">
+      <p>Sarah</p>
+    </div>
+    <div class="roommate">
+      <img src="profile.jpg" alt="Michael Smith">
+      <p>Michael</p>
+    </div>
+  </div>
+</div>
+
+        <!-- Action Buttons -->
+        <div class="actions">
+            <button onclick="extendStay()">View Payment History</button>
+            <button onclick="requestMaintenance()">Report Issue</button>
+        </div>
+
+    </div>
+
 </body>
 </html>

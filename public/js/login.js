@@ -1,3 +1,12 @@
+const backDropEle = document.querySelector('.cover')
+function removeSpinner(){
+    backDropEle.classList.add('display-none')
+}
+
+function addSpinner(){
+    backDropEle.classList.remove('display-none')
+}
+
 document.getElementById("login-form").addEventListener("submit", async function (event) {
     event.preventDefault(); // Prevent default form submission
 

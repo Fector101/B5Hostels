@@ -50,7 +50,7 @@ div.display-none{
     top: 50%;
     transform: translate(-50%, -50%);
     border: 8px solid #f3f3f3;
-    border-top: 8px solid #4CAF50;
+    border-top: 8px solid var(--btn-bg);
     border-radius: 50%;
     width: 60px;
     height: 60px;

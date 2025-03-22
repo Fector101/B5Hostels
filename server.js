@@ -48,6 +48,15 @@ app.get('/payment-portal', (req, res) => {
 app.get('/user', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/pages/user.html'))
 });
+
+
+app.get('/admin-dashboard', (req, res) => {
+    
+
+    res.render('admin-dashboard', {  page_title:'home'});
+});
+
+
 // Start Server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

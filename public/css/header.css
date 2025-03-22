@@ -69,6 +69,7 @@ header .notify-btn{
   fill:#525256;
   border-radius: 60%;
   border-style: none;
+padding:5px;
 }
 
 header .notify-btn svg{

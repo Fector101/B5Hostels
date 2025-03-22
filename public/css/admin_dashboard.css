@@ -1,4 +1,8 @@
-
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
     font-family: SF Pro Display, system-ui, sans-serif;
     --btn-bg: #6a0dad;
@@ -10,9 +14,9 @@ body {
 
 header {
     display: flex;
-    box-shadow: 1px 1px 1px grey;
+    box-shadow: 0 1px 1px grey;
     padding: 1rem 2rem;
-    /* background: #000; */
+   /*  background: #000; */
     
   align-items: center;
 }
@@ -35,6 +39,10 @@ header h1 {
 }
 header nav {
     margin: auto;
+    display: flex;
+    gap:10px;
+    align-items: center;
+    justify-content: center;
 }
 
 header nav button:hover {
@@ -53,7 +61,6 @@ header nav button {
     /* border: 1px solid grey; */
     /* color: white; */
     /* font-size: 1.2em; */
-    margin-right: 10px;
     width: 100px;
     height: 35px;
     border-radius: 10px;
@@ -135,11 +142,11 @@ div.card .content span{
 
 
 body {
-    font-family: Arial, sans-serif;
+    /*font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 20px;
-    text-align: center;
+    text-align: center;*/
 }
 
 .dashboard {
@@ -192,7 +199,7 @@ body {
 }
 
 .view-btn {
-    background: #007bff;
+    background: var(--btn-bg);
     color: #fff;
     border: none;
     padding: 8px 12px;
@@ -205,6 +212,13 @@ body {
 }
 
 /* Room Status Styling */
+.card.status-card,.card.attention-card{
+  padding: 1rem;
+  margin-bottom: 10px;
+  display:flex;
+  flex-direction: column;
+  margin: 20px;
+}
 .status-list {
     margin-top: 10px;
 }
@@ -242,15 +256,22 @@ body {
     padding: 1rem;
   }
 header nav {
+  flex-direction:column;
     height: 0;
     width:0;
     overflow: hidden;
+    transition: height 0.5s ease;
+}
+
+header nav button {
+  width:100%;
 }
 header button.signout-btn{
-  
     height: 0;
     width:0;
     overflow: hidden;
+    border:none;
+  transition: height 0.5s ease;
 }
 
 .menu-btn-box{  

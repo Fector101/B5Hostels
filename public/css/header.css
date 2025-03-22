@@ -60,7 +60,7 @@ header nav a.active{
     color: black;
 }
 header .notify-btn{
-  --size:40px;
+  --size:35px;
   height: var(--size);
   width: var(--size);
   display: flex;

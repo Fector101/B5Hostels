@@ -70,6 +70,12 @@ header .notify-btn{
   border-radius: 60%;
   border-style: none;
 }
+
+header .notify-btn svg{
+  height: 100%;
+  width: 100%;
+}
+
 @media screen and (max-width:500px) {
     header h1{
         font-size: 21px;

@@ -10,13 +10,16 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+        <div id="notification" class="notification"></div>
+    <div class="cover display-none">
+        <div id="spinner" class="spinner"></div>
+    </div>
 
-    <!-- <div class="signup-card"> -->
         <div class="signup-container">
             <h2>Sign Up</h2>
             <p>Let's start with some facts about you</p>
             
-            <form method="post" action="/api/authn/signup">
+            <form id="signup-form">
                 <div class="profile-upload">
                     <label for="profile-pic" class="profile-label">
                         <img src="imgs/profile1.jpg" alt="Profile Image" id="profile-preview">

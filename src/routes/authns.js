@@ -34,7 +34,6 @@ router.post("/signup", async (req, res) => {
             level,
         });
         await user.save();
-const data={ id: user.id, level, email, gender, name: user.name, matric_no }
 const days_left = "";
         const total_paid = "";
         const data = {

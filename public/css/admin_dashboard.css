@@ -1,6 +1,7 @@
-/* styles.css */
+
 body {
     font-family: SF Pro Display, system-ui, sans-serif;
+    --btn-bg: #6a0dad;
 }
 
 .dim-text {
@@ -12,6 +13,8 @@ header {
     box-shadow: 1px 1px 1px grey;
     padding: 1rem 2rem;
     /* background: #000; */
+    
+  align-items: center;
 }
 
 header h1 {
@@ -19,7 +22,17 @@ header h1 {
     margin-block: auto;
 
 }
+.menu-btn-box{
+  display: flex;
+  align-items: center;
+  
+}
 
+.menu-btn-box button{
+  --size:35px;
+  height: var(--size);
+  width:60px;
+}
 header nav {
     margin: auto;
 }
@@ -79,7 +92,7 @@ div.cards {
 
 div.card {
     background: #fff;
-    
+
     padding: 0;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -219,4 +232,32 @@ body {
 .count {
     font-weight: bold;
     color: #333;
+}
+
+@media screen and (max-width:500px) {
+    header h1{
+        font-size: 21px;
+    }
+      header{
+    padding: 1rem;
+  }
+header nav {
+    height: 0;
+    width:0;
+    overflow: hidden;
+}
+header button.signout-btn{
+  
+    height: 0;
+    width:0;
+    overflow: hidden;
+}
+
+.menu-btn-box{  
+  width:100%;
+}
+
+.menu-btn-box button{  
+  margin-left: auto;
+}
 }

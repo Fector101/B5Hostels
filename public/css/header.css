@@ -1,7 +1,7 @@
-
 header{
     font-family: "Playfair Display", serif;
     padding: 0 1rem;
+    padding-right: 0.5rem;
     display: flex;
     align-items: center;
     /* box-shadow: 1px 1px 1px 1px rgba(171, 170, 170, 0.605); */
@@ -59,7 +59,17 @@ header nav a{
 header nav a.active{
     color: black;
 }
-
+header .notify-btn{
+  --size:30px;
+  height: var(--size);
+  width: var(--size);
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  fill:#525256;
+  border-radius: 60%;
+  border-style: none;
+}
 @media screen and (max-width:500px) {
     header h1{
         font-size: 21px;

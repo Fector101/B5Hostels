@@ -12,7 +12,8 @@ async function connectToDatabase() {
         return cachedDB
     }
     console.log('Creating new DB connection')
-    cachedDB = mongoose.connect( uri )
+    const client = await mongoose.connect( uri )
+    cachedDB = client
     
     return cachedDB
 }

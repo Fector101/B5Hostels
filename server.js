@@ -6,6 +6,7 @@ const cors = require('cors')
 
 const authns =  require('./src/routes/authns')
 const studentRoutes =  require('./src/routes/students')
+const adminRoutes =  require('./src/routes/admin')
 const connectDB = require('./src/db')
 
 
@@ -28,6 +29,7 @@ connectDB()
 // Routes
 
 app.use('/', studentRoutes)
+app.use('/admin', adminRoutes)
 app.use('/api/authn', authns)
 
 app.get('/', (req, res) => {
@@ -50,11 +52,6 @@ app.get('/user', (req, res) => {
 });
 
 
-app.get('/admin-dashboard', (req, res) => {
-    
-
-    res.render('admin-dashboard', {  page_title:'home'});
-});
 
 
 // Start Server

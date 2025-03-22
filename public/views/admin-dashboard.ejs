@@ -4,25 +4,13 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Admin Dashboard</title>
-        <link rel="stylesheet" href="css/index.css" />
-        <link rel="stylesheet" href="css/admin_dashboard.css" />
-        <script defer src="script.js"></script>
+        <link rel="stylesheet" href="/css/index.css" />
+        <link rel="stylesheet" href="/css/admin.css" />
+        <link rel="stylesheet" href="/css/admin-responsive.css" />
+        <script defer src="/js/admin-header.js"></script>
     </head>
     <body>
-        <header>
-            <div class="menu-btn-box">
-              <h1>Hostel Manager</h1>
-              <button class="menu-btn">
-                Menu
-              </button>
-            </div>
-            <nav>
-                <button class="active">Dashboard</button>
-                <button>Students</button>
-                <button>Room</button>
-            </nav>
-            <button class="signout-btn">Sign Out</button>
-        </header>
+        <%- include("admin-header") -%>
         <div class="welcome-box">
             <h1>Admin Dashboard</h1>
             <p class="dim-text">
@@ -57,14 +45,6 @@
             <div class="card">
                 <span class="strip"></span>
                 <div class="content">
-                    <h3>Rejected Students</h3>
-                    <p>Not eligible for accommodation</p>
-                    <span>1</span>
-                </div>
-            </div>
-            <div class="card">
-                <span class="strip"></span>
-                <div class="content">
                     <h3>Total Rooms</h3>
                     <p>Available in the hostel</p>
                     <span>8</span>
@@ -78,7 +58,6 @@
                     <span>6</span>
                 </div>
             </div>
-
         </div>
         <div class="card attention-card">
             <h3>Students Needing Attention</h3>
@@ -106,17 +85,19 @@
             <p>Current status of all rooms in the hostel</p>
             <div class="status-list">
                 <div class="status-item">
-                    <span class="status-dot available"></span> Available Rooms <span class="count">6</span>
+                    <span class="status-dot available"></span> Available Rooms
+                    <span class="count">6</span>
                 </div>
                 <div class="status-item">
-                    <span class="status-dot occupied"></span> Fully Occupied <span class="count">1</span>
+                    <span class="status-dot occupied"></span> Fully Occupied
+                    <span class="count">1</span>
                 </div>
                 <div class="status-item">
-                    <span class="status-dot maintenance"></span> Under Maintenance <span class="count">1</span>
+                    <span class="status-dot maintenance"></span> Under
+                    Maintenance <span class="count">1</span>
                 </div>
             </div>
             <button class="view-btn">View All Rooms</button>
         </div>
-    
-</body>
+    </body>
 </html>

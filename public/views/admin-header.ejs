@@ -1,0 +1,24 @@
+<header>
+    <div class="menu-btn-box">
+        <h1>Hostel Manager</h1>
+        <button class="menu-btn">☰</button>
+    </div>
+    <nav>
+        <a
+            class="<%= page_title === 'dashboard' ? 'active' : '' %>"
+            href="/admin/dashboard"
+            >Dashboard</a
+        >
+        <a
+            class="<%= page_title === 'students' ? 'active' : '' %>"
+            href="/admin/students"
+            >Students</a
+        >
+        <a
+            class="<%= page_title === 'rooms' ? 'active' : '' %>"
+            href="/admin/rooms"
+            >Room</a
+        >
+    </nav>
+    <button class="signout-btn">Sign Out</button>
+</header>

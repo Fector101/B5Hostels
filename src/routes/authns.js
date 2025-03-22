@@ -34,8 +34,7 @@ router.post("/signup", async (req, res) => {
             level,
         });
         await user.save();
-const data=
-            { id: user.id, level, email, gender, name: user.name, matric_no }
+const data={ id: user.id, level, email, gender, name: user.name, matric_no }
         const token = jwt.sign(data,
             process.env.JWT_SECRET,
             { expiresIn: "1h" }

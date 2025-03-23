@@ -13,11 +13,11 @@ async function connectToDatabase() {
     }
     console.log('Creating new DB connection')
     try{
-        cachedDB = mongoose.connect( uri )
+        cachedDB = await mongoose.connect( uri )
         return cachedDB
     }catch(err){
         console.error('Error connecting to DB', err)
-        return None
+        return null
     }
     
 }

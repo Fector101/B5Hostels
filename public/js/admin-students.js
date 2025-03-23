@@ -89,7 +89,6 @@ document
         const selectBtn = event.target.closest(
             ".room-selection-card .select-btn"
         );
-        console.log(selectBtn);
         if (!selectBtn) return;
         document
             .querySelector(".room-selection-card.active")
@@ -106,13 +105,13 @@ function showTab(tab) {
             card.classList.remove("display-none");
         }
     });
-    const currentLevel = document.querySelector('.select-level').value
-    displayLevel(currentLevel)
+    // const currentLevel = document.querySelector('.select-level').value
+    // displayLevel(currentLevel)
+    document.querySelector('.select-level').value='all'
+    displayLevel('all')
 }
 
 function displayLevel(level) {
-    console.log(level)
-    
     const currentTab = document.querySelector('.tabs button.active').value
     document.querySelectorAll(`.main-content .cards-box > div.${currentTab}`).forEach(card => {
         if (card.getAttribute('data-level') == level) {

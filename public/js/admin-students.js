@@ -106,7 +106,7 @@ function showTab(tab) {
             card.classList.remove("display-none");
         }
     });
-    const currentLevel = document.querySelector('.select-hostel').value
+    const currentLevel = document.querySelector('.select-level').value
     displayLevel(currentLevel)
 }
 

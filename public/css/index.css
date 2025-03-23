@@ -42,7 +42,7 @@ div.display-none{
 }
 
 .cover{
-    position: absolute;
+    position: fixed;
     height: 100vh;
     width: 100vw;
     background-color: #808080b2;

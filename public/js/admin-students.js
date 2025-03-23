@@ -78,3 +78,4 @@ document.querySelector('.allocation-box')
     selectBtn.closest('.room-selection-card').classList.add("active")
   })
 
+// function show

@@ -339,13 +339,6 @@ section.main-content .cards-box {
     color: white;
 }
 
-.badge.undergraduate {
-    background: blue;
-}
-
-.badge.masters {
-    background: purple;
-}
 
 .student-card .name-box,
 .student-card .card-header,
@@ -409,12 +402,8 @@ section.main-content .cards-box {
     border-color: var(--btn-bg);
 }
 
-
 .student-card .btns-box .reject-room-btn {
-    background-color: #F89C9C;
     color: white;
-
-    border-color: #F89C9C;
 }
 
 .student-card .btns-box .assigned-room-btn {
@@ -555,4 +544,26 @@ section.main-content .cards-box {
 
 .amenities-box .con>div:first-of-type {
     margin-left: 0;
+}
+
+
+
+
+
+
+.red-color{
+    background-color: hsl(0 80% 60%) !important;
+    border-color: #F89C9C !important;
+}
+
+.warning-strip{
+    border-top-color: hsl(45 80% 60%) !important;
+}
+
+.bad-strip{
+    border-top-color:rgb(239 68 68)!important;
+}
+
+.good-strip {
+    border-top-color: rgb(34 197 94) !important;
 }

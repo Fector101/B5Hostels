@@ -44,6 +44,7 @@ document.getElementById('add-room-form').addEventListener("submit", async functi
         });
         const result = await response.json();
         if (response.ok) {
+            removeSpinner()
             showNotification(result.msg, "success");
 
         } else {

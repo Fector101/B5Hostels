@@ -99,7 +99,7 @@ document
 
 function showTab(tab) {
     // tab = 'pending' or 'verified' or 'paid' or ('student-card' <--- for all)
-    document.querySelectorAll(".student-card").forEach((card) => {
+    document.querySelectorAll(".main-content .student-card").forEach((card) => {
         if (!card.classList.contains(tab)) {
             card.classList.add("display-none");
         } else {
@@ -114,7 +114,7 @@ function displayLevel(level) {
     console.log(level)
     
     const currentTab = document.querySelector('.tabs button.active').value
-    document.querySelectorAll(`.cards-box > div.${currentTab}`).forEach(card => {
+    document.querySelectorAll(`.main-content .cards-box > div.${currentTab}`).forEach(card => {
         if (card.getAttribute('data-level') == level) {
             // showNotification(card.getAttribute('data-level'), "success")
             card.classList.remove('display-none')
@@ -129,9 +129,9 @@ function displayLevel(level) {
 
 document.querySelector(".tabs").addEventListener("click", function (event) {
     const tabBtn = event.target.closest("button");
+    if (!tabBtn) return;
     this.querySelector(".active").classList.remove("active");
     tabBtn.classList.add("active");
-    if (!tabBtn) return;
     showTab(tabBtn.value);
 });
 

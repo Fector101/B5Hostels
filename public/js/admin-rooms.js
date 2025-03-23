@@ -15,9 +15,9 @@ function showTab(tab) {
 
 document.querySelector('.tabs').addEventListener('click', function (event) {
     const tabBtn = event.target.closest('button')
+    if (!tabBtn) return
     this.querySelector('.active').classList.remove('active')
     tabBtn.classList.add('active')
-    if (!tabBtn) return
     showTab(tabBtn.value)
     
 })

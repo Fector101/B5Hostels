@@ -545,6 +545,11 @@ section.main-content .cards-box {
 
 
 
+.student-card button.primary-btn{
+    background-color: var(--btn-bg);
+    color: white;
+    border-color: var(--btn-bg);
+}
 
 
 .red-color{

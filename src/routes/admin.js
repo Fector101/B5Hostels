@@ -53,7 +53,7 @@ router.post("/add-room", async (req, res) => {
     else if (room) { return res.status(400).json({ exists: true, msg: "Room Already Register" }); }
 
 
-const room = new Room({
+ room = new Room({
     room_number,
     block,
     floor,
@@ -62,7 +62,7 @@ const room = new Room({
     amenities,
 });
 
-const result = await doDataBaseThing(room.save);
+const result = await doDataBaseThing(() => room.save());
 
     if (result == 'db_error') { return res.status(400).json({ msg: "Network Error, Try Refreshing Page" });}
     else if (result) { 

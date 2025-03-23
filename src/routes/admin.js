@@ -31,7 +31,7 @@ room = arg ? await func(arg) : await func();
         return true
     } catch (err) {
 
-        console.log('First attempt failed, retrying in 1 second...');
+        console.log(err,'First attempt failed, retrying in 1 second...');
         await delay(1000); // Wait 1 second before retrying
 
         try {

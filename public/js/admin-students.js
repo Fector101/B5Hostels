@@ -60,7 +60,7 @@ let htmlString=``
                </div>   
             
                 <div class="btns-box">
-                <button class='active select-btn'>Select Room</button>
+                <button class='${i==0?"active ":""}select-btn'>${i==0?"Selected":"Select Room"}</button>
                 </div>
         </div>`
   }

@@ -98,13 +98,10 @@ function showTab(tab) {
     displayLevel(currentLevel)
 }
 
-function displayLevel(hostel){
-    const currentTab = document.querySelector('.tabs button.active').value
-    const specificElement = document.querySelector('.cards-box > div');
-console.log(specificElement);
-
-    document.querySelectorAll(`.cards-box > div.[data-level="2"]`).forEach(card => {
-        if (card.classList.contains(hostel)) {
+function displayLevel(level){
+ const currentTab = document.querySelector('.tabs button.active').value
+    document.querySelectorAll(`.cards-box > div.${currentTab}`).forEach(card => {
+        if (card.getAttribute('data-level') == level) {
             card.classList.remove('display-none')
         } else {
             card.classList.add('display-none')
@@ -119,3 +116,9 @@ document.querySelector(".tabs").addEventListener("click", function (event) {
     if (!tabBtn) return;
     showTab(tabBtn.value);
 });
+
+
+document.querySelector('.select-level').addEventListener('change', function () {
+    const selectedLevel = this.value
+    displayHostel(selectedLevel)
+})

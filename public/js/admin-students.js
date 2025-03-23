@@ -2,7 +2,7 @@
 const backDropEle = document.querySelector('.cover')
 function removeModal(event=None){
     backDropEle.classList.add('display-none')
-    
+
 }
 
 function showModal(){
@@ -60,7 +60,7 @@ let htmlString=``
                </div>   
             
                 <div class="btns-box">
-                <button>Select Room</button>
+                <button class='active select-btn'>Select Room</button>
                 </div>
         </div>`
   }

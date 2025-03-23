@@ -48,7 +48,7 @@ router.post("/add-room", async (req, res) => {
     const { room_number, block, floor, status, capacity, amenities } = req.body;
 const floorNumber = Number(floor);
     console.log({ room_number, block, floor, status, capacity, amenities })
-    let room = await doDataBaseThing(Room.findOne, { room_number })
+    let room = await doDataBaseThing(() => Room.findOne({ room_number }));
 
     if (room == 'db_error') { return res.status(400).json({ msg: "Network Error, Try Refreshing Page" });}
     else if (room) {

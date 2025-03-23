@@ -70,6 +70,7 @@ header nav a.active {
 }
 
 header nav a {
+color: inherit;
     cursor: pointer;
     text-decoration: none;
     display: flex;

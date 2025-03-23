@@ -6,12 +6,13 @@ const RoomSchema = new mongoose.Schema({
     room_number: { type: String, required: true, unique: true },
     block:  { type: String},
     floor:  { type: Number},
-    status:  { type: String},
+    status:  { type: String, enum: ["available", "booked","maintenance"], default: "available" },
     capacity:  { type: Number},
-    amenities:  { type: String},
+    amenities:  [{ type: String }], // Array of strings
     // Use ObjectId references instead of embedding Student model
     occupants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Student" }],
 });
+
 
 
 const Room = mongoose.model("Room", RoomSchema);

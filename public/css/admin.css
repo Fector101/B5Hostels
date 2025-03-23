@@ -426,6 +426,8 @@ max-width: 99%;
   width: 350px;
   max-width: 99%;
   height: 500px;
+
+  max-height: 80%;
   max-height: 99%;
   background: white;
   border-radius: 5px;padding: 20px;

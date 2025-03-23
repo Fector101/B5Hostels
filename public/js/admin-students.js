@@ -21,7 +21,7 @@ let htmlString=``
   for (var i = 0; i < number; i++) {
     htmlString+=`
     
-        <div class="student-card room-selection-card verified">
+        <div class="student-card room-selection-card verified ${i==0?"active":""}">
             <div class="card-header">
                 <div class="student-id-box">
                   <p class="dim-text">Room</p>
@@ -60,7 +60,7 @@ let htmlString=``
                </div>   
             
                 <div class="btns-box">
-                <button class='${i==0?"active ":""}select-btn'>${i==0?"Selected":"Select Room"}</button>
+                <button class='select-btn'>${i==0?"Selected":"Select Room"}</button>
                 </div>
         </div>`
   }

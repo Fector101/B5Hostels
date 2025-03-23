@@ -465,10 +465,10 @@ max-width: 99%;
 
 /*-------*/
 
-room-selection-card.active{
+.room-selection-card.active{
 border:1px solid var(--btn-bg);
 }
-room-selection-card.active button.select-btn{
+.room-selection-card.active button.select-btn{
   background-color:var(--btn-bg);
   color:white;
 }

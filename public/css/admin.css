@@ -452,7 +452,7 @@ section.main-content .cards-box {
  /* background:red;*/
   flex:1;
   padding: 10px;
-  overflow-y: scroll;
+  overflow: hidden scroll;
 }
 .room-selection-card .amenities-box{
   margin-bottom: 0;

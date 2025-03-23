@@ -5,7 +5,6 @@ const RoomSchema = new mongoose.Schema({
     img: { type: String}, // Image URL or filename
     room_number: { type: String, required: true, unique: true },
     block:  { type: String},
-    occupied: { type: Number, default: 0 },
     floor:  { type: Number},
     status:  { type: String},
     capacity:  { type: Number},

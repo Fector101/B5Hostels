@@ -5,6 +5,18 @@
     }
 }
 
+@media screen and (max-width:700px) {
+
+    .allocation-box {
+        margin: auto;
+        width: 400px;
+    }
+
+    .room-selection-card.student-card {
+        width: 100%;
+    }
+}
+
 @media screen and (max-width:770px) {
     .main-page-details-box .card {
         min-width: 400px;
@@ -57,6 +69,7 @@
         max-width: 400px;
     }
 }
+
 @media screen and (max-width:426px) {
     .main-page-details-box .card {
         min-width: auto;

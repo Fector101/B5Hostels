@@ -39,14 +39,16 @@ header h1 {
     border: none;
     background: transparent;
     border-radius: 8px;
-    
+
 }
-.menu-btn-box button svg{
-    --size:20px;
+
+.menu-btn-box button svg {
+    --size: 20px;
     width: var(--size);
     height: var(--size);
 }
-.menu-btn-box button:hover{
+
+.menu-btn-box button:hover {
     background: #e0dede;
     cursor: pointer;
 }
@@ -70,7 +72,7 @@ header nav a.active {
 }
 
 header nav a {
-color: inherit;
+    color: inherit;
     cursor: pointer;
     text-decoration: none;
     display: flex;
@@ -111,12 +113,12 @@ header>button:last-child {
     background: #eee;
     cursor: pointer;
     border-radius: 5px;
-color: grey;
+    color: grey;
 }
 
 .tabs button.active {
     background: white;
-color: black;
+    color: black;
 }
 
 .filters {
@@ -157,12 +159,14 @@ color: black;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
 .card span.strip {
     background-color: var(--btn-bg);
     height: 5px;
     display: flex;
     border-radius: 5px 5px 0 0;
 }
+
 .card .content {
     padding: 15px;
     display: flex;
@@ -182,6 +186,7 @@ color: black;
     margin: 5px 0;
     color: #666;
 }
+
 .card .content span {
     /* lager number in card */
     font-size: 1.875rem;
@@ -198,7 +203,8 @@ color: black;
 
     /* background: #000; */
 }
-.main-page-details-box .card{
+
+.main-page-details-box .card {
     flex: 1;
     /* width: 455px; */
 
@@ -301,7 +307,7 @@ section.main-content .cards-box {
 
 .student-card {
     width: 400px;
-max-width: 99%;
+    max-width: 99%;
     background: #000;
     display: flex;
     flex-direction: column;
@@ -416,79 +422,104 @@ max-width: 99%;
     background-color: #FFFFFFC2;
     border-color: #C7C4C4;
 }
+
 /* still admin-students page but modal*/
 
-.allocation-modal{
-  padding:20px 0;
-}
-.allocation-box{
-  margin: auto;
-  width: 350px;
-  max-width: 99%;
-  height: 500px;
-
-  max-height: 80%;
-  max-height: 99%;
-  background: white;
-  border-radius: 5px;padding: 20px;
-  display: flex;
-  flex-direction: column;
+.allocation-modal {
+    padding: 20px 0;
 }
 
-.allocation-box h1{
-  font-size: 25px;
-  align-self: center;
+.allocation-box {
+    margin: auto;
+    width: 700px;
+    max-width: 99%;
+    height: 500px;
+    align-items: center;
+    max-height: 80%;
+    max-height: 99%;
+    background: white;
+    border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
-.allocation-box .header-caption{
-  font-size: 14px;
-  margin-block: 5px 15px;
-  align-self: center;
+.allocation-box .rooms-box {
+    /* background:red;*/
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    overflow: hidden scroll;
+    justify-content: space-between;
 }
-.allocation-box .close-btn{
-  --size:25px;
-  height: var(--size);
-  width: var(--size);
-  margin-left:auto;
+.room-selection-card.student-card {
+    font-size: 13px;
+    gap: 10px;
+    width: 45%;
 }
 
-.allocation-box .rooms-box{
- /* background:red;*/
-  flex:1;
-  padding: 10px;
-  overflow: hidden scroll;
+.allocation-box h1 {
+    font-size: 25px;
+    align-self: center;
 }
-.room-selection-card .amenities-box{
-  margin-bottom: 0;
+
+.allocation-box .header-caption {
+    font-size: 14px;
+    margin-block: 5px 15px;
+    align-self: center;
+}
+
+.allocation-box .close-btn {
+    --size: 25px;
+    height: var(--size);
+    width: var(--size);
+    margin-left: auto;
+}
+
+
+.room-selection-card .amenities-box {
+    margin-bottom: 0;
 }
 
 
 /*-------*/
 
-.room-selection-card.active{
-border:1px solid var(--btn-bg);
-}
-.room-selection-card.active button.select-btn{
-  background-color:var(--btn-bg);
-  color:white;
-}
-.allocation-btns-box{
-  padding: 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  
+.room-selection-card.active {
+    border: 1px solid var(--btn-bg);
 }
 
-.allocation-btns-box button{
-  height:40px;
-  width:120px;
-  border: none;
-  border-radius: 10px;
+.room-selection-card.active button.select-btn {
+    background-color: var(--btn-bg);
+    color: white;
 }
-.allocation-btns-box button.ok{
-  background-color: var(--btn-bg);
-  color: white;
+
+.allocation-btns-box {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+
+}
+
+.allocation-btns-box button {
+    height: 40px;
+    width: 120px;
+    border: none;
+    margin-right: 10px;
+    border-radius: 10px;
+}
+.allocation-btns-box button:hover {
+    background: #e0dede;
+    cursor: pointer;
+
+}
+
+.allocation-btns-box button.ok {
+    background-color: var(--btn-bg);
+    color: white;
 }
 
 /*-------*/

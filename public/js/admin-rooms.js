@@ -1,4 +1,18 @@
 
+const backDropEle = document.querySelector(".cover");
+function removeModal(event = None) {
+    backDropEle.classList.add("display-none");
+}
+
+function showModal() {
+    backDropEle.classList.remove("display-none");
+}
+document.querySelector("button.add-room-btn").addEventListener("click", showModal);
+document.querySelector("button.add-room-btn").addEventListener("click", showModal);
+
+// document.addEventListener("click", function (event) {
+
+
 function showTab(tab) {
     // tab = 'maintenance' or 'free' or 'full' or ('room-card' <--- for all)
     

@@ -7,7 +7,13 @@ body {
 .dim-text {
     color: #666;
 }
-
+.primary-btn{
+    background-color: var(--btn-bg);
+  color: white;
+  border-color: var(--btn-bg);
+  border-style: solid;
+  border-radius: 10px;
+}
 header {
     display: flex;
     box-shadow: -1px 0px 0.8px grey;
@@ -158,6 +164,7 @@ header>button:last-child svg {
 }
 
 .welcome-box {
+    width: 100%;
     /* max-width: 900px; */
     display: flex;
     flex-direction: column;
@@ -165,9 +172,18 @@ header>button:last-child svg {
     padding: 20px;
     gap: 5px;
 }
-
-
-
+.welcome-box.rooms-welcome-box{
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.welcome-box .add-room-btn{
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+    height: 40px;
+    margin-left: auto;
+}
 
 .cards {
     display: grid;
@@ -611,14 +627,81 @@ section.main-content .cards-box {
     margin-left: 0;
 }
 
-
-
-
 .student-card button.primary-btn {
     background-color: var(--btn-bg);
     color: white;
     border-color: var(--btn-bg);
 }
+
+/* Add Room Modal */
+.add-container{
+    /* background: #000; */
+    background: #fff;
+    margin: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 10px;
+}
+.add-container .header-sub{
+    font-size: 13px;
+}
+.add-container > h3,.add-container>p{
+    align-self: center;
+}
+.add-container button{
+    align-self: flex-end;
+}
+.add-container form{
+    /* background: #000; */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.add-container input, .add-container select, .add-container textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.add-container textarea {
+    resize: none;
+    height: 50px;
+}
+
+.add-container .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.add-container .form-group small {
+    color: #777;
+    font-size: 12px;
+}
+.add-container form button{
+    width: 120px;
+    height: 35px;
+    margin: 0 auto;
+}
+
 
 
 .red-color {
@@ -637,3 +720,6 @@ section.main-content .cards-box {
 .good-strip {
     border-top-color: rgb(34 197 94) !important;
 }
+
+
+

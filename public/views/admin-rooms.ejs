@@ -12,10 +12,105 @@
     </head>
     <body>
         <%- include("admin-header") -%>
+        <div class="flex cover display-none">
+            <div class="add-container">
+                <button class="close-btn">X</button>
+                <!-- <div class="header"> -->
+                    <h3>Add New Room</h3>
+                    <p class="header-sub dim-text">
+                        Fill in the details to add a new room to the hostel.
+                    </p>
+                <!-- </div> -->
+                <form>
+                    <div class="grid-container">
+                        <div class="form-group">
+                            <label for="room-number">Room Number</label>
+                            <input
+                                type="text"
+                                id="room-number"
+                                placeholder="e.g., 101"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="block">Block</label>
+                            <input
+                                type="text"
+                                id="block"
+                                placeholder="e.g., A"
+                            />
+                        </div>
+                    </div>
 
-        <div class="welcome-box">
-            <h2>Room Management</h2>
-            <p>View and manage all hostel rooms</p>
+                    <div class="grid-container">
+                        <div class="form-group">
+                            <label for="floor">Floor</label>
+                            <input type="number" id="floor" min="1" value="1" />
+                        </div>
+                        <div class="form-group">
+                            <label for="capacity">Capacity</label>
+                            <input
+                                type="number"
+                                id="capacity"
+                                min="1"
+                                value="2"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status">
+                            <option>Available</option>
+                            <option>Occupied</option>
+                            <option>Under Maintenance</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="amenities">Amenities</label>
+                        <textarea
+                            id="amenities"
+                            placeholder="WiFi, Desk, Wardrobe"
+                        ></textarea>
+                        <small
+                            >List amenities separated by commas (e.g., WiFi,
+                            Desk, Wardrobe)</small
+                        >
+                    </div>
+                    <button class="primary-btn">Add Room</button>
+                </form>
+            </div>
+        </div>
+        <div class="welcome-box rooms-welcome-box">
+            <div>
+                <h2>Room Management</h2>
+                <p>View and manage all hostel rooms</p>
+            </div>
+            <button class="add-room-btn primary-btn">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-plus mr-2 h-4 w-4"
+                    data-lov-id="src/components/AddRoomForm.tsx:80:10"
+                    data-lov-name="Plus"
+                    data-component-path="src/components/AddRoomForm.tsx"
+                    data-component-line="80"
+                    data-component-file="AddRoomForm.tsx"
+                    data-component-name="Plus"
+                    data-component-content="%7B%22className%22%3A%22mr-2%20h-4%20w-4%22%7D"
+                >
+                    <path d="M5 12h14"></path>
+                    <path d="M12 5v14"></path>
+                </svg>
+                Add Room
+            </button>
         </div>
         <section class="main-content">
             <div class="tabs">
@@ -70,7 +165,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="student-card room-card warning-strip maintenance old-hostel">
+                <div
+                    class="student-card room-card warning-strip maintenance old-hostel"
+                >
                     <div class="card-header">
                         <div class="student-id-box">
                             <p class="dim-text">Room</p>

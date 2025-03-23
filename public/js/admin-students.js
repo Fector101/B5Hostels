@@ -1,3 +1,15 @@
+function showNotification(message, type) {
+    const notification = document.getElementById("notification");
+    notification.textContent = message;
+    notification.className = `notification ${type}`;
+    notification.style.display = "block";
+
+    setTimeout(() => { notification.style.display = "none"; }, 3000);
+}
+
+
+
+
 const backDropEle = document.querySelector(".cover");
 function removeModal(event = None) {
     backDropEle.classList.add("display-none");
@@ -101,6 +113,7 @@ function showTab(tab) {
 function displayLevel(level){
  const currentTab = document.querySelector('.tabs button.active').value
     document.querySelectorAll(`.cards-box > div.${currentTab}`).forEach(card => {
+showNotification(card.getAttribute('data-level'), "good")
         if (card.getAttribute('data-level') == level) {
             card.classList.remove('display-none')
         } else {

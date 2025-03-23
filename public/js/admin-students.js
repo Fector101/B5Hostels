@@ -113,7 +113,7 @@ function showTab(tab) {
 function displayLevel(level){
  const currentTab = document.querySelector('.tabs button.active').value
     document.querySelectorAll(`.cards-box > div.${currentTab}`).forEach(card => {
-showNotification(card.getAttribute('data-level'), "good")
+showNotification(card.getAttribute('data-level'), "success")
         if (card.getAttribute('data-level') == level) {
             card.classList.remove('display-none')
         } else {

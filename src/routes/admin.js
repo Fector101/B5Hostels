@@ -20,13 +20,20 @@ router.get('/rooms', (req, res) => {
     res.render('admin-rooms', { page_title: 'rooms' });
 });
 
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function doDataBaseThing(func, arg) {
     let room;
     try {
         room = await func(arg)
         return room
     } catch (err) {
-        console.log('doing second try')
+
+        console.log('First attempt failed, retrying in 1 second...');
+        await delay(1000); // Wait 1 second before retrying
+
         try {
             room = await func(arg)
             return room

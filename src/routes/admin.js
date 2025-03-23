@@ -28,7 +28,7 @@ async function doDataBaseThing(func, arg=false) {
     let room;
     try {
 room = arg ? await func(arg) : await func();
-        return true
+        return room
     } catch (err) {
 
         console.log(err,'First attempt failed, retrying in 1 second...');
@@ -52,7 +52,6 @@ const floorNumber = Number(floor);
 
     if (room == 'db_error') { return res.status(400).json({ msg: "Network Error, Try Refreshing Page" });}
     else if (room) {
-console.log("added room")
  return res.status(400).json({ exists: true, msg: "Room Already Register" }); }
 
 
@@ -68,7 +67,8 @@ console.log("added room")
 const result = await doDataBaseThing(() => room.save());
 
     if (result == 'db_error') { return res.status(400).json({ msg: "Network Error, Try Refreshing Page" });}
-    else if (result) { 
+    else { 
+console.log("added room")
     return res.status(200).json({ msg: "Room Successfully Register" }); }
 
 })

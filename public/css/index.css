@@ -13,7 +13,13 @@ body {
 div.display-none{
   display: none;
 }
-
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+.width100{
+  width: 100%;
+}
 .notification {
   position: fixed;
   top: 20px;

@@ -465,8 +465,8 @@ max-width: 99%;
 
 /*-------*/
 
-.select-btn.active{
-  background:var(--btn-bg);
+button.select-btn.active{
+  background-color:var(--btn-bg);
   color:white;
 }
 .allocation-btns-box{

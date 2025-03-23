@@ -51,7 +51,9 @@ const floorNumber = Number(floor);
     let room = await doDataBaseThing(Room.findOne, { room_number })
 
     if (room == 'db_error') { return res.status(400).json({ msg: "Network Error, Try Refreshing Page" });}
-    else if (room) { return res.status(400).json({ exists: true, msg: "Room Already Register" }); }
+    else if (room) {
+console.log("added room")
+ return res.status(400).json({ exists: true, msg: "Room Already Register" }); }
 
 
  room = new Room({

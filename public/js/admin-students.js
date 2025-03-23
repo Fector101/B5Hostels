@@ -18,12 +18,19 @@ function removeModal(event = None) {
 function showModal() {
     backDropEle.classList.remove("display-none");
 }
-document
-    .querySelector(".allocation-box .close-btn")
-    .addEventListener("click", removeModal);
+document.querySelector(".allocation-box .close-btn").addEventListener("click", removeModal);
+
 document.addEventListener("click", function (event) {
     const assignBtn = event.target.closest(".assign-btn");
     if (!assignBtn) return;
+    const student_card = assignBtn.closest(".student-card");
+    const student_name = student_card.querySelector(".name").innerText;
+    const student_matric_no = student_card.querySelector(".matric_no").innerText;
+    console.log(student_name, student_matric_no);
+    const modal_header_con = document.querySelector('.header-caption.dim-text')
+    modal_header_con.querySelector('.--name').textContent = student_name.split(' ')[0]
+    modal_header_con.querySelector('.--matric_no').textContent = student_matric_no
+
     showModal();
     // console.log(assignBtn)
 });
@@ -86,13 +93,9 @@ insertRooms(5);
 document
     .querySelector(".allocation-box")
     .addEventListener("click", function (event) {
-        const selectBtn = event.target.closest(
-            ".room-selection-card .select-btn"
-        );
+        const selectBtn = event.target.closest( ".room-selection-card .select-btn" );
         if (!selectBtn) return;
-        document
-            .querySelector(".room-selection-card.active")
-            .classList.remove("active");
+        document.querySelector(".room-selection-card.active").classList.remove("active");
         selectBtn.closest(".room-selection-card").classList.add("active");
     });
 

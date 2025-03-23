@@ -19,7 +19,7 @@
 
         </div>
 
-        <div class="flex form cover display-non">
+        <div class="flex form cover display-none">
             <div class="add-container">
                 <button class="close-btn">X</button>
                     <h3>Add New Room</h3>
@@ -71,9 +71,9 @@
                     <div class="form-group">
                         <label for="status">Status</label>
                         <select name="status">
-                            <option>Available</option>
-                            <option>Occupied</option>
-                            <option>Under Maintenance</option>
+                            <option value="free">Available</option>
+                            <option value="full">Occupied</option>
+                            <option value="maintenance">Under Maintenance</option>
                         </select>
                     </div>
 
@@ -140,27 +140,30 @@
                 </select>
             </div>
             <div class="cards-box">
-                <div class="student-card room-card good-strip free new-hostel">
+
+                <% rooms.forEach(room => { %>
+
+                <div class="student-card room-card <%= room.status %> <%= room.block == 'New Hostel'? 'new-hostel': 'old-hostel' %>">
                     <div class="card-header">
                         <div class="student-id-box">
                             <p class="dim-text">Room</p>
-                            <p>A-101</p>
+                            <p><%= room.room_number %></p>
                         </div>
-                        <span class="badge hostel">Available</span>
+                        <span class="badge hostel"><%= room.status %></span>
                     </div>
                     <div class="info">
                         <div class="row">
                             <p class="dim-text">Block:</p>
-                            <p>New Hostel</p>
+                            <p><%= room.block %></p>
                         </div>
                         <div class="row">
                             <p class="dim-text">Capacity:</p>
-                            <p>1/4</p>
+                            <p><%= room.occupants.length %>/<%= room.capacity %></p>
                         </div>
 
                         <div class="row">
                             <p class="dim-text">Floor:</p>
-                            <p>1</p>
+                            <p><%= room.floor %></p>
                         </div>
                     </div>
                     <div class="amenities-box">
@@ -176,7 +179,10 @@
                         </div>
                     </div>
                 </div>
-                <div
+
+                <% }); %>
+
+                <!-- <div
                     class="student-card room-card warning-strip maintenance old-hostel"
                 >
                     <div class="card-header">
@@ -211,8 +217,8 @@
                             <div class="sub-container"><p>Study Area</p></div>
                         </div>
                     </div>
-                </div>
-                <div class="student-card room-card bad-strip full new-hostel">
+                </div> -->
+                <!-- <div class="student-card room-card bad-strip full new-hostel">
                     <div class="card-header">
                         <div class="student-id-box">
                             <p class="dim-text">Room</p>
@@ -243,8 +249,8 @@
                             <div class="sub-container"><p>Study Area</p></div>
                         </div>
                     </div>
-                </div>
-                <div class="student-card room-card bad-strip full old-hostel">
+                </div> -->
+                <!-- <div class="student-card room-card bad-strip full old-hostel">
                     <div class="card-header">
                         <div class="student-id-box">
                             <p class="dim-text">Room</p>
@@ -275,7 +281,7 @@
                             <div class="sub-container"><p>Study Area</p></div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </section>
     </body>

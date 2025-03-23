@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const verifyToken = require("../helper/basic");
+const {verifyToken} = require("../helper/basic");
 const Room = require("../models/Room"); // Import the Room model
 const Student = require("../models/Student");
 
@@ -33,7 +33,13 @@ async function assignStudentToRoom(matric_no, roomId) {
 
     console.log(`Assigned ${student.name} to room ${room.title}`);
 }
-
+function getInitials(name) {
+    if (!name) return "";
+    const parts = name.trim().split(/\s+/);
+    const firstInitial = parts[0]?.[0] || "";
+    const lastInitial = parts[1]?.[0] || "";
+    return (firstInitial + lastInitial).toUpperCase();
+}
 router.get("/dashboard", verifyToken, (req, res) => {
     const userInfo = req.user;
     // const token = jwt.sign({ id: user._id, username: user.username, matric_no: user.matric_no }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -43,7 +49,8 @@ router.get("/dashboard", verifyToken, (req, res) => {
     // console.log(userInfo)
     const data = {
         page_title: "dashboard",
-        name: userInfo.name.split(" ")[0],
+        name: userInfo.name,
+        initials: getInitials(userInfo.name),
         matric_no: userInfo.matric_no,
         level: userInfo.level,
         room: userInfo.room || "Nil",
@@ -68,8 +75,10 @@ router.get("/room/:room_number", async (req, res) => {
         }); //, description: roomData.description });
     } else {
         res.status(404).render("room", {
-            room_number: "Room Not Found",
+            room_number: "Not Found",
             page_title: "dashboard",
+            amenities: "Not Found",
+            occupants: "Not Found",
             img_path:'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png',
             // description: "This room does not exist.",
         });

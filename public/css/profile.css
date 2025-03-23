@@ -20,13 +20,33 @@ body{
 }
 
 /* Profile Section */
+.profile {
+  display: flex;
+  flex-direction: column;
+}
+.profile .profile-icon p{
+  font-size: 3rem;
+}
 .profile .profile-icon{
+  --size: 100px;
+  width: var(--size);
+  height: var(--size);
+  background: #c6c5c5c4;
+  align-self: center;
+  border-radius: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  color: #6a0dad !important;
+}
+/* .profile .profile-icon{
   width: 80px;
   fill: rgb(191, 171, 219);
   height: 80px;
   border-radius: 50%;
   border: 3px solid #6a0dad;
-}
+} */
 
 .profile h2 {
   color: #6a0dad;

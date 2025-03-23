@@ -18,4 +18,28 @@ const verifyToken = (req, res, next) => {
     }
 };
 
-module.exports = verifyToken;
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function doDataBaseThing(func, arg = false) {
+    let room;
+    try {
+        room = arg ? await func(arg) : await func();
+        return room
+    } catch (err) {
+
+        console.log(err, 'First attempt failed, retrying in 1 second...');
+        await delay(1000); // Wait 1 second before retrying
+
+        try {
+            room = arg ? await func(arg) : await func();
+            return room
+        } catch (err) {
+            console.log('second try failed')
+            return 'db_error'
+        }
+    }
+}
+module.exports = {verifyToken, doDataBaseThing};

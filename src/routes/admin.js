@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const verifyToken = require("../helper/basic");
+const {verifyToken,doDataBaseThing} = require("../helper/basic");
 const Room = require("../models/Room"); // Import the Room model
 const Student = require("../models/Student");
 
@@ -16,33 +16,11 @@ router.get('/students', (req, res) => {
     res.render('admin-students', { page_title: 'students' });
 });
 
-router.get('/rooms', (req, res) => {
-    res.render('admin-rooms', { page_title: 'rooms' });
+router.get('/rooms', async (req, res) => {
+    const rooms = await doDataBaseThing(() => Room.find());
+    res.render('admin-rooms', { page_title: 'rooms',rooms });
 });
 
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function doDataBaseThing(func, arg = false) {
-    let room;
-    try {
-        room = arg ? await func(arg) : await func();
-        return room
-    } catch (err) {
-
-        console.log(err, 'First attempt failed, retrying in 1 second...');
-        await delay(1000); // Wait 1 second before retrying
-
-        try {
-            room = arg ? await func(arg) : await func();
-            return room
-        } catch (err) {
-            console.log('second try failed')
-            return 'db_error'
-        }
-    }
-}
 
 function randomImg(){
     return 'img'+Math.floor(Math.random() * 21) + '.jpg'

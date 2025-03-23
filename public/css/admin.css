@@ -743,14 +743,14 @@ section.main-content .cards-box {
     border-color: #F89C9C !important;
 }
 
-.warning-strip {
+.maintenance {
     border-top-color: hsl(45 80% 60%) !important;
 }
 
-.bad-strip {
+.full {
     border-top-color: rgb(239 68 68) !important;
 }
 
-.good-strip {
+.free {
     border-top-color: rgb(34 197 94) !important;
 }

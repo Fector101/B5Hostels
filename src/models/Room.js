@@ -1,12 +1,15 @@
 const mongoose = require("mongoose");
-const Student = require("./Student");
+// const Student = require("./Student");
 
 const RoomSchema = new mongoose.Schema({
     img: { type: String}, // Image URL or filename
-    title: { type: String, required: true, unique: true }, // Room name
-    occupied: { type: Number, default: 0 }, // Current number of occupants
-    location:  { type: String}, // Optional, if you have Old/New Hostel
-
+    room_number: { type: String, required: true, unique: true },
+    block:  { type: String},
+    occupied: { type: Number, default: 0 },
+    floor:  { type: Number},
+    status:  { type: String},
+    capacity:  { type: Number},
+    amenities:  { type: String},
     // Use ObjectId references instead of embedding Student model
     occupants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Student" }],
 });

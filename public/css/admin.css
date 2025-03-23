@@ -463,6 +463,33 @@ max-width: 99%;
 }
 
 
+/*-------*/
+
+.select-btn.active{
+  background:var(--btn-bg);
+  color:white;
+}
+.allocation-btns-box{
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  
+}
+
+.allocation-btns-box button{
+  height:40px;
+  width:120px;
+  border: none;
+  border-radius: 10px;
+}
+.allocation-btns-box button.ok{
+  background-color: var(--btn-bg);
+  color: white;
+}
+
+/*-------*/
+
 /* admin-rooms */
 
 .amenities-box {

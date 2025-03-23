@@ -80,19 +80,37 @@ header nav a {
     align-items: center;
     width: 100px;
     height: 35px;
+    padding: 0 4px;
     border-radius: 10px;
     background-color: transparent;
     border-style: none;
+    font-size: 14px;
+}
+
+header nav a svg {
+    --size: 16px;
+    width: var(--size);
+    height: var(--size);
+    margin: 0 5px;
 }
 
 header>button:last-child {
     /* margin-left: auto; */
     width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 35px;
     background-color: white;
     border: 1px solid grey;
     border-radius: 10px;
+}
 
+header>button:last-child svg {
+    --size: 20px;
+    margin-right: 5px;
+    height: var(--size);
+    width: var(--size);
 }
 
 .tabs {
@@ -110,6 +128,7 @@ header>button:last-child {
     background: #ddd;
     cursor: pointer;
 }
+
 .tabs button {
     min-width: 90px;
     height: 32px;
@@ -178,10 +197,44 @@ header>button:last-child {
     gap: 5px;
 }
 
+.card .content .row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.card .content .row svg {
+
+    padding: 3px;
+    --size: 30px;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 5px;
+}
+
+.card .content .row.total-students svg {
+    color: rgb(37 99 235);
+    background: rgb(239 246 255);
+}
+
+.card .content .row.pending-students svg {
+    background-color:rgb(250, 245, 203);
+    color: rgb(202 138 4);
+}
+
+.card .content .row.verified-students svg{
+    color: rgb(22 163 74);
+    background-color: rgb(240 253 244);
+}
+.card .content .row.total-rooms svg{
+    color: rgb(147 51 234);
+}
+/*.card .content .row.total-students{
+.card .content .row.total-students{ */
 
 .card h3 {
     margin: 0;
-    font-size: 1.2em;
+    font-size: 1em;
     color: #333;
 }
 
@@ -271,6 +324,9 @@ header>button:last-child {
     display: inline-block;
     margin-right: 10px;
 }
+.status-dot.available {background-color: green;}
+.status-dot.occupied {background-color: red;}
+.status-dot.maintenance {background-color: orange;}
 
 .count {
     font-weight: bold;
@@ -331,10 +387,21 @@ section.main-content .cards-box {
     color: white;
 }
 
-.badge.level{background-color: #3b193b;}
-.good-strip .badge.hostel {background-color: rgb(34 197 94);}
-.warning-strip .badge.hostel {background-color: hsl(45 80% 60%);}
-.bad-strip .badge.hostel {background-color: rgb(239 68 68);}
+.badge.level {
+    background-color: #3b193b;
+}
+
+.good-strip .badge.hostel {
+    background-color: rgb(34 197 94);
+}
+
+.warning-strip .badge.hostel {
+    background-color: hsl(45 80% 60%);
+}
+
+.bad-strip .badge.hostel {
+    background-color: rgb(239 68 68);
+}
 
 .student-card .name-box,
 .student-card .card-header,
@@ -439,6 +506,7 @@ section.main-content .cards-box {
     overflow: hidden scroll;
     justify-content: space-between;
 }
+
 .room-selection-card.student-card {
     font-size: 13px;
     gap: 10px;
@@ -496,6 +564,7 @@ section.main-content .cards-box {
     margin-right: 10px;
     border-radius: 10px;
 }
+
 .allocation-btns-box button:hover {
     background: #e0dede;
     cursor: pointer;
@@ -545,24 +614,24 @@ section.main-content .cards-box {
 
 
 
-.student-card button.primary-btn{
+.student-card button.primary-btn {
     background-color: var(--btn-bg);
     color: white;
     border-color: var(--btn-bg);
 }
 
 
-.red-color{
+.red-color {
     background-color: hsl(0 80% 60%) !important;
     border-color: #F89C9C !important;
 }
 
-.warning-strip{
+.warning-strip {
     border-top-color: hsl(45 80% 60%) !important;
 }
 
-.bad-strip{
-    border-top-color:rgb(239 68 68)!important;
+.bad-strip {
+    border-top-color: rgb(239 68 68) !important;
 }
 
 .good-strip {

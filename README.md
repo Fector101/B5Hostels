@@ -1,1 +1,1 @@
-(https://b5hostel.vercel.app/)[link]
+[link](https://b5hostel.vercel.app/)

@@ -43,6 +43,10 @@ async function doDataBaseThing(func, arg = false) {
         }
     }
 }
+
+function randomImg(){
+    return 'img'+Math.floor(Math.random() * 21) + '.jpg'
+}
 router.post("/add-room", async (req, res) => {
 
     const { room_number, block, floor, status, capacity, amenities } = req.body;
@@ -63,6 +67,7 @@ router.post("/add-room", async (req, res) => {
         status,
         capacity,
         amenities,
+        img:randomImg(),
     });
 
     const result = await doDataBaseThing(() => room.save());

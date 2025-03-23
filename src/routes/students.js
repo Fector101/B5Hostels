@@ -63,6 +63,7 @@ router.get("/room/:room_number", async (req, res) => {
             img_path: roomData.img,
             page_title: "dashboard",
             room_number: roomData.room_number,
+            amenities: roomData.amenities,
             occupants: roomData.occupants,
         }); //, description: roomData.description });
     } else {

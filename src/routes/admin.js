@@ -24,18 +24,18 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function doDataBaseThing(func, arg) {
+async function doDataBaseThing(func, arg=false) {
     let room;
     try {
-        room = await func(arg)
-        return room
+room = arg ? await func(arg) : await func();
+        return true
     } catch (err) {
 
         console.log('First attempt failed, retrying in 1 second...');
         await delay(1000); // Wait 1 second before retrying
 
         try {
-            room = await func(arg)
+room = arg ? await func(arg) : await func();
             return room
         } catch (err) {
             console.log('second try failed')
@@ -51,17 +51,23 @@ router.post("/add-room", async (req, res) => {
 
     if (room == 'db_error') { return res.status(400).json({ msg: "Network Error, Try Refreshing Page" });}
     else if (room) { return res.status(400).json({ exists: true, msg: "Room Already Register" }); }
-    
-    user = new Room({
-                name,
-                matric_no,
-                email,
-                password: hashedPassword,
-                gender,
-                level,
-            });
-            await user.save();
-    return res.status(200).json({ exists: true, msg: "Room Successfully Register" });
+
+
+const room = new Room({
+    room_number,
+    block,
+    floor,
+    status,
+    capacity,
+    amenities,
+});
+
+const result = await doDataBaseThing(room.save);
+
+    if (result == 'db_error') { return res.status(400).json({ msg: "Network Error, Try Refreshing Page" });}
+    else if (result) { 
+    return res.status(200).json({ msg: "Room Successfully Register" }); }
+
 })
 
 module.exports = router;

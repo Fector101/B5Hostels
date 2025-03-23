@@ -111,10 +111,12 @@ header>button:last-child {
     background: #eee;
     cursor: pointer;
     border-radius: 5px;
+color: grey;
 }
 
 .tabs button.active {
     background: white;
+color: black;
 }
 
 .filters {

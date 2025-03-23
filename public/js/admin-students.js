@@ -83,12 +83,12 @@ function showTab(tab) {
   document.querySelectorAll('.student-card').forEach(card => {
     if (!card.classList.contains(tab)) {
       card.classList.add('display-none')
-    }else{
-      
+    } else {
+
       card.classList.remove('display-none')
     }
   })
-  
+
 }
 
 document.querySelector('.tabs').addEventListener('click', function (event) {
@@ -103,7 +103,7 @@ document.querySelector('.tabs').addEventListener('click', function (event) {
   }
   else if (tabBtn.innerText == 'Paid') {
     showTab('paid')
-  }else{
+  } else {
     showTab('student-card')
   }
 })

@@ -8,7 +8,7 @@ function showModal() {
     backDropEle.classList.remove("display-none");
 }
 document.querySelector("button.add-room-btn").addEventListener("click", showModal);
-document.querySelector("button.add-room-btn").addEventListener("click", showModal);
+document.querySelector(".add-container .close-btn").addEventListener("click", removeModal);
 
 // document.addEventListener("click", function (event) {
 

@@ -46,6 +46,7 @@ room = arg ? await func(arg) : await func();
 router.post("/add-room", async (req, res) => {
 
     const { room_number, block, floor, status, capacity, amenities } = req.body;
+const floorNumber = Number(floor);
     console.log({ room_number, block, floor, status, capacity, amenities })
     let room = await doDataBaseThing(Room.findOne, { room_number })
 
@@ -56,7 +57,7 @@ router.post("/add-room", async (req, res) => {
  room = new Room({
     room_number,
     block,
-    floor,
+    floor:floorNumber,
     status,
     capacity,
     amenities,

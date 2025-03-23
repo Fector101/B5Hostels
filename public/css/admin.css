@@ -415,6 +415,48 @@ section.main-content .cards-box {
     background-color: #FFFFFFC2;
     border-color: #C7C4C4;
 }
+/* still admin-students page but modal*/
+
+.allocation-modal{
+  padding:20px 0;
+}
+.allocation-box{
+  margin: auto;
+  width: 320px;
+  max-width: 99%;
+  height: 500px;
+  max-height: 99%;
+  background: white;
+  border-radius: 5px;padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.allocation-box h1{
+  font-size: 25px;
+  align-self: center;
+}
+
+.allocation-box .header-caption{
+  margin-block: 5px 15px;
+  align-self: center;
+}
+.allocation-box .close-btn{
+  --size:25px;
+  height: var(--size);
+  width: var(--size);
+  margin-left:auto;
+}
+
+.allocation-box .rooms-box{
+ /* background:red;*/
+  flex:1;
+  padding: 10px;
+  overflow-y: scroll;
+}
+.room-selection-card .amenities-box{
+  margin-bottom: 0;
+}
 
 
 /* admin-rooms */

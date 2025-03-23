@@ -1,15 +1,16 @@
 
 function showTab(tab) {
-    // tab = 'pending' or 'verified' or 'paid' or ('student-card' <--- for all)
-    document.querySelectorAll('.student-card').forEach(card => {
+    // tab = 'maintenance' or 'free' or 'full' or ('room-card' <--- for all)
+    
+    document.querySelectorAll('.room-card').forEach(card => {
         if (!card.classList.contains(tab)) {
             card.classList.add('display-none')
         } else {
-
             card.classList.remove('display-none')
         }
     })
-
+    const currentHostel = document.querySelector('.select-hostel').value
+    displayHostel(currentHostel)
 }
 
 document.querySelector('.tabs').addEventListener('click', function (event) {
@@ -17,16 +18,22 @@ document.querySelector('.tabs').addEventListener('click', function (event) {
     this.querySelector('.active').classList.remove('active')
     tabBtn.classList.add('active')
     if (!tabBtn) return
-    if (tabBtn.innerText == 'Occupied') {
-        showTab('full')
-    } else if (tabBtn.innerText == 'Available') {
-        showTab('free')
-    } else if (tabBtn.innerText == 'Maintenance') {
-        showTab('maintenance')
-    }
-    else if (tabBtn.innerText == 'Paid') {
-        showTab('paid')
-    } else {
-        showTab('room-card')
-    }
+    showTab(tabBtn.value)
+    
+})
+
+function displayHostel(hostel){
+    const currentTab = document.querySelector('.tabs button.active').value
+    document.querySelectorAll(`.cards-box > div.${currentTab}`).forEach(card => {
+        if (card.classList.contains(hostel)) {
+            card.classList.remove('display-none')
+        } else {
+            card.classList.add('display-none')
+        }
+    })
+}
+
+document.querySelector('.select-hostel').addEventListener('change', function () {
+    const selectedHostel = this.value
+    displayHostel(selectedHostel)
 })

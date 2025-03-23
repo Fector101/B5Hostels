@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="/css/admin.css" />
         <link rel="stylesheet" href="/css/admin-responsive.css" />
         <script defer src="/js/admin-header.js"></script>
- <script defer src="/js/admin-students.js"></script>
+        <script defer src="/js/admin-students.js"></script>
     </head>
     <body>
         <div id="notification" class="notification"></div>
@@ -22,15 +22,10 @@
                 <p>Available Rooms (6)</p>
                 <div class="rooms-box"></div>
 
-<div class="allocation-btns-box">
-                  <button class="ok">
-                    Assign Room
-                  </button>
-                  <button>
-                    Cancel
-                  </button>
+                <div class="allocation-btns-box">
+                    <button class="ok">Assign Room</button>
+                    <button>Cancel</button>
                 </div>
-
             </div>
         </div>
         <%- include("admin-header") -%>
@@ -42,137 +37,181 @@
 
         <section class="main-content">
             <div class="tabs">
-                <button class="active">All Students</button>
-                <button>Pending</button>
-                <button>Verified</button>
-                <button>Paid</button>
+                <button value="student-card" class="active">All Students</button>
+                <button value="pending">Pending</button>
+                <button value="verified">Verified</button>
+                <button value="paid">Paid</button>
             </div>
 
             <div class="filters">
                 <input type="text" placeholder="Search students..." />
                 <select>
-                    <option>All Levels</option>
+                    <option value="all">All Levels</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="300">300</option>
+                    <option value="400">400</option>
+                    <option value="500">500</option>
                 </select>
             </div>
             <div class="cards-box">
+                <div data-level="200" class="student-card good-strip verified">
+                    <div class="card-header">
+                        <div class="student-id-box">
+                            <p class="dim-text">Student ID</p>
+                            <p>UG2023001</p>
+                        </div>
+                        <span class="badge undergraduate">100 LVL</span>
+                    </div>
+                    <div class="name-box">
+                        <div class="avatar">ES</div>
+                        <div>
+                            <h3>Evelyn Samuel</h3>
+                            <p class="email">nevan@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="info">
+                        <div class="row">
+                            <p class="dim-text">Status:</p>
+                            <p>Verified</p>
+                        </div>
+                        <div class="row">
+                            <p class="dim-text">Room:</p>
+                            <p>R001</p>
+                        </div>
 
-            <div class="student-card good-strip verified">
-                <div class="card-header">
-                    <div class="student-id-box">
-                        <p class="dim-text">Student ID</p>
-                        <p>UG2023001</p>
+                        <div class="row">
+                            <p class="dim-text">Preference:</p>
+                            <p>None</p>
+                        </div>
                     </div>
-                    <span class="badge undergraduate">100 LVL</span>
-                </div>
-                <div class="name-box">
-                    <div class="avatar">ES</div>
-                    <div>
-                        <h3>Evelyn Samuel</h3>
-                        <p class="email">nevan@gmail.com</p>
-                    </div>
-                </div>
-                <div class="info">
-                    <div class="row">
-                        <p class="dim-text">Status:</p>
-                        <p>Verified</p>
-                    </div>
-                    <div class="row">
-                        <p class="dim-text">Room:</p>
-                        <p>R001</p>
-                    </div>
-
-                    <div class="row">
-                        <p class="dim-text">Preference:</p>
-                        <p>None</p>
-                    </div>
-                </div>
-                <div class="btns-box">
-                    <!--<button class="assign-btn">Assign Room</button>
+                    <div class="btns-box">
+                        <!--<button class="assign-btn">Assign Room</button>
                   <button class="random-room-btn">Random Room</button>
                   -->
-                    <!--
+                        <!--
                   <button class="assign-btn">Verify</button>
                   <button class="reject-room-btn">Reject</button>
                   -->
-                    <button disabled class="assigned-room-btn">
-                        Room Assigned
-                    </button>
-                </div>
-            </div>
-            <div class="student-card warning-strip pending">
-                <div class="card-header">
-                    <div class="student-id-box">
-                        <p class="dim-text">Student ID</p>
-                        <p>UG2023001</p>
-                    </div>
-                    <span class="badge undergraduate">100 LVL</span>
-                </div>
-                <div class="name-box">
-                    <div class="avatar">ES</div>
-                    <div>
-                        <h3>Evelyn Samuel</h3>
-                        <p class="email">nevan@gmail.com</p>
+                        <button disabled class="assigned-room-btn">
+                            Room Assigned
+                        </button>
                     </div>
                 </div>
-                <div class="info">
-                    <div class="row">
-                        <p class="dim-text">Status:</p>
-                        <p>Pending</p>
+                <div
+                    data-level="100"
+                    class="student-card warning-strip pending"
+                >
+                    <div class="card-header">
+                        <div class="student-id-box">
+                            <p class="dim-text">Student ID</p>
+                            <p>UG2023001</p>
+                        </div>
+                        <span class="badge undergraduate">100 LVL</span>
                     </div>
-                    <div class="row">
-                        <p class="dim-text">Room:</p>
-                        <p>Not assigned</p>
+                    <div class="name-box">
+                        <div class="avatar">ES</div>
+                        <div>
+                            <h3>Evelyn Samuel</h3>
+                            <p class="email">nevan@gmail.com</p>
+                        </div>
                     </div>
+                    <div class="info">
+                        <div class="row">
+                            <p class="dim-text">Status:</p>
+                            <p>Pending</p>
+                        </div>
+                        <div class="row">
+                            <p class="dim-text">Room:</p>
+                            <p>Not assigned</p>
+                        </div>
 
-                    <div class="row">
-                        <p class="dim-text">Preference:</p>
-                        <p>None</p>
+                        <div class="row">
+                            <p class="dim-text">Preference:</p>
+                            <p>None</p>
+                        </div>
                     </div>
-                </div>
-                <div class="btns-box">
-                    <!--<button class="assign-btn">Assign Room</button>
+                    <div class="btns-box">
+                        <!--<button class="assign-btn">Assign Room</button>
                   <button class="random-room-btn">Random Room</button>
                   -->
-                    <button class="assign-btn">Verify</button>
-                    <button class="red-color reject-room-btn">Reject</button>
-                </div>
-            </div>
-            <div class="student-card warning-strip paid">
-                <div class="card-header">
-                    <div class="student-id-box">
-                        <p class="dim-text">Student ID</p>
-                        <p>UG2023001</p>
-                    </div>
-                    <span class="badge undergraduate">100 LVL</span>
-                </div>
-                <div class="name-box">
-                    <div class="avatar">ES</div>
-                    <div>
-                        <h3>Evelyn Samuel</h3>
-                        <p class="email">nevan@gmail.com</p>
+                        <button class="assign-btn">Verify</button>
+                        <button class="red-color reject-room-btn">
+                            Reject
+                        </button>
                     </div>
                 </div>
-                <div class="info">
-                    <div class="row">
-                        <p class="dim-text">Status:</p>
-                        <p>Pending</p>
+                <div data-level="200" class="student-card warning-strip paid">
+                    <div class="card-header">
+                        <div class="student-id-box">
+                            <p class="dim-text">Student ID</p>
+                            <p>UG2023001</p>
+                        </div>
+                        <span class="badge undergraduate">100 LVL</span>
                     </div>
-                    <div class="row">
-                        <p class="dim-text">Room:</p>
-                        <p>Not assigned</p>
+                    <div class="name-box">
+                        <div class="avatar">ES</div>
+                        <div>
+                            <h3>Evelyn Samuel</h3>
+                            <p class="email">nevan@gmail.com</p>
+                        </div>
                     </div>
+                    <div class="info">
+                        <div class="row">
+                            <p class="dim-text">Status:</p>
+                            <p>Pending</p>
+                        </div>
+                        <div class="row">
+                            <p class="dim-text">Room:</p>
+                            <p>Not assigned</p>
+                        </div>
 
-                    <div class="row">
-                        <p class="dim-text">Preference:</p>
-                        <p>None</p>
+                        <div class="row">
+                            <p class="dim-text">Preference:</p>
+                            <p>None</p>
+                        </div>
+                    </div>
+                    <div class="btns-box">
+                        <button class="assign-btn">Assign Room</button>
+                        <button class="random-room-btn">Random Room</button>
                     </div>
                 </div>
-                <div class="btns-box">
-                    <button class="assign-btn">Assign Room</button>
-                    <button class="random-room-btn">Random Room</button>
+                <div data-level="300" class="student-card warning-strip paid">
+                    <div class="card-header">
+                        <div class="student-id-box">
+                            <p class="dim-text">Student ID</p>
+                            <p>UG2023001</p>
+                        </div>
+                        <span class="badge undergraduate">100 LVL</span>
+                    </div>
+                    <div class="name-box">
+                        <div class="avatar">ES</div>
+                        <div>
+                            <h3>Evelyn Samuel</h3>
+                            <p class="email">nevan@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="info">
+                        <div class="row">
+                            <p class="dim-text">Status:</p>
+                            <p>Pending</p>
+                        </div>
+                        <div class="row">
+                            <p class="dim-text">Room:</p>
+                            <p>Not assigned</p>
+                        </div>
+
+                        <div class="row">
+                            <p class="dim-text">Preference:</p>
+                            <p>None</p>
+                        </div>
+                    </div>
+                    <div class="btns-box">
+                        <button class="assign-btn">Assign Room</button>
+                        <button class="random-room-btn">Random Room</button>
+                    </div>
                 </div>
             </div>
-        </div>
         </section>
     </body>
 </html>

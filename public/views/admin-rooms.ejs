@@ -19,21 +19,22 @@
         </div>
         <section class="main-content">
             <div class="tabs">
-                <button class="active">All Rooms</button>
-                <button>Available</button>
-                <button>Occupied</button>
-
-                <button>Maintenance</button>
+                <button value="room-card" class="active">All Rooms</button>
+                <button value="free">Available</button>
+                <button value="full">Occupied</button>
+                <button value="maintenance">Maintenance</button>
             </div>
 
             <div class="filters">
                 <input type="text" placeholder="Search rooms..." />
-                <select>
-                    <option>All Blocks</option>
+                <select class="select-hostel">
+                    <option value="room-card">All Blocks</option>
+                    <option value="new-hostel">New Hostel</option>
+                    <option value="old-hostel">Old Hostel</option>
                 </select>
             </div>
             <div class="cards-box">
-                <div class="student-card room-card good-strip free">
+                <div class="student-card room-card good-strip free new-hostel">
                     <div class="card-header">
                         <div class="student-id-box">
                             <p class="dim-text">Room</p>
@@ -69,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="student-card room-card warning-strip maintenance">
+                <div class="student-card room-card warning-strip maintenance old-hostel">
                     <div class="card-header">
                         <div class="student-id-box">
                             <p class="dim-text">Room</p>
@@ -103,7 +104,39 @@
                         </div>
                     </div>
                 </div>
-                <div class="student-card room-card bad-strip full">
+                <div class="student-card room-card bad-strip full new-hostel">
+                    <div class="card-header">
+                        <div class="student-id-box">
+                            <p class="dim-text">Room</p>
+                            <p>A-101</p>
+                        </div>
+                        <span class="badge undergraduate">Occupied</span>
+                    </div>
+                    <div class="info">
+                        <div class="row">
+                            <p class="dim-text">Blocs:</p>
+                            <p>New Hostel</p>
+                        </div>
+                        <div class="row">
+                            <p class="dim-text">Capacity:</p>
+                            <p>4/4</p>
+                        </div>
+
+                        <div class="row">
+                            <p class="dim-text">Floor:</p>
+                            <p>2</p>
+                        </div>
+                    </div>
+                    <div class="amenities-box">
+                        <p class="dim-text">Amenities:</p>
+                        <div class="con">
+                            <div class="sub-container"><p>Wifi</p></div>
+
+                            <div class="sub-container"><p>Study Area</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="student-card room-card bad-strip full old-hostel">
                     <div class="card-header">
                         <div class="student-id-box">
                             <p class="dim-text">Room</p>

@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="/css/admin.css" />
         <link rel="stylesheet" href="/css/admin-responsive.css" />
         <script defer src="/js/admin-header.js"></script>
+        <script defer src="/js/admin-rooms.js"></script>
     </head>
     <body>
         <%- include("admin-header") -%>
@@ -32,7 +33,7 @@
                 </select>
             </div>
             <div class="cards-box">
-                <div class="student-card good-strip">
+                <div class="student-card room-card good-strip free">
                     <div class="card-header">
                         <div class="student-id-box">
                             <p class="dim-text">Room</p>
@@ -68,7 +69,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="student-card good-strip">
+                <div class="student-card room-card warning-strip maintenance">
                     <div class="card-header">
                         <div class="student-id-box">
                             <p class="dim-text">Room</p>
@@ -102,7 +103,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="student-card bad-strip">
+                <div class="student-card room-card bad-strip full">
                     <div class="card-header">
                         <div class="student-id-box">
                             <p class="dim-text">Room</p>

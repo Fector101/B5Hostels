@@ -192,10 +192,12 @@ section ol {
     .room{
         flex-direction: column;
         flex-wrap: nowrap;
-        height: 250px;
+        height: 350px;
     }
     .room img{
         width: 100%;
+
+        height: 220px;
     }
     .room .info p{
         margin-bottom: 5px;

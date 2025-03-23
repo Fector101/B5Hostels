@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="/css/header.css" />
         <link rel="stylesheet" href="/css/room.css" />
         <script defer src="/js/room.js"></script>
-        <title><%= title %></title>
+        <title>Room <%= room_number %></title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,7 +18,9 @@
     </head>
     <body>
     <%- include("header") -%>
-
+        <section>
+            <h1>Room <%= room_number %></h1>
+        </section>
         <section class="first-section">
             <div class="room-picture" style="background-image: url('/imgs/<%= img_path %>');"></div>
 

@@ -5,24 +5,44 @@
 }
 
 body {
-  background-color: #eef6fca4;
+  background-color: #e3bbff66;
+  background: linear-gradient(to right, #e5c6e7, #e4b9e7);
+  background: linear-gradient(to right, #fce8fe, #f8c8fb);
+  /* background-color: #eef6fca4; */
   font-family: "Lora", serif;
   letter-spacing: 0.6px;
---btn-bg: #6a0dad;
+  --btn-bg: #6a0dad;
 }
-div.display-none{
+
+.primary-btn {
+  background-color: var(--btn-bg);
+  color: white;
+  border-color: var(--btn-bg);
+  border-style: solid;
+  border-radius: 10px;
+}
+
+.primary-btn:hover {
+  background-color: rgb(126, 60, 155);
+}
+
+div.display-none {
   display: none;
 }
+
 .flex {
   display: flex;
 }
+
 .flex-wrap {
   display: flex;
   flex-wrap: wrap;
 }
-.width100{
+
+.width100 {
   width: 100%;
 }
+
 .notification {
   position: fixed;
   top: 20px;
@@ -36,51 +56,67 @@ div.display-none{
   z-index: 3;
 }
 
-.notification.success { background-color: green; }
-.notification.error { background-color: red; }
+.notification.success {
+  background-color: green;
+}
+
+.notification.error {
+  background-color: red;
+}
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.cover{
-    position: fixed;
-    height: 100vh;
-    width: 100vw;
-    background-color: #808080b2;
+.cover {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background-color: #808080b2;
 }
-.display-none{
-    display: none;
+
+.display-none {
+  display: none;
 }
+
 .spinner {
-    position: relative;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid var(--btn-bg);
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 2s linear infinite;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid var(--btn-bg);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 2s linear infinite;
 }
 
 @keyframes spin {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

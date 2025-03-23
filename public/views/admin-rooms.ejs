@@ -31,18 +31,23 @@
                         <div class="form-group">
                             <label for="room-number">Room Number</label>
                             <input
-                                type="text"
+                                type="number"
+                                min="1"
                                 name="room_number"
                                 placeholder="e.g., 101"
                             />
                         </div>
                         <div class="form-group">
                             <label for="block">Block</label>
-                            <input
+                            <!-- <input
                                 type="text"
                                 name="block"
                                 placeholder="e.g., Old Hostel"
-                            />
+                            /> -->
+                            <select name="block">
+                                <option>Old Hostel</option>
+                                <option>New Hostel</option>
+                            </select>
                         </div>
                     </div>
 

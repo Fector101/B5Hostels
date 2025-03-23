@@ -24,18 +24,18 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function doDataBaseThing(func, arg=false) {
+async function doDataBaseThing(func, arg = false) {
     let room;
     try {
-room = arg ? await func(arg) : await func();
+        room = arg ? await func(arg) : await func();
         return room
     } catch (err) {
 
-        console.log(err,'First attempt failed, retrying in 1 second...');
+        console.log(err, 'First attempt failed, retrying in 1 second...');
         await delay(1000); // Wait 1 second before retrying
 
         try {
-room = arg ? await func(arg) : await func();
+            room = arg ? await func(arg) : await func();
             return room
         } catch (err) {
             console.log('second try failed')
@@ -46,30 +46,32 @@ room = arg ? await func(arg) : await func();
 router.post("/add-room", async (req, res) => {
 
     const { room_number, block, floor, status, capacity, amenities } = req.body;
-const floorNumber = Number(floor);
+    const floorNumber = Number(floor);
     console.log({ room_number, block, floor, status, capacity, amenities })
     let room = await doDataBaseThing(() => Room.findOne({ room_number }));
 
-    if (room == 'db_error') { return res.status(400).json({ msg: "Network Error, Try Refreshing Page" });}
+    if (room == 'db_error') { return res.status(400).json({ msg: "Network Error, Try Refreshing Page" }); }
     else if (room) {
- return res.status(400).json({ exists: true, msg: "Room Already Register" }); }
+        return res.status(400).json({ exists: true, msg: "Room Already Added" });
+    }
 
 
- room = new Room({
-    room_number,
-    block,
-    floor:floorNumber,
-    status,
-    capacity,
-    amenities,
-});
+    room = new Room({
+        room_number,
+        block,
+        floor: floorNumber,
+        status,
+        capacity,
+        amenities,
+    });
 
-const result = await doDataBaseThing(() => room.save());
+    const result = await doDataBaseThing(() => room.save());
 
-    if (result == 'db_error') { return res.status(400).json({ msg: "Network Error, Try Refreshing Page" });}
-    else { 
-console.log("added room")
-    return res.status(200).json({ msg: "Room Successfully Register" }); }
+    if (result == 'db_error') { return res.status(400).json({ msg: "Network Error, Try Refreshing Page" }); }
+    else {
+        console.log("added room")
+        return res.status(200).json({ msg: "Room Successfully Added" });
+    }
 
 })
 

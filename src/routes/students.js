@@ -53,22 +53,24 @@ router.get("/dashboard", verifyToken, (req, res) => {
     res.render("dashboard", data);
 });
 
-router.get("/room/:title", async (req, res) => {
-    const title = req.params.title;
-    console.log(title, " title");
-    const roomData = await Room.findOne({ title });
+router.get("/room/:room_number", async (req, res) => {
+    const room_number = req.params.room_number;
+    console.log(room_number, " room_number");
+    const roomData = await Room.findOne({ room_number });
     // getRoomWithStudents(roomData._id)
     if (roomData) {
         res.render("room", {
             img_path: roomData.img,
             page_title: "dashboard",
-            title: roomData.title,
+            room_number: roomData.room_number,
             occupants: roomData.occupants,
         }); //, description: roomData.description });
     } else {
         res.status(404).render("room", {
-            title: "Room Not Found",
-            description: "This room does not exist.",
+            room_number: "Room Not Found",
+            page_title: "dashboard",
+            img_path:'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png',
+            // description: "This room does not exist.",
         });
     }
 });

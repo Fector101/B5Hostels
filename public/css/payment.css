@@ -30,6 +30,9 @@
     font-weight: 600;
     color: #f4f4f4;
 }
+#payment-page .confirm-payement-modal .content-box.display-none{
+    display: none;
+}
 #payment-page .confirm-payement-modal .content-box{
     box-shadow: -1px 1px 10px 1px rgb(214, 213, 213);
     display: flex;
@@ -39,7 +42,12 @@
     padding: 1rem;
     gap: 10px;
     border-radius: 20px;
+    z-index: 1;
+    /* animation: my_anim 1.2s ease-in-out infinite; */
 }
+
+
+
 #payment-page .confirm-payement-modal svg{
     --size:130px;
     background: #93df9b19;
@@ -90,7 +98,7 @@
 }
 
 #payment-page button:hover {
-    background-color: rgb(230, 40, 135);
+    /* background-color: rgb(230, 40, 135); */
 
 }
 #payment-page #cvv{

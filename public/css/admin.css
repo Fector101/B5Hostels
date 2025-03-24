@@ -395,6 +395,9 @@ section.main-content .cards-box {
     justify-content: center;
 }
 
+.student-card.pending{
+    border-color: hsl(45 80% 60%);
+}
 .student-card {
     width: 400px;
     max-width: 99%;

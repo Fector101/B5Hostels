@@ -106,11 +106,17 @@
                   <button class="assign-btn">Verify</button>
                   <button class="reject-room-btn">Reject</button>
                   -->
-                        <button disabled class="assigned-room-btn">
-                            Room Assigned
-                        </button>
+                <% if (state==' pending') { %>
+                    <button class="primary-btn">Verify</button>
+                    <button class="red-color reject-room-btn"> Reject </button>
+                <% } else {%>
+                
+                    <button disabled class="assigned-room-btn"> Room Assigned </button>
+                <% } %>
+
                     </div>
                 </div>
+                
                 <% }); %>
 
 

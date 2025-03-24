@@ -52,6 +52,12 @@ router.get("/dashboard", verifyToken, async (req, res) => {
     let total = user.payments.reduce((sum, payment) => sum + payment.amount, 0)
     
     total = total > 0?'₦ '+ total:0
+    let room_mates = []
+    if (user.room){
+        let room = await doDataBaseThing(() => Room.findOne({ room_number:user.room }));
+        // console.log(room)
+        room_mates = room.occupants.map(each => each.name || each.matric_no)
+    }
     const data = {
         page_title: "dashboard",
         name: user.name,
@@ -62,8 +68,10 @@ router.get("/dashboard", verifyToken, async (req, res) => {
         preference: user.preference || "Nil",
         date_booked: userInfo.days_left || 0,
         days_passed: daysPassed(user.payments[0]?.date),
-        total_paid: total || "Nil"
+        total_paid: total || "Nil",
+        room_mates
     };
+    
     // console.log(data)
     res.render("dashboard", data);
 });

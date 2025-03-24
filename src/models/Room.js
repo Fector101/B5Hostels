@@ -12,7 +12,7 @@ const RoomSchema = new mongoose.Schema({
     // Use ObjectId references instead of embedding Student model
     occupants: [
         {
-            matric_no: { type: String, required: true },
+            matric_no: { type: String, required: true }
         }
       ]
 });

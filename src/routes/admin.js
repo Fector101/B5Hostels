@@ -14,7 +14,7 @@ router.get('/dashboard', (req, res) => {
 
 router.get('/students', async (req, res) => {
     const students = await doDataBaseThing(() => Student.find());
-
+    // console.log(students)
     res.render('admin-students', { page_title: 'students',students });
 });
 

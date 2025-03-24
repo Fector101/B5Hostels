@@ -12,7 +12,10 @@
     </head>
     <body>
         <div id="notification" class="notification"></div>
-        <div class="flex cover display-none">
+        <div style="z-index: 3;" class="spinner-cover cover display-none">
+            <div id="spinner" class="spinner"></div>
+        </div>
+        <div class="flex cover display-none choices">
             <div class="allocation-box">
                 <button class="close-btn">X</button>
                 <h1>Room Allocation</h1>
@@ -20,10 +23,59 @@
                     Assign a room to <span class="--name">Evelyn</span> <span class="--matric_no">(FT23CMP0007)</span>
                 </p>
                 <p>Available Rooms (6)</p>
-                <div class="rooms-box"></div>
+                <div class="rooms-box">
+                    <% rooms.forEach((room,i) => { %>
+                        
+                        <div class="student-card room-selection-card free <%=i == 0 ? "active" : "" %>" >
+                    <div class="card-header">
+                        <div class="student-id-box">
+                          <p class="dim-text">Room</p>
+                          <p class="room_number"><%= room.room_number %></p>
+                          </div>
+                        <span class="badge hostel"><%= room.status %></span>
+                    </div>
+                        <div class="info">
+                            <div class="row">
+                              <p class="dim-text">Block:</p>
+                              <p><%= room.block %></p>
+                            </div>
+                            <div class="row">
+                              <p class="dim-text">Capacity:</p>
+                              <p><%= room.occupants.length %>/<%= room.capacity %></p>
+
+                            </div>
+                            
+                            <div class="row">
+                              <p class="dim-text">Floor:</p>
+                              <p><%= room.floor %></p>
+                              </div>
+                        </div>
+                        <div class="amenities-box">
+                          <p class="dim-text">
+                            Amenities:
+                          </p>
+                          <div class="con">
+                          <div class="sub-container"><p>Wifi</p></div>
+        
+        <div class="sub-container"><p>Desk</p></div>
+        
+        <div class="sub-container"><p>Wardrobe</p></div>
+        
+        <div class="sub-container"><p>Study Area</p></div>
+                        </div>
+                       </div>   
+                    
+                        <div class="btns-box">
+                        <button class='select-btn'><%= i == 0 ? "Selected" : "Select Room" %></button>
+                        </div>
+                </div>
+
+
+                    <% }); %>
+                </div>
 
                 <div class="allocation-btns-box">
-                    <button class="ok">Assign Room</button>
+                    <button id="accept-room" class="ok">Assign Room</button>
                     <button>Cancel</button>
                 </div>
             </div>
@@ -68,7 +120,7 @@
                             state = ' paid';
                         }
                     %>
-                <div data-level="200" class="student-card good-strip<%= state %>">
+                <div data-level="<%= student.level %>" class="student-card <%= state %> <%= student.payments &&student.payments.length > 0? ' paid':''%>">
                     <div class="card-header">
                         <div class="student-id-box">
                             <p class="dim-text">Matric N0</p>
@@ -99,9 +151,8 @@
                         </div>
                     </div>
                     <div class="btns-box">
-                        <!--<button class="assign-btn">Assign Room</button>
-                  <button class="random-room-btn">Random Room</button>
-                  -->
+                        
+                
                         <!--
                   <button class="assign-btn">Verify</button>
                   <button class="reject-room-btn">Reject</button>
@@ -109,6 +160,9 @@
                 <% if (state==' pending') { %>
                     <button class="primary-btn">Verify</button>
                     <button class="red-color reject-room-btn"> Reject </button>
+                <% } else if(!student.room && student.payments.length > 0){%>
+                    <button class="assign-btn">Assign Room</button>
+                    <button class="random-room-btn">Random Room</button>
                 <% } else {%>
                 
                     <button disabled class="assigned-room-btn"> Room Assigned </button>
@@ -120,7 +174,7 @@
                 <% }); %>
 
 
-                <div
+                <!-- <div
                     data-level="100"
                     class="student-card warning-strip pending"
                 >
@@ -154,9 +208,9 @@
                         </div>
                     </div>
                     <div class="btns-box">
-                        <!--<button class="assign-btn">Assign Room</button>
+                        button class="assign-btn">Assign Room</button>
                   <button class="random-room-btn">Random Room</button>
-                  -->
+                  
                         <button class="primary-btn">Verify</button>
                         <button class="red-color reject-room-btn">
                             Reject
@@ -232,7 +286,7 @@
                         <button class="assign-btn">Assign Room</button>
                         <button class="random-room-btn">Random Room</button>
                     </div>
-                </div>
+                </div> -->
             </div>
         </section>
     </body>

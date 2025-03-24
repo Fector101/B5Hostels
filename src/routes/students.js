@@ -10,7 +10,7 @@ router.use(cookieParser());
 
 async function getRoomWithStudents(roomId) {
     const room = await Room.findById(roomId).populate("occupants").exec();
-    console.log(room);
+    // console.log(room);
 }
 
 async function assignStudentToRoom(matric_no, roomId) {
@@ -18,7 +18,7 @@ async function assignStudentToRoom(matric_no, roomId) {
     const room = await Room.findById(roomId);
 
     if (!student || !room) {
-        console.log("Student or Room not found");
+        // console.log("Student or Room not found");
         return;
     }
 
@@ -31,7 +31,7 @@ async function assignStudentToRoom(matric_no, roomId) {
     student.room = room._id;
     await student.save();
 
-    console.log(`Assigned ${student.name} to room ${room.title}`);
+    // console.log(`Assigned ${student.name} to room ${room.title}`);
 }
 function getInitials(name) {
     if (!name) return "";
@@ -61,13 +61,13 @@ router.get("/dashboard", verifyToken, async (req, res) => {
         days_passed: daysPassed(user.payments[0].date),
         total_paid: '₦ '+ user.payments.reduce((sum, payment) => sum + payment.amount, 0) || "Nil"
     };
-    console.log(data)
+    // console.log(data)
     res.render("dashboard", data);
 });
 
 router.get("/room/:room_number", async (req, res) => {
     const room_number = req.params.room_number;
-    console.log(room_number, " room_number");
+    // console.log(room_number, " room_number");
     const roomData = await Room.findOne({ room_number });
     // getRoomWithStudents(roomData._id)
     if (roomData) {
@@ -125,8 +125,9 @@ router.post("/make-payment", verifyToken, async (req, res) => {
     //   }
     // adding preference
 
-    console.log('found user ', result)
+    // console.log('found user ', result)
     console.log(matric_no, 'to --> room:', room_no)
+    return res.status(400).json({ msg: "Payment Successful" });
 
 })
 

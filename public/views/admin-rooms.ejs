@@ -15,8 +15,7 @@
         <div id="notification" class="notification"></div>
 
         <div style="z-index: 3;" class="spinner-cover cover display-none">
-        <div id="spinner" class="spinner"></div>
-
+            <div id="spinner" class="spinner"></div>
         </div>
 
         <div class="flex form cover display-none">
@@ -149,7 +148,7 @@
                             <p class="dim-text">Room</p>
                             <p><%= room.room_number %></p>
                         </div>
-                        <span class="badge hostel"><%= room.status == 'free'?'Available': 'Occupied' %></span>
+                        <span class="badge hostel"><%= room.status %></span>
                     </div>
                     <div class="info">
                         <div class="row">

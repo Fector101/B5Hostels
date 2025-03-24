@@ -54,7 +54,7 @@ document.getElementById('add-room-form').addEventListener("submit", async functi
     } catch (error) {
         console.log(error)
         // removeSpinner()
-        showNotification(`Server error. Try again later.`, "error");
+        showNotification(`-Network error. Try Refreshing Page.`, "error");
     }
 })
 

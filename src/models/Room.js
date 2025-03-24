@@ -10,7 +10,11 @@ const RoomSchema = new mongoose.Schema({
     capacity:  { type: Number},
     amenities:  [{ type: String }], // Array of strings
     // Use ObjectId references instead of embedding Student model
-    occupants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Student" }],
+    occupants: [
+        {
+            matric_no: { type: String, required: true },
+        }
+      ]
 });
 
 

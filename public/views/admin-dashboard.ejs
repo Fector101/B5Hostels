@@ -26,7 +26,7 @@
                         <h3>Total Students</h3>
                     </div>
                     <p>Registered in system</p>
-                    <span>6</span>
+                    <span><%= total_students%></span>
                 </div>
             </div>
             <div class="card">
@@ -37,7 +37,7 @@
                         <h3>Pending Verification</h3>
                     </div>
                     <p>Awaiting approval</p>
-                    <span>3</span>
+                    <span><%= awaiting_approval %></span>
                 </div>
             </div>
             <div class="card">
@@ -48,7 +48,7 @@
                         <h3>Verified Students</h3>
                     </div>
                     <p>Approved for accommodation</p>
-                    <span>2</span>
+                    <span><%= total_students_that_have_rooms %></span>
                 </div>
             </div>
             <div class="card">
@@ -59,7 +59,7 @@
                         <h3>Total Rooms</h3>
                     </div>
                     <p>Available in the hostel</p>
-                    <span>8</span>
+                    <span><%= total_rooms %></span>
                 </div>
             </div>
             <div class="card">
@@ -70,27 +70,27 @@
                         <h3>Available Rooms</h3>
                     </div>
                     <p>Ready for allocation</p>
-                    <span>6</span>
+                    <span><%= available_rooms %></span>
                 </div>
             </div>
         </div>
         <div class="main-page-details-box flex-wrap">
-            <div class="card attention-card">
+            <div class="card attention-card" id="open-rooms-page">
                 <h3>Students Needing Attention</h3>
                 <p>Students that require verification or room allocation</p>
                 <div class="card-item">
                     <span class="icon">⏳</span>
                     <div>
                         <strong>Pending Verification</strong>
-                        <p>3 students awaiting verification</p>
+                        <p><% awaiting_approval %> students awaiting verification</p>
                     </div>
                     <button class="view-btn">View All</button>
                 </div>
                 <div class="card-item">
                     <span class="icon">🏠</span>
                     <div>
-                        <strong>Room Allocation Needed</strong>
-                        <p>1 verified student needs rooms</p>
+                        <strong>Verification Students</strong>
+                        <p><% awaiting_approval %> students with assigned rooms</p>
                     </div>
                     <button class="view-btn">View All</button>
                 </div>
@@ -103,19 +103,28 @@
                     <div class="status-item">
                         <span class="status-dot available"></span> Available
                         Rooms
-                        <span class="count">6</span>
+                        <span class="count"><%= available_rooms %></span>
                     </div>
                     <div class="status-item">
                         <span class="status-dot occupied"></span> Fully Occupied
-                        <span class="count">1</span>
+                        <span class="count"><%= full_rooms %></span>
                     </div>
                     <div class="status-item">
                         <span class="status-dot maintenance"></span> Under
-                        Maintenance <span class="count">1</span>
+                        Maintenance <span class="count"><%= under_maintenance %></span>
                     </div>
                 </div>
-                <button class="view-btn">View All Rooms</button>
+                <button class="view-btn" id="view-all-rooms">View All Rooms</button>
             </div>
         </div>
+        <script>
+            document.getElementById('open-rooms-page').addEventListener('click',function(event){
+                const btn= event.target.closest('button')
+                window.location.href = "/admin/students/"
+            })
+            document.getElementById('view-all-rooms').addEventListener('click',function(){
+                window.location.href = "/admin/rooms/"
+            })
+        </script>
     </body>
 </html>

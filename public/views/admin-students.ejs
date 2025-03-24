@@ -55,34 +55,36 @@
                 </select>
             </div>
             <div class="cards-box">
+                <% students.forEach(student => { %>
+
                 <div data-level="200" class="student-card good-strip verified">
                     <div class="card-header">
                         <div class="student-id-box">
                             <p class="dim-text">Matric N0</p>
-                            <p class="matric_no">UG2023001</p>
+                            <p class="matric_no"><%= student.matric_no %></p>
                         </div>
-                        <span class="badge level">200 LVL</span>
+                        <span class="badge level"><%= student.level %> LVL</span>
                     </div>
                     <div class="name-box">
                         <div class="avatar">ES</div>
                         <div>
-                            <h3 class="name">Evelyn Samuel</h3>
-                            <p class="email">nevan@gmail.com</p>
+                            <h3 class="name"><%= student.name %></h3>
+                            <p class="email"><%= student.email %></p>
                         </div>
                     </div>
                     <div class="info">
                         <div class="row">
                             <p class="dim-text">Status:</p>
-                            <p>Verified</p>
+                            <p><%= student.room?'Verified': 'Pending' %></p>
                         </div>
                         <div class="row">
                             <p class="dim-text">Room:</p>
-                            <p>R001</p>
+                            <p><%= student.room || 'Not assigned' %></p>
                         </div>
 
                         <div class="row">
                             <p class="dim-text">Preference:</p>
-                            <p>None</p>
+                            <p><%= student.preference || 'None' %></p>
                         </div>
                     </div>
                     <div class="btns-box">
@@ -98,6 +100,9 @@
                         </button>
                     </div>
                 </div>
+                <% }); %>
+
+
                 <div
                     data-level="100"
                     class="student-card warning-strip pending"

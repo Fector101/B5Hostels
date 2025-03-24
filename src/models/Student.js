@@ -9,9 +9,8 @@ const studentSchema = new mongoose.Schema({
   gender: { type: String, required: true },
   level: { type: String, required: true },
 
-  total_paid: { type: Number, default: 0 },
   room: { type: String, required: false },
-  date_booked: { type: String, required: false },
+  preference: { type: String, required: false },
 
   payments: [
     {

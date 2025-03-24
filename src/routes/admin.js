@@ -12,8 +12,10 @@ router.get('/dashboard', (req, res) => {
     res.render('admin-dashboard', { page_title: 'dashboard' });
 });
 
-router.get('/students', (req, res) => {
-    res.render('admin-students', { page_title: 'students' });
+router.get('/students', async (req, res) => {
+    const students = await doDataBaseThing(() => Student.find());
+
+    res.render('admin-students', { page_title: 'students',students });
 });
 
 router.get('/rooms', async (req, res) => {

@@ -101,6 +101,13 @@ router.get("/home", verifyToken, async (req, res) => {
     }
 });
 
-module.exports = router;
+router.post("/make-payment", verifyToken, (req, res) => {
+    const {room_no} = req.body;
+    const userInfo = req.user;
+    const matric_no= userInfo.matric_no
+    console.log(matric_no,'to --> room:',room_no)
+
+})
 
 module.exports = router;
+

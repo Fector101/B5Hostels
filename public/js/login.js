@@ -1,9 +1,9 @@
 const backDropEle = document.querySelector('.cover')
-function removeSpinner(){
+function removeSpinner() {
     backDropEle.classList.add('display-none')
 }
 
-function addSpinner(){
+function addSpinner() {
     backDropEle.classList.remove('display-none')
 }
 
@@ -31,14 +31,14 @@ document.getElementById("login-form").addEventListener("submit", async function 
             showNotification(result.msg || "Login successful", "success");
 
         } else {
-removeSpinner()
+            removeSpinner()
             showNotification(result.msg || "Login failed", "error");
         }
         console.log(result)
     } catch (error) {
         console.log(error)
-removeSpinner()
-        showNotification(`Server error. Try again later.`, "error");
+        removeSpinner()
+        showNotification(`-Network error. Try again later.`, "error");
     }
 });
 

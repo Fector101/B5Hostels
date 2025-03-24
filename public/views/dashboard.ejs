@@ -81,9 +81,13 @@
                     Conditioning
                 </p>
                 <p><strong>Security:</strong> 24/7 Security, Gated Entry</p>
-                <% } else {%>
+                <% } else if(total_paid !== 'Nil') {%>
                 <p>Waiting For Room Verification</p>
+                <% } else{%>
+                    <p>No Payment Made yet</p>
+                    
                 <% } %>
+
             </div>
             <% if (room !== 'Nil') { %>
 

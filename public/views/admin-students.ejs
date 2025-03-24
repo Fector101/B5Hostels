@@ -108,7 +108,6 @@
             </div>
             <div class="cards-box">
                 <% students.forEach(student => { %>
-                    <% console.log(student.preference && !student.room && student); %>
                     <% 
                         let state = ''; // Default state if none of the conditions match
 
@@ -147,7 +146,7 @@
 
                         <div class="row">
                             <p class="dim-text">Preference:</p>
-                            <p><%= student.preference || 'None' %></p>
+                            <p class="preference"><%= student.preference || 'None' %></p>
                         </div>
                     </div>
                     <div class="btns-box">
@@ -157,16 +156,20 @@
                   <button class="assign-btn">Verify</button>
                   <button class="reject-room-btn">Reject</button>
                   -->
+                  <% console.log(student.payments); %>
+
                 <% if (state==' pending') { %>
-                    <button class="primary-btn">Verify</button>
+                    <button class="primary-btn verify-btn">Verify</button>
                     <button class="red-color reject-room-btn"> Reject </button>
                 <% } else if(!student.room && student.payments.length > 0){%>
                     <button class="assign-btn">Assign Room</button>
                     <button class="random-room-btn">Random Room</button>
-                <% } else {%>
-                
+                <% } else if(student.room){%>
+                    
                     <button disabled class="assigned-room-btn"> Room Assigned </button>
-                <% } %>
+                    <% } else if( student.payments.length === 0){%>
+                        <button disabled class="assigned-room-btn"> No Payment </button>
+                        <% } %>
 
                     </div>
                 </div>

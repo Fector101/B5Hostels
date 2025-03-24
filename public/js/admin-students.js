@@ -125,3 +125,65 @@ document.querySelector('.select-level').addEventListener('change', function () {
     const selectedLevel = this.value
     displayLevel(selectedLevel)
 })
+
+document.querySelector('.cards-box').addEventListener('click', async function (event) {
+    const verfiyBtn = event.target.closest('.verify-btn')
+    const rejectBtn = event.target.closest('.reject-room-btn')
+    if (verfiyBtn) {
+        const student_card = verfiyBtn.closest('.student-card')
+        const matric_no = student_card.querySelector('.matric_no').innerText
+        const room_number = student_card.querySelector('.preference').innerText
+
+        console.log(matric_no, room_number)
+        try {
+
+            const response = await fetch("/admin/add-student-room", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ matric_no, room_number })
+            });
+            const result = await response.json();
+
+            if (response.ok) {
+                removeSpinner()
+                showNotification(result.msg, "success");
+
+            } else {
+                removeSpinner()
+                showNotification(result.msg || "Poor Network, Try Refreshing Page", "error");
+            }
+        } catch (error) {
+            console.log(error)
+            // removeSpinner()
+            showNotification(`-Network error. Try again later.`, "error");
+        }
+    } else if (rejectBtn) {
+        const student_card = verfiyBtn.closest('.student-card')
+        const matric_no = student_card.querySelector('.matric_no').innerText
+        const room_number = student_card.querySelector('.preference').innerText
+
+        console.log(matric_no, room_number)
+        try {
+
+            const response = await fetch("/admin/reject-student-room", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ matric_no })
+            });
+            const result = await response.json();
+
+            if (response.ok) {
+                removeSpinner()
+                showNotification(result.msg, "success");
+
+            } else {
+                removeSpinner()
+                showNotification(result.msg || "Poor Network, Try Refreshing Page", "error");
+            }
+        } catch (error) {
+            console.log(error)
+            // removeSpinner()
+            showNotification(`-Network error. Try again later.`, "error");
+        }
+    }
+})

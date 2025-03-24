@@ -12,6 +12,8 @@
 }
 #payment-page{
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
 }
 #payment-page .confirm-payement-modal.display-none{

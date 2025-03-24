@@ -4,7 +4,6 @@ function showNotification(message, type) {
     notification.textContent = message;
     notification.className = `notification ${type}`;
     notification.style.display = "block";
-
     setTimeout(() => { notification.style.display = "none"; }, 3000);
 }
 
@@ -12,16 +11,16 @@ const make_payment_btn = document.querySelector('button#pay')
 make_payment_btn.addEventListener('click', function () {
     document.querySelector('#room-page').classList.add('display-none')
     document.querySelector('#payment-page').classList.remove('display-none')
-    // window.location.href = '/payment-portal'
 
 })
-
+document.querySelector('#close-payment').addEventListener('click', function () {
+    document.querySelector('#payment-page').classList.add('display-none')
+    document.querySelector('#room-page').classList.remove('display-none')
+})
 document.getElementById("payment-form")
     .addEventListener("submit", async function (event) {
         event.preventDefault();
         // document.querySelector('.confirm-payement-modal').classList.remove('display-none')
-
-
         try {
             const response = await fetch("/make-payment", {
                 method: "POST",
@@ -33,7 +32,7 @@ document.getElementById("payment-form")
             if (response.ok) {
                 showNotification(result.msg || "Payment successful", "success");
                 setTimeout(() => { window.location.href = '/dashboard' }, 1000)
-            }else {
+            } else {
                 // removeSpinner()
                 showNotification(result.msg || "Payment failed", "error");
             }

@@ -10,7 +10,7 @@ router.use(cookieParser());
 router.post("/signup", async (req, res) => {
     try {
         const { name, email, matric_no, password, gender, level } = req.body;
-        console.log(name, email, matric_no, password, gender, level);
+        // console.log(name, email, matric_no, password, gender, level);
 
         let user = await Student.findOne({ matric_no });
 

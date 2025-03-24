@@ -44,6 +44,7 @@ async function doDataBaseThing(func, arg = false) {
 }
 
 function daysPassed(date) {
+    if(!date) return 0
     const now = new Date();
     const diff = now - date;
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));

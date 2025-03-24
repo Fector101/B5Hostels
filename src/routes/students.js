@@ -48,7 +48,10 @@ router.get("/dashboard", verifyToken, async (req, res) => {
     // console.log(req)
     // console.log(userInfo)
     const user = await doDataBaseThing(() => Student.findOne({ matric_no: userInfo.matric_no }))
-    // console.log('ww ',daysPassed(user.payments[0].date))
+    // console.log('ww ',daysPassed(user.payments[0]?.date))
+    let total = user.payments.reduce((sum, payment) => sum + payment.amount, 0)
+    
+    total = total > 0?'₦ '+ total:0
     const data = {
         page_title: "dashboard",
         name: user.name,
@@ -58,8 +61,8 @@ router.get("/dashboard", verifyToken, async (req, res) => {
         room: user.room || "Nil",
         preference: user.preference || "Nil",
         date_booked: userInfo.days_left || 0,
-        days_passed: daysPassed(user.payments[0].date),
-        total_paid: '₦ '+ user.payments.reduce((sum, payment) => sum + payment.amount, 0) || "Nil"
+        days_passed: daysPassed(user.payments[0]?.date),
+        total_paid: total || "Nil"
     };
     // console.log(data)
     res.render("dashboard", data);

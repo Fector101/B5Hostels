@@ -33,16 +33,16 @@ router.get("/dashboard", async (req, res) => {
     const under_maintenance = all_rooms.filter(
         (room) => room.status == "maintenance"
     ).length;
-    console.log({
-        page_title: "dashboard",
-        under_maintenance,
-        full_rooms,
-        available_rooms,
-        total_rooms,
-        total_students_that_have_rooms,
-        total_students,
-        awaiting_approval,
-    })
+    // console.log({
+    //     page_title: "dashboard",
+    //     under_maintenance,
+    //     full_rooms,
+    //     available_rooms,
+    //     total_rooms,
+    //     total_students_that_have_rooms,
+    //     total_students,
+    //     awaiting_approval,
+    // })
     res.render("admin-dashboard", {
         page_title: "dashboard",
         under_maintenance,
@@ -56,8 +56,7 @@ router.get("/dashboard", async (req, res) => {
 });
 
 router.get("/students", async (req, res) => {
-    all_students =
-        all_students || (await doDataBaseThing(() => Student.find()));
+    all_students = all_students || (await doDataBaseThing(() => Student.find()));
     all_rooms = all_rooms || (await doDataBaseThing(() => Room.find()));
     // const rooms = await doDataBaseThing(() => Room.find());
     // console.log(students)
@@ -135,5 +134,64 @@ router.post("/add-room", async (req, res) => {
         return res.status(200).json({ msg: "Room Successfully Added" });
     }
 });
+router.post("/add-student-room", async (req, res) => {
+    const { matric_no, room_number } = req.body;
+    const user = await doDataBaseThing(() => Student.findOne({ matric_no }));
 
+    if (user == "db_error") {
+        return res
+            .status(400)
+            .json({ msg: "-Network Error, Try Refreshing Page" });
+    } else if (!user) {
+        return res
+            .status(400)
+            .json({ exists: true, msg: "Student doesn't Exist" });
+    }
+    let room = await doDataBaseThing(() => Room.findOne({ room_number }));
+    // console.log(room)
+    if(room.occupants.find(each => each.matric_no === matric_no) ){
+        res
+            .status(400)
+            .json({ exists: true, msg: "Student Already in Room" });
+    }
+
+    await doDataBaseThing(() => {
+        room.occupants.push({ matric_no });
+        room.save();
+    });
+    await doDataBaseThing(() => {
+        user.room = room_number;
+        user.save();
+    });
+    return res.status(200).json({ msg: "Student Successfully Added to Room" });
+
+})
+
+router.post("/reject-student-room", async (req, res) => {
+    const { matric_no } = req.body;
+    const user = await doDataBaseThing(() => Student.findOne({ matric_no }));
+
+    if (user == "db_error") {
+        return res
+            .status(400)
+            .json({ msg: "-Network Error, Try Refreshing Page" });
+    } else if (!user) {
+        return res
+            .status(400)
+            .json({ exists: true, msg: "Student doesn't Exist" });
+    }
+    try{
+        await doDataBaseThing(() => {
+            user.preference=''
+            user.save();
+        });
+        return res.status(200).json({ msg: "Rejected Student Room Successfully" });
+    }catch(err){
+        console.log(err)
+        return res
+        .status(400)
+        .json({ msg: "-Network Error, Try Refreshing Page" });
+    }
+
+})
 module.exports = router;

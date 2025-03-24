@@ -129,6 +129,10 @@ document.querySelector('.select-level').addEventListener('change', function () {
 document.querySelector('.cards-box').addEventListener('click', async function (event) {
     const verfiyBtn = event.target.closest('.verify-btn')
     const rejectBtn = event.target.closest('.reject-room-btn')
+    function displayDoneBtn(txt){
+        event.target.closest('.btns-box').innerHTML=`<button disabled class="assigned-room-btn"> ${txt} </button>`
+        
+    }
     if (verfiyBtn) {
         const student_card = verfiyBtn.closest('.student-card')
         const matric_no = student_card.querySelector('.matric_no').innerText
@@ -137,7 +141,7 @@ document.querySelector('.cards-box').addEventListener('click', async function (e
         console.log(matric_no, room_number)
         try {
 
-            const response = await fetch("/admin/add-student-room", {
+            const response = await fetch("/admin/assign-room", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ matric_no, room_number })
@@ -145,6 +149,7 @@ document.querySelector('.cards-box').addEventListener('click', async function (e
             const result = await response.json();
 
             if (response.ok) {
+                displayDoneBtn('Room Assigned')
                 removeSpinner()
                 showNotification(result.msg, "success");
 
@@ -158,7 +163,7 @@ document.querySelector('.cards-box').addEventListener('click', async function (e
             showNotification(`-Network error. Try again later.`, "error");
         }
     } else if (rejectBtn) {
-        const student_card = verfiyBtn.closest('.student-card')
+        const student_card = rejectBtn.closest('.student-card')
         const matric_no = student_card.querySelector('.matric_no').innerText
         const room_number = student_card.querySelector('.preference').innerText
 
@@ -173,6 +178,7 @@ document.querySelector('.cards-box').addEventListener('click', async function (e
             const result = await response.json();
 
             if (response.ok) {
+                displayDoneBtn('Reject Room')
                 removeSpinner()
                 showNotification(result.msg, "success");
 

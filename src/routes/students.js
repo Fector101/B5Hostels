@@ -48,6 +48,9 @@ router.get("/dashboard", verifyToken, async (req, res) => {
     // console.log(req)
     // console.log(userInfo)
     const user = await doDataBaseThing(() => Student.findOne({ matric_no: userInfo.matric_no }))
+    if(!user){
+        return res.status(401).sendFile(path.join(__dirname, '../../public/pages/login.html'));
+    }
     // console.log('ww ',daysPassed(user.payments[0]?.date))
     let total = user.payments.reduce((sum, payment) => sum + payment.amount, 0)
     
@@ -58,6 +61,7 @@ router.get("/dashboard", verifyToken, async (req, res) => {
         // console.log(room)
         room_mates = room.occupants.map(each => each.name || each.matric_no)
     }
+    console.log(user,'------')
     const data = {
         page_title: "dashboard",
         name: user.name,
@@ -72,7 +76,7 @@ router.get("/dashboard", verifyToken, async (req, res) => {
         room_mates
     };
     
-    // console.log(data)
+    console.log(data,'------')
     res.render("dashboard", data);
 });
 
@@ -121,6 +125,12 @@ router.post("/make-payment", verifyToken, async (req, res) => {
     const { room_no } = req.body;
     const userInfo = req.user;
     const matric_no = userInfo.matric_no
+
+    let room = await doDataBaseThing(() => Room.findOne({ room_number:room_no }));
+    if(room.occupants && room.occupants.length >= room.capacity){
+        return res.status(400).json({ msg: "Payment Declined Room Full" });
+
+    }
     const user = await doDataBaseThing(() => Student.findOne({ matric_no }))
 
     // todo cheeck date of payment
@@ -138,7 +148,7 @@ router.post("/make-payment", verifyToken, async (req, res) => {
 
     // console.log('found user ', result)
     console.log(matric_no, 'to --> room:', room_no)
-    return res.status(400).json({ msg: "Payment Successful" });
+    return res.status(200).json({ msg: "Payment Successful" });
 
 })
 

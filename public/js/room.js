@@ -4,7 +4,7 @@ function showNotification(message, type) {
     notification.textContent = message;
     notification.className = `notification ${type}`;
     notification.style.display = "block";
-    setTimeout(() => { notification.style.display = "none"; }, 3000);
+    setTimeout(() => { notification.style.display = "none"; }, 3000000);
 }
 
 const make_payment_btn = document.querySelector('button#pay')

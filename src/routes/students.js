@@ -115,7 +115,8 @@ router.post("/make-payment", verifyToken, async (req, res) => {
     // todo cheeck date of payment
     if (user.preference) return res.status(400).json({ msg: "Already Made Payment" });
     const result = await doDataBaseThing(() => {
-        user.preference = room_no;
+        // so student can pay without room yet
+        user.preference = room_no || '';
         user.payments.push({ amount: 12000 });
         user.save()
     })

@@ -15,7 +15,6 @@
         />
     </head>
     <body>
-    
         <%- include("header") -%>
         <div class="dashboard">
             <!-- Profile Section -->
@@ -44,10 +43,10 @@
             <div class="progress-section">
                 <div class="progress-info">
                     <span class="level">Days Completed</span>
-                    <span class="progress-text">220/365 Days</span>
+                    <span class="progress-text"><%= days_passed %>/365 Days</span>
                 </div>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 73%"></div>
+                    <div class="progress-fill" style="width: <%= days_passed %>%"></div>
                 </div>
             </div>
 
@@ -63,11 +62,12 @@
                     <p><%= room %></p>
                     <span>Hostel Room</span>
                 </div>
+                <% } %> 
+                <% if (preference!=='Nil') { %>
                 <div class="stat-box">
                     <p><%= total_paid %></p>
                     <span> Paid Dues </span>
                 </div>
-
                 <% } %>
             </div>
 
@@ -82,7 +82,7 @@
                 </p>
                 <p><strong>Security:</strong> 24/7 Security, Gated Entry</p>
                 <% } else {%>
-                <p>No Recent Payment</p>
+                <p>Waiting For Room Verification</p>
                 <% } %>
             </div>
             <% if (room !== 'Nil') { %>
@@ -134,7 +134,7 @@
                     </div>
                 </div>
             </div>
-                <% } %>
+            <% } %>
             <!-- Action Buttons -->
             <div class="actions">
                 <button onclick="extendStay()">View Payment History</button>

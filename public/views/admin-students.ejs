@@ -56,8 +56,19 @@
             </div>
             <div class="cards-box">
                 <% students.forEach(student => { %>
+                    <% console.log(student.preference && !student.room && student); %>
+                    <% 
+                        let state = ''; // Default state if none of the conditions match
 
-                <div data-level="200" class="student-card good-strip verified">
+                        if (student.preference && !student.room) {
+                            state = ' pending';
+                        } else if (student.preference && student.room) {
+                            state = ' verified';
+                        } else if (student.payments && student.payments.length > 0) {
+                            state = ' paid';
+                        }
+                    %>
+                <div data-level="200" class="student-card good-strip<%= state %>">
                     <div class="card-header">
                         <div class="student-id-box">
                             <p class="dim-text">Matric N0</p>

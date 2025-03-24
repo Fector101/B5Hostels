@@ -7,6 +7,9 @@
     align-items: center;
     height: 100vh;
 } */
+#payment-page.display-none{
+    display: none;  
+}
 #payment-page{
     display: flex;
     justify-content: center;

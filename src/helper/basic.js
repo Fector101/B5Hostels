@@ -42,4 +42,12 @@ async function doDataBaseThing(func, arg = false) {
         }
     }
 }
-module.exports = {verifyToken, doDataBaseThing};
+
+function daysPassed(date) {
+    const now = new Date();
+    const diff = now - date;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    return days;
+}
+
+module.exports = {verifyToken, doDataBaseThing,daysPassed};

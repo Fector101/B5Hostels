@@ -35,11 +35,12 @@ router.post("/signup", async (req, res) => {
         });
         await user.save();
 const days_left = "";
-        const total_paid = "";
+        const total_paid = user.payments.reduce((sum, payment) => sum + payment.amount, 0);
         const data = {
             id: user._id,
             name,
             matric_no,
+            preference: user.preference,
             room: user.room,
             level,
             days_left,
@@ -77,13 +78,14 @@ router.post("/login", async (req, res) => {
 
         // console.log(user, " <--- heres user");
         const days_left = "";
-        const total_paid = "";
+        const total_paid = user.payments.reduce((sum, payment) => sum + payment.amount, 0);
         const data = {
             id: user._id,
             name: user.name,
             matric_no: user.matric_no,
             room: user.room,
             level: user.level,
+            preference: user.preference,
             days_left,
             total_paid,
         };

@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const {verifyToken} = require("../helper/basic");
+const { verifyToken, doDataBaseThing, daysPassed } = require("../helper/basic");
 const Room = require("../models/Room"); // Import the Room model
 const Student = require("../models/Student");
 
@@ -40,23 +40,28 @@ function getInitials(name) {
     const lastInitial = parts[1]?.[0] || "";
     return (firstInitial + lastInitial).toUpperCase();
 }
-router.get("/dashboard", verifyToken, (req, res) => {
+router.get("/dashboard", verifyToken, async (req, res) => {
     const userInfo = req.user;
     // const token = jwt.sign({ id: user._id, username: user.username, matric_no: user.matric_no }, process.env.JWT_SECRET, { expiresIn: '1h' });
     // res.cookie('userInfo', token
     // Data save in token always save in `req.user`
     // console.log(req)
     // console.log(userInfo)
+    const user = await doDataBaseThing(() => Student.findOne({ matric_no: userInfo.matric_no }))
+    // console.log('ww ',daysPassed(user.payments[0].date))
     const data = {
         page_title: "dashboard",
-        name: userInfo.name,
+        name: user.name,
         initials: getInitials(userInfo.name),
-        matric_no: userInfo.matric_no,
-        level: userInfo.level,
-        room: userInfo.room || "Nil",
+        matric_no: user.matric_no,
+        level: user.level,
+        room: user.room || "Nil",
+        preference: user.preference || "Nil",
         date_booked: userInfo.days_left || 0,
-        total_paid: userInfo.total_paid || "Nil"
+        days_passed: daysPassed(user.payments[0].date),
+        total_paid: '₦ '+ user.payments.reduce((sum, payment) => sum + payment.amount, 0) || "Nil"
     };
+    console.log(data)
     res.render("dashboard", data);
 });
 
@@ -79,7 +84,7 @@ router.get("/room/:room_number", async (req, res) => {
             page_title: "dashboard",
             amenities: "Not Found",
             occupants: "Not Found",
-            img_path:'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png',
+            img_path: 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png',
             // description: "This room does not exist.",
         });
     }
@@ -101,11 +106,26 @@ router.get("/home", verifyToken, async (req, res) => {
     }
 });
 
-router.post("/make-payment", verifyToken, (req, res) => {
-    const {room_no} = req.body;
+router.post("/make-payment", verifyToken, async (req, res) => {
+    const { room_no } = req.body;
     const userInfo = req.user;
-    const matric_no= userInfo.matric_no
-    console.log(matric_no,'to --> room:',room_no)
+    const matric_no = userInfo.matric_no
+    const user = await doDataBaseThing(() => Student.findOne({ matric_no }))
+
+    // todo cheeck date of payment
+    if (user.preference) return res.status(400).json({ msg: "Already Made Payment" });
+    const result = await doDataBaseThing(() => {
+        user.preference = room_no;
+        user.payments.push({ amount: 12000 });
+        user.save()
+    })
+    // if (user) {
+    //     ; // Save the changes
+    //   }
+    // adding preference
+
+    console.log('found user ', result)
+    console.log(matric_no, 'to --> room:', room_no)
 
 })
 

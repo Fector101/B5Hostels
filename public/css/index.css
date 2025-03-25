@@ -5,13 +5,13 @@
 }
 
 body {
-  background-color: #e3bbff66;
+  
   background: linear-gradient(to right, #e5c6e7, #e4b9e7);
   background: linear-gradient(to right, #fce8fe, #f8c8fb);
   /* background-color: #eef6fca4; */
   font-family: "Lora", serif;
   letter-spacing: 0.6px;
-  --btn-bg: #6a0dad;
+  --btn-bg: hotpink;
 }
 
 .primary-btn {

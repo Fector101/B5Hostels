@@ -4,7 +4,7 @@ body {
     align-items: center;
     min-height: 100vh;
     font-family: Arial, sans-serif;
-    background-color: #f1eded;
+    background-color: plum
     margin: 0;
     padding: 20px;
     text-align: center;
@@ -42,15 +42,16 @@ body {
 }
 
 .signup-btn {
-    width: 100%;
+    /* width: 100%; */
+    
     padding: 10px;
     background-color: var(--btn-bg);
-
     color: white;
     border: none;
-    border-radius: 5px;
+    
     font-size: 16px;
     cursor: pointer;
+    border-radius: 10px;
 }
 
 .signup-btn:hover {
@@ -94,7 +95,7 @@ a {
 
 .profile-upload p {
     font-size: 12px;
-    color: #666;
+    color: #ffffbfea
 }
 .signup-card {
     display: flex;
@@ -103,7 +104,7 @@ a {
 }
 
 .signup-container {
-    background-color: rgb(255, 255, 255);
+    background-color: whitesmoke
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(194, 194, 194, 0.8);
@@ -123,7 +124,7 @@ h2 {
 }
 
 p {
-    color: #666;
+    color: #ffffbfea;
 }
 
 form > *{margin-bottom: 15px;}
@@ -138,10 +139,13 @@ form > *{margin-bottom: 15px;}
 input, select {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: none;
+    border-bottom: 2px solid #d01bb5;
     border-radius: 5px;
     font-size: 16px;
     background-color: white;
+    outline: none;
+
 }
 
 

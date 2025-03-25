@@ -127,10 +127,11 @@ router.post("/add-room", async (req, res) => {
     room = new Room({
         room_number,
         block,
-        floor: floorNumber,
         status,
         capacity,
         amenities,
+        floor: floorNumber,
+        title:room_number,
         img: randomImg(),
     });
     console.log('This is room --> ',room)

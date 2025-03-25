@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 const RoomSchema = new mongoose.Schema({
     img: { type: String}, // Image URL or filename
+    title: { type: String, unique: true },
     room_number: { type: String, required: true, unique: true },
     block:  { type: String},
     floor:  { type: Number},

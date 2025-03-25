@@ -37,7 +37,7 @@ async function doDataBaseThing(func, arg = false) {
             room = arg ? await func(arg) : await func();
             return room
         } catch (err) {
-            console.log('second try failed')
+            console.log(err,'---second try failed')
             return 'db_error'
         }
     }

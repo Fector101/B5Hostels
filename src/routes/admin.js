@@ -133,6 +133,7 @@ router.post("/add-room", async (req, res) => {
         amenities,
         img: randomImg(),
     });
+    console.log('This is room --> ',room)
 
     const result = await doDataBaseThing(() => room.save());
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, Lock, Vote, Bed } from "lucide-react";
+import { Mail, Lock, Bed } from "lucide-react";
 import './../components/css/login-signuppage.css'
 import GoToTop from "../components/js/GoToTop";
 import { Link } from "react-router-dom";

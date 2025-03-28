@@ -138,7 +138,7 @@
     justify-content: center;
 }
 
-@media screen and (max-width:360px) {
+@media screen and (max-width:560px) {
 
 .form-box {
     margin: 25px;

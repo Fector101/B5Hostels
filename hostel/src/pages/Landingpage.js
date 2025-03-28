@@ -10,7 +10,7 @@ export default function Landingpage() {
 
             <div className="main">
                 <h1>Student Hostel Management System</h1>
-                <p className="header-desc caption">An easy way to create polls, collect votes, and analyze results for student organizations and educational institutions.</p>
+                <p className="header-desc caption">Join our platform for easy hostel allocation, room management, and a better student living experience.</p>
                 <Link to='/signup' className="primary-btn">Get started <ArrowRight /></Link>
                 <div className="features-box">
                     <div className="feature">

@@ -141,7 +141,7 @@
 @media screen and (max-width:560px) {
 
 .form-box {
-    margin: 50px;
+    width: calc(100% - 25px);
 align-self:center;
 }
 }

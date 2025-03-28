@@ -1,5 +1,5 @@
 // import { useEffect, useRef, useState } from "react";
-// import "./components/css/quick-style.css"
+import "./components/css/quick-style.css"
 import "./components/css/App.css";
 import Homepage from "./pages/Homepage";
 import { top_movies_data } from "./components/js/api_data";
@@ -17,6 +17,7 @@ import Loginpage from "./pages/Loginpage";
 import Landingpage from "./pages/Landingpage";
 import Adminpanelpage from "./pages/Adminpanelpage";
 import SignupPage from "./pages/Signuppage";
+import Studentpage from "./pages/Historypage";
 // import SignupPage from "./pages/Signuppage";
 // import LoginPage from "./pages/Loginpage";
 // import ForgotPSPage from "./pages/ForgotPSpage";
@@ -58,14 +59,14 @@ function App() {
     useEffect(() => {
         function handleResize() {
             if (window.innerWidth > 800) {
-                setHeaderState(true);
+                // setHeaderState(true);
             } else {
-                setHeaderState(false);
+                // setHeaderState(false);
             }
         }
 
         window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
+        // return () => window.removeEventListener("resize", handleResize);
     }, []);
 
     return (
@@ -78,6 +79,7 @@ function App() {
                 <Route path="/admin" element={<Adminpanelpage />} />
                 <Route path="/login" element={<Loginpage />} />
                 <Route path="/signup" element={<SignupPage />} />
+                <Route path="/student" element={<Studentpage />} />
                 <Route
                     path="/home"
                     element={<Homepage top_movies_data__={top_movies_data} />}

@@ -1,4 +1,4 @@
-.not-signed-header {
+.header {
     /* background: #000; */
     display: flex;
     /* justify-content: space-between; */
@@ -7,7 +7,7 @@
     background: #ffd7fe;
 }
 
-.not-signed-header .brand {
+.header .brand {
     font-size: 20px;
     font-weight: 600;
     background-image: linear-gradient(to right, #cf1898, #ffb0e7);
@@ -28,7 +28,7 @@
     border-radius: 8px;
 }
 
-.not-signed-header a.btn {
+.header a.btn {
     height: 40px;
     padding: 0 10px;
 
@@ -36,17 +36,17 @@
     align-items: center;
 }
 
-.not-signed-header .signup-btn {
+.header .signup-btn {
 
     background-color: #e62eb0;
     color: white;
 }
 
-.not-signed-header .signup-btn:hover {
+.header .signup-btn:hover {
     background-color: #cf1898;
 }
 
-.not-signed-header .login-btn {
+.header .login-btn {
     margin-left: auto;
     margin-right: 10px;
     border: 1px solid #e8a7d5;
@@ -54,13 +54,87 @@
     color: #e62eb0;
 }
 
-@media screen and (max-width:500px) {
-    
- 
-
-.not-signed-header a.btn {
-font-size: 13px;
-
-    height: 35px;
+/* Logged In Header */
+header .nav {
+    padding: 0 10px;
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
 }
+
+header .nav a {
+    font-size: 14px;
+    height: 35px;
+    display: flex;
+    gap: 8px;
+    text-decoration: none;
+    color: #5e5e5e;
+    align-items: center;
+    border-radius: 10px;
+    padding: 0 5px;
+}
+
+header .nav a svg{
+    --size: 20px;
+    height: var(--size);
+    width: var(--size);
+}
+
+header .nav a:hover {
+    background-color: rgba(128, 128, 128, 0.345);
+    cursor: pointer;
+}
+
+.header button {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    --size: 35px;
+    height: var(--size);
+    width: 35px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+
+}
+
+.header button svg {
+    --size: 20px;
+    width: var(--size);
+    height: var(--size);
+}
+
+.header button:hover {
+    background-color: rgba(128, 128, 128, 0.345);
+    cursor: pointer;
+}
+
+
+
+
+@media (max-width: 800px) {
+    .sidebar {
+        /* position: fixed; */
+        /* left: -290px; */
+        /* Start off-screen */
+        /* top: 0; */
+        /* Always show on larger screens */
+    }
+    .header button {
+        display: flex;
+    }
+
+    header .heading {
+        /* padding-left: 20px; */
+        /* padding-block: 17px; */
+    }
+}
+
+
+@media screen and (max-width:500px) {
+    .header a.btn {
+        font-size: 13px;
+
+        height: 35px;
+    }
 }

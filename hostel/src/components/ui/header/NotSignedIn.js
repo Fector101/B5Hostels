@@ -4,7 +4,7 @@ import "./newheader.css"
 
 export default function NotSignedIn() {
     return (
-        <div className="not-signed-header">
+        <div className="not-signed-header header signed-header">
             <div className="row">
                 <Bed />
                 <Link className="brand" to='/'>B5 Homes</Link>

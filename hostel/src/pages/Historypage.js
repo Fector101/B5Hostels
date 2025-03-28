@@ -42,7 +42,7 @@ function VotingStats({ title, des, runners_info_tuple }) {
         </div>
     )
 }
-export default function Historypage({ top_movies_data__ }) {
+export default function Studentpage() {
     const votingStatsArray = [
         {
             title: "Best Student Representative",
@@ -74,9 +74,6 @@ export default function Historypage({ top_movies_data__ }) {
         }
     ];
 
-    // Usage in a component
-
-
     return (
         <div className="history-page page">
             <section className="heading">
@@ -93,22 +90,6 @@ export default function Historypage({ top_movies_data__ }) {
                     ))}
                 </div>
             </section>
-            {/* <main>
-                {top_movies_data__ && <Carousel data={top_movies_data__.results?.slice(0, 7)} />}
-            </main>
-            {top_movies_data__ &&
-                <>
-                    <SectionPreview title={'Trending'} icon={<TrendingUp />} data_info={{ types: ['Movies', 'TV Shows'], active: 'Movies' }} data={top_movies_data__.results} url='trending' />
-                    <SectionPreview title={'Top'} icon={<ChartNoAxesColumn />} data_info={{ types: ['Movies', 'TV Shows'], active: 'Movies' }} data={top_movies_data__.results} url='top' />
-                    <SectionPreview title={'Ongoing'} icon={<Tv />} data_info={{ types: ['TV Shows'] }} data={top_movies_data__.results} url='ongoing' />
-                    <Recommendations data={top_movies_data__.results.slice(0, 6)} />
-                    <div className="SectionPreview">
-                        <LoginComponent />
-                    </div>
-                </>
-            } */}
         </div>
     )
 }
-// {/* add ongoing,top,trending,Upcoming to Movies/Shows page */}
-// {/* <SectionPreview title={'Upcoming'} icon={<Clock3 />} data_info={{types:['Movies','TV Shows'],active:'Movies'}} data={top_movies_data__.results}/> */}

@@ -30,7 +30,7 @@ export default function Loginpage() {
                         <GraduationCap className="icon" />
                         <input
                             type="text"
-                            placeholder=FT23CMP0001"
+                            placeholder="FT23CMP0001"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required

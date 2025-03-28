@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Mail, Lock, Bed } from "lucide-react";
+import { Mail, Lock, Bed, GraduationCap  } from "lucide-react";
+
 import './../components/css/login-signuppage.css'
 import GoToTop from "../components/js/GoToTop";
 import { Link } from "react-router-dom";
@@ -24,12 +25,12 @@ export default function Loginpage() {
                 <h2>Welcome Back</h2>
                 <p className="subtitle">Login to manage your hostel account</p>
                 <form onSubmit={handleSubmit}>
-                    <label>Email</label>
+                    <label>Matric Number</label>
                     <div className="input-group">
-                        <Mail className="icon" />
+                        <GraduationCap className="icon" />
                         <input
-                            type="email"
-                            placeholder="youremail@nsuk.edu.ng"
+                            type="text"
+                            placeholder=FT23CMP0001"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required

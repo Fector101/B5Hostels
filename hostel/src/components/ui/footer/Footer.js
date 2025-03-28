@@ -28,8 +28,7 @@ export default function Footer(){
 
             <Link to='/'>About Us</Link>
             <Link to='/'>Privacy</Link>
-            <Link to='/'>Terms</Link>
-            <Link to='/'>Contact</Link>
+            <Link to='/'>Contact Us</Link>
             </div>
             <p className="caption">© 2025 B5 Homes. All rights reserved</p>
         </footer>

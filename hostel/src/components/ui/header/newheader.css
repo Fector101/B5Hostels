@@ -53,3 +53,12 @@
     /* background-color: #f5f5f5; */
     color: #e62eb0;
 }
+
+@media screen and (max-width:500px) {
+    
+ 
+
+.not-signed-header a.btn {
+font-size: 14px;
+}
+}

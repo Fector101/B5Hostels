@@ -96,15 +96,7 @@ function App() {
                     }
                 />
             </Routes>
-            {btn_state && (
-                <button
-                    className="primary-btn"
-                    id="menu-btn"
-                    onClick={toggleHeader}
-                >
-                    {header_state ? <X /> : <Menu />}
-                </button>
-            )}
+           
             <Footer/>
         </>
         // <div className="App">

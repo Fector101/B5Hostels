@@ -9,7 +9,7 @@ export default function Landingpage() {
             <NotSignedIn/>
 
             <div className="main">
-                <h1>B5 Hostel Management System</h1>
+                <h1>B5 Homes</h1>
                 <p className="header-desc caption">Join our platform for easy hostel allocation, room management, and a better student living experience.</p>
                 <Link to='/signup' className="primary-btn">Get started <ArrowRight /></Link>
                 <div className="features-box">

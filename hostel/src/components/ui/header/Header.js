@@ -1,20 +1,8 @@
-import { useState, React, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import {React} from "react";
 import "./header.css"
 // import "./header-responsive.css"
 import {
-    Search,
-    User2,
-    ChevronDown,
-    BellIcon,
-    Menu,
-    HomeIcon,
-    Bookmark,
-    Tv,
-    Activity,
-    Film,
     ChevronRight,
-    XCircle,
     Vote,
     LayoutDashboard,
     ChartNoAxesColumn,
@@ -22,13 +10,7 @@ import {
     User,
     LogOut,
 } from "lucide-react";
-import { Link, Outlet, useLocation, useParams } from "react-router-dom";
-import { nanoid } from "nanoid";
-import LoginForm from "../login-signup/LoginForm";
-import SignupForm from "../login-signup/SignupForm";
-import { disableScroll, enableScroll } from "../../js/helper";
-import useCarouselStore from "../carousel/useCarouselStore";
-
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 export default function Header({ className, userName }) {
     // userName='Dev'

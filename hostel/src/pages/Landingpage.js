@@ -1,4 +1,4 @@
-import { ArrowRight, Bed, Bell, Calendar1, Vote } from "lucide-react";
+import { ArrowRight, Bed, Bell, Calendar1 } from "lucide-react";
 import '../components/css/landingpage.css';
 import { Link } from "react-router-dom";
 import NotSignedIn from "../components/ui/header/NotSignedIn";

@@ -13,7 +13,6 @@ import Footer from "./components/ui/footer/Footer";
 import Pollspage from "./pages/Pollspage";
 import Historypage from "./pages/Historypage";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
 import Loginpage from "./pages/Loginpage";
 import Landingpage from "./pages/Landingpage";
 import Adminpanelpage from "./pages/Adminpanelpage";
@@ -39,22 +38,22 @@ import SignupPage from "./pages/Signuppage";
 // /site-collection/
 function App() {
     const location = useLocation();
+    const [header_state, setHeaderState] = useState(window.innerWidth > 500);
+    // const [btn_state, setBtnState] = useState(window.innerWidth > 500);
 
     useEffect(
         function () {
-            setBtnState(["/", "/login"].includes(location.pathname));
+            // setBtnState(["/", "/login"].includes(location.pathname));
 
             setHeaderState(false);
         },
         [location]
     );
 
-    const [header_state, setHeaderState] = useState(window.innerWidth > 500);
-    const [btn_state, setBtnState] = useState(window.innerWidth > 500);
 
-    function toggleHeader() {
-        setHeaderState((prev) => !prev);
-    }
+    // function toggleHeader() {
+    //     setHeaderState((prev) => !prev);
+    // }
 
     useEffect(() => {
         function handleResize() {

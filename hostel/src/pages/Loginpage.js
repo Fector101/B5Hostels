@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, Lock, Bed, GraduationCap  } from "lucide-react";
+import {  Lock, Bed, GraduationCap  } from "lucide-react";
 
 import './../components/css/login-signuppage.css'
 import GoToTop from "../components/js/GoToTop";

@@ -1,7 +1,7 @@
 import './../components/css/login-signuppage.css';
 import GoToTop from "../components/js/GoToTop";
 import { useState } from "react";
-import { Mail, Lock, Vote, IdCard, User, GraduationCap } from "lucide-react";
+import {  Lock,  IdCard, User, GraduationCap } from "lucide-react";
 import { Link } from 'react-router-dom';
 import NotSignedIn from '../components/ui/header/NotSignedIn';
 

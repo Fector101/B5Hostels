@@ -1,9 +1,10 @@
-import { TrendingUp, ChartColumn, Vote, ChevronRight, ArrowRight, Clock, Users, Plus } from "lucide-react"
+import { TrendingUp, ChartColumn, Vote, ArrowRight, Clock, Users, Plus } from "lucide-react"
 // import Carousel from "../components/ui/carousel/Carousel"
 // import SectionPreview from "./../components/js/SectionPreview"
 // import Recommendations from "./../components/js/Recommendations"
 // import LoginComponent from "../components/ui/login-signup/LoginForm"
 import '../components/css/homepage.css'
+import { Link } from "react-router-dom";
 function Myprogress({value}) {
     console.log(value+'%')
     return (
@@ -37,7 +38,7 @@ function VotingStats({ title, des, runners_info_tuple }) {
                 })}
             </div>
             <p>Total votes: {total_votes}</p>
-            <a className="view-all-votes-btn primary-btn">View Details <ArrowRight /></a>
+            <Link className="view-all-votes-btn primary-btn">View Details <ArrowRight /></Link>
         </div>
     )
 }
@@ -124,7 +125,7 @@ export default function Homepage({ top_movies_data__ }) {
                         <Clock className="badge purple" />
                     </div>
                     <div>
-                        <a>View active polls <ArrowRight /></a>
+                        <Link>View active polls <ArrowRight /></Link>
                     </div>
                 </div>
                 <div className="card vote-item">

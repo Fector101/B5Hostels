@@ -2,23 +2,23 @@ import { Link } from "react-router-dom";
 // import ImgwithPL from "./../../js/ImgwithPL";
 import './footer.css'
 // import logo_src from "../../imgs/logo.png"
-import { toTitleCase } from "../../js/helper";
-function Row({header,links,className}){
+// import { toTitleCase } from "../../js/helper";
+// function Row({header,links,className}){
     
 
-    return(
-        <div className={className}>
-            <p>{header}</p>
-            {
-                links.map(({url,name_})=>{
-                    let link_name = toTitleCase(name_ || url)
+//     return(
+//         <div className={className}>
+//             <p>{header}</p>
+//             {
+//                 links.map(({url,name_})=>{
+//                     let link_name = toTitleCase(name_ || url)
                     
-                    return <Link key={link_name} to={url}>{link_name}</Link>
-                })
-            }
-        </div>
-    )
-}
+//                     return <Link key={link_name} to={url}>{link_name}</Link>
+//                 })
+//             }
+//         </div>
+//     )
+// }
 export default function Footer(){
     return(
         <footer className="footer flex">

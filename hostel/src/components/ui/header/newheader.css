@@ -31,6 +31,9 @@
 .not-signed-header a.btn {
     height: 40px;
     padding: 0 10px;
+
+    display: flex;
+    align-items: center;
 }
 
 .not-signed-header .signup-btn {

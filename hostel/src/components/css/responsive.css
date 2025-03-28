@@ -1,0 +1,114 @@
+@media screen and (max-width:500px) {
+    .carousel-content-case .phone-bookmark-btn svg.svg1 {
+        fill: var(--accent-color);
+        color: var(--accent-color);
+        position: absolute;
+        left: 3px;
+        top: 5px;
+    }
+
+    .carousel-content-case .phone-bookmark-btn svg:hover {
+        --color: rgb(202, 202, 235);
+    }
+
+    .carousel-content-case .phone-bookmark-btn svg {
+        --color: rgb(230, 230, 241);
+        fill: var(--color);
+        color: var(--color);
+        position: relative;
+        height: 100%;
+        width: 100%;
+    }
+
+    .carousel-content-case .phone-bookmark-btn:hover {
+        background-color: transparent;
+    }
+
+    .carousel-content-case .phone-bookmark-btn {
+        position: relative;
+        right: 30px;
+        bottom: 35px;
+        height: 55px;
+        width: 55px;
+        display:flex;
+        animation: beat 1s ease-in-out infinite;
+    }
+
+    .carousel-content-case .texts,
+    .carousel-case .btns-case {
+        display: none;
+    }
+
+    .page {
+        /* padding: 0 20px; */
+        padding-top: 0.75rem;
+        gap: 0.625rem;
+    }
+
+    .page>main {
+        width: calc(100% - 40px);
+        height: 45vh;
+        margin-bottom: 40px;
+    }
+    
+    .SectionPreview{
+        padding-left:  20px;
+        padding-right: 20px;
+    }
+    .SectionPreview h3 {
+        font-size: 19px;
+    }
+    .SectionPreview .preview-media-type-btns-case {
+        margin-left: auto;
+        width: 115px;
+        height: 70%;
+    }
+
+    .SectionPreview .preview-media-type-btns-case button {
+        font-size: 10px;
+    }
+    .SectionPreview .collection .card {
+        --card-height: 280px;
+        --card-info-height: 60px;
+        width: 170px;
+    }
+    .SectionPreview .collection .card .card-info {
+        padding-top: 7px;
+        padding-left: 6px;
+    }
+
+    .SectionPreview .card .card-info .title-box-pc {
+        display: none;
+    }
+
+
+    .SectionPreview .collection .card .card-info .details-case-1 .title{
+        display: block;
+    }
+
+    .SectionPreview .card .card-info .details-case-2 {
+        gap: 3px;
+        flex-direction: column;
+        height: auto;
+    }
+
+    .SectionPreview .card .rate-text-case {
+        margin-left: 2px;
+        width: max-content;
+        padding: 2px 4px;
+        align-self: center;
+    }
+
+    .SectionPreview .view-all-link {
+        margin-top: 0; /*Because no scroll bar*/
+    }
+}
+
+@media screen and (max-width:800px){
+.carousel-content-case{
+    flex-direction: column;
+    gap: 10px;
+    padding:4% 6%;
+}
+}
+

@@ -29,7 +29,8 @@
 }
 
 .not-signed-header a.btn {
-    padding: 10px 20px;
+    height: 40px;
+    padding: 0 10px;
 }
 
 .not-signed-header .signup-btn {

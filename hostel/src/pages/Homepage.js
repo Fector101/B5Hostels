@@ -1,4 +1,4 @@
-import { TrendingUp, Tv, ChartNoAxesColumn, ChartColumn, Vote, ChevronRight, ArrowRight, Clock, Users, MoveRight, Plus } from "lucide-react"
+import { TrendingUp, ChartColumn, Vote, ChevronRight, ArrowRight, Clock, Users, Plus } from "lucide-react"
 // import Carousel from "../components/ui/carousel/Carousel"
 // import SectionPreview from "./../components/js/SectionPreview"
 // import Recommendations from "./../components/js/Recommendations"

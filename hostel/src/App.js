@@ -91,7 +91,7 @@ function App() {
                 <Route
                     path="*"
                     element={
-                        <NotFoundpage redirect_path="/" timeout_secs={5} />
+                        <NotFoundpage redirect_path="/" timeout_secs={5*1000} />
                     }
                 />
             </Routes>

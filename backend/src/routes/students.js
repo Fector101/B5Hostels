@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const { verifyToken, doDataBaseThing, daysPassed } = require("../helper/basic");
+const { verifyToken, doDataBaseThing, daysPassed, delay } = require("../helper/basic");
 const Room = require("../models/Room"); // Import the Room model
 const Student = require("../models/Student");
 
@@ -42,6 +42,8 @@ function getInitials(name) {
 }
 router.get("/profile", verifyToken, async (req, res) => {
     const userInfo = req.user;
+    await delay(1000*2)
+    console.log('done waiting........................')
     // const token = jwt.sign({ id: user._id, username: user.username, matric_no: user.matric_no }, process.env.JWT_SECRET, { expiresIn: '1h' });
     // res.cookie('userInfo', token
     // Data save in token always save in `req.user`
@@ -49,9 +51,8 @@ router.get("/profile", verifyToken, async (req, res) => {
     // console.log(userInfo)
     const user = await doDataBaseThing(() => Student.findOne({ matric_no: userInfo.matric_no }))
     if(!user){
-        return res.status(401).sendFile(path.join(__dirname, '../../public/pages/login.html'));
+        return res.status(401).json({ msg: "Student doesn't exist" });
     }
-    // console.log('ww ',daysPassed(user.payments[0]?.date))
     let total = user.payments.reduce((sum, payment) => sum + payment.amount, 0)
     
     total = total > 0?'₦ '+ total:0
@@ -62,7 +63,7 @@ router.get("/profile", verifyToken, async (req, res) => {
         // console.log(room)
         room_mates = room.occupants.map(each => each.name || each.matric_no)
     }
-    console.log(user,'------')
+    // console.log(user,'------')
     const data = {
         page_title: "dashboard",
         name: user.name,
@@ -82,7 +83,7 @@ router.get("/profile", verifyToken, async (req, res) => {
         msg: "Login In Session"
     };
     
-    console.log(data,'------')
+    // console.log(data,'------')
     return res.status(200).json({ data });
 });
 
@@ -117,10 +118,12 @@ router.get("/room/:room_number", async (req, res) => {
 //     res.render('lists', {  page_title:'home',name: userInfo.name, room: userInfo.room || 'None', date_booked: userInfo.date_booked || 'not booked' });
 // });
 
-router.get("/home", verifyToken, async (req, res) => {
+router.get("/rooms", verifyToken, async (req, res) => {
+    await delay(1000*2)
+
     try {
-        const rooms = await Room.find(); // Fetch all rooms from MongoDB
-        res.render("rooms", { page_title: "home", rooms }); // Pass rooms data to EJS template
+        const rooms = await Room.find();
+        return res.status(200).json({ data:rooms });
     } catch (error) {
         console.error("Error fetching rooms:", error);
         res.status(500).send("Server Error");

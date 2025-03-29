@@ -138,8 +138,8 @@ function App() {
                     path="/home"
                     element={<Homepage top_movies_data__={top_movies_data} />}
                 />
-                <Route path="/room" element={<RoomDetailsPage rooms_data={rooms}/>} />
-                <Route path="/rooms" element={<Roomspage rooms_data={rooms}/>} />
+                <Route path="/room" element={<RoomDetailsPage/>} />
+                <Route path="/rooms" element={<Roomspage />} />
                 {/*
         <Route path="/forgot-ps" element={ <ForgotPSPage /> }/>
         <Route path="/list/*" element={<ListRoutes />} /> 

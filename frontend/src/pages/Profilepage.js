@@ -1,86 +1,56 @@
 import { TrendingUp, Tv, ChartNoAxesColumn, ChartColumn, Vote, ChevronRight, ArrowRight, Clock, Users, MoveRight, Plus, User, Home, Building, Check, CheckCircle, Info } from "lucide-react"
 import '../components/css/profilepage.css'
 import { useContext, useEffect, useState } from "react";
-import { toast } from 'react-toastify';
 import { UserContext } from '../components/js/UserContext';
-function Myprogress({ value }) {
-    console.log(value + '%')
-    return (
-        <div className="progress-range" style={{ 'width': '100%', backgroundColor: '#cac8c8', height: '10px', borderRadius: '5px', marginBottom: '4px', overflow: 'hidden' }}>
-            <div style={{ width: value + '%', backgroundColor: '#4ec9e6', height: '100%' }} className="progress-value"></div>
-        </div>
-    )
-}
-function VotingStats({ title, des, runners_info_tuple }) {
-    // runners_info_tuple =[['name',140]]   
-    // runners_info_tuple =[['name','votes'],...]   
-    const total_votes = runners_info_tuple.reduce((sum, [, votes]) => sum + votes, 0);
-    // console.log(total_votes, '---')
-    return (
-        <div className="voting-stats-card">
-            <div className="row"><div className="badge active"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-dot"><circle cx="12.1" cy="12.1" r="1"></circle></svg> Active</div><div className="caption"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><p>Ends: 2025-04-10</p></div></div>
-            <h4>{title}</h4>
-            <p className="caption">{des}</p>
-            <div className="runners-box">
-                {runners_info_tuple?.map(([name, votes], i) => {
-                    const percentage = total_votes > 0 ? ((votes / total_votes) * 100).toFixed(2) : 0;
-                    console.log(total_votes, '---')
+import { toast } from 'react-toastify';
 
-                    return (
-                        <div>
-                            <div className="row">
-                                <p>{name}</p>
-                                <p className="caption">{votes} votes</p>
-                            </div>
-                            <Myprogress value={percentage} />
-                        </div>)
-                })}
-            </div>
-            <p>Total votes: {total_votes}</p>
-            <a className="view-all-votes-btn primary-btn">View Details <ArrowRight /></a>
-        </div>
-    )
-}
 // const { user, setUser } = useContext(null);
 export default function Profilepage() {
     const [current_tab, setCurrentTab] = useState(() => 'room')
 
     const { userData } = useContext(UserContext);
-    console.log(userData)
+    // console.log(userData)
     // useEffect(() => {
-    //     async function getData() {
-    //         const cachedUser = localStorage.getItem("userData");
-    //         if (cachedUser) {
-    //             setUserData(JSON.parse(cachedUser)); // Use cached data
-    //             return;
-    //         }
-    //         console.log(userData,!Object.keys(userData).length)
-    //         try {
-    //             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/profile`, {
-    //                 method: "GET",
-    //                 credentials: "include",
-    //                 headers: { "Content-Type": "application/json" },
-    //             });
-    //             const data = await response.json();
-    //             if (response.ok) {
-    //                 setUserData(data.data);
-    //                 console.log(data.data);
-    //                 localStorage.setItem("userData", JSON.stringify(data.data)); // Cache it
-    //             } else {
-    //                 toast("Login Session Expired", { type: "warning" });
-    //             }
-    //         } catch (error) {
-    //             console.error("Network error:", error);
-    //         }
+        //     async function getData() {
+        //         const cachedUser = localStorage.getItem("userData");
+        //         if (cachedUser) {
+        //             setUserData(JSON.parse(cachedUser)); // Use cached data
+        //             return;
+        //         }
+        //         console.log(userData,!Object.keys(userData).length)
+        //         try {
+        //             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/profile`, {
+        //                 method: "GET",
+        //                 credentials: "include",
+        //                 headers: { "Content-Type": "application/json" },
+        //             });
+        //             const data = await response.json();
+        //             if (response.ok) {
+        //                 setUserData(data.data);
+        //                 console.log(data.data);
+        //                 localStorage.setItem("userData", JSON.stringify(data.data)); // Cache it
+        //             } else {
+        //                 toast("Login Session Expired", { type: "warning" });
+        //             }
+        //         } catch (error) {
+        //             console.error("Network error:", error);
+        //         }
+        //     }
+        // if (Object.keys(userData).length) {
+            // toast("Successfully Fetched User Data", { type: "success" });
+            //  getData();
     //     }
-    //     if (!Object.keys(userData).length) getData();
-    // }, []);
-    
-
+    // }, [userData]);
 
 
     return (
         <div className="profile-page page">
+            {Object.keys(userData).length === 0 &&
+                <div className='modal'>
+                    <div id="spinner" className="spinner"></div>
+                </div>
+
+            }
             <section className="heading">
                 <div>
                     <h1>Student Profile</h1>

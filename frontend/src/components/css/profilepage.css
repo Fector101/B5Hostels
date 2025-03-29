@@ -1,7 +1,10 @@
 .profile-page.page {
     padding: 20px;
 }
-
+.profile-page .modal{
+    z-index: 1;
+    display: block;
+}
 .profile-page.page section {
     margin-bottom: 30px;
 }

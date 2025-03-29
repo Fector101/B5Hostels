@@ -4,13 +4,13 @@ import { useState } from "react";
 import { Lock, IdCard, User, GraduationCap } from "lucide-react";
 import { Link, useNavigate } from 'react-router-dom';
 import NotSignedIn from '../components/ui/header/NotSignedIn';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 
 export default function SignupPage() {
     const navigate = useNavigate()
 
-    const usefiller = 1
+    const usefiller = process.env.NODE_ENV === 'dev'
     const [email, setEmail] = useState(usefiller ? "f@gmail.com" : '');
     const [matric_no, setMatricNo] = useState(usefiller ? "FT23CMP00001" : '');
     const [password, setPassword] = useState(usefiller ? "1" : '');
@@ -23,7 +23,6 @@ export default function SignupPage() {
 
         const formData = {
             name: fullname,
-            // fullname,
             email,
             matric_no,
             password,

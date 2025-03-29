@@ -1,23 +1,58 @@
 import { useState } from "react";
-import {  Lock, Bed, GraduationCap  } from "lucide-react";
+import { Lock, Bed, GraduationCap } from "lucide-react";
 
 import '../components/css/login-signuppage.css'
 import GoToTop from "../components/js/GoToTop";
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import NotSignedIn from "../components/ui/header/NotSignedIn";
+import { toast } from 'react-toastify';
 
 export default function Loginpage() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const navigate = useNavigate()
+    
+    const usefiller = process.env.NODE_ENV === 'dev'
+    const [matric_no, setMatricNo] = useState(usefiller ? 'FT23CMP00001' : "");
+    const [password, setPassword] = useState(usefiller ? '1' : "");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log({ email, password });
+        try {
+
+            const formData = {
+                matric_no,
+                password,
+            };
+
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/authn/login`, {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log("User created:", data);
+                toast(data.msg || 'Login successful!', { type: 'success' });
+                navigate(data.url);
+                // Redirect or update UI
+            } else {
+                console.error("Login error:", data);
+                toast(data.msg || 'Check your inputs.', { type: 'warning' });
+            }
+        } catch (error) {
+            console.error("Network error:", error);
+            toast('Something went wrong! ' + error, { type: 'error' });
+            // alert("Network error. Please try again.");
+        }
     };
 
     return (
         <div className="form-page page">
-           <NotSignedIn/>
+            <NotSignedIn />
             <div className="form-box">
                 <div className="icon-circle">
                     <Bed />
@@ -31,8 +66,8 @@ export default function Loginpage() {
                         <input
                             type="text"
                             placeholder="FT23CMP0001"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={matric_no}
+                            onChange={(e) => setMatricNo(e.target.value)}
                             required
                         />
                     </div>

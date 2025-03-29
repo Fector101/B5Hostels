@@ -1,18 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext} from "react";
 import "../components/css/roomdetailspage.css"; // Make sure to create this file and import it
 import { Building, CreditCard, Users, X } from "lucide-react";
-import img from './img6.jpg'
+// import img from './img6.jpg'
 import { useSearchParams } from "react-router-dom";
+import ImageComponent from "../components/js/imgs";
+import { UserContext } from '../components/js/UserContext';
 
-
-export default function RoomPreview({ rooms_data }) {
+export default function RoomPreview() {
     const [searchParams] = useSearchParams();
     const requested_room = searchParams.get('id');
     const [modal, setModal] = useState(false);
+    const { RoomsData } = useContext(UserContext);
 
-    let roomData = { ...rooms_data?.find(({ room_number }) => room_number === requested_room) }
+    let roomData = { ...RoomsData?.find(({ room_number }) => room_number === requested_room) }
     console.log(roomData);
-
+    useEffect(()=>{
+        
+    },[])
     // Sample data (you can replace this with props or API data)
     // const roomData = {
     //     building: "Block A",
@@ -75,11 +79,9 @@ export default function RoomPreview({ rooms_data }) {
                                     <p>₦ 12,000</p>
                                 </li>
                             </ol>
-                            {/* <button className="primary-btn" id="pay">Book Now <CreditCard /> </button> */}
                         </div>
                         <h3 className="form-start-header">Card Information</h3>
                         <form id="payment-form">
-                            {/* <label htmlFor="card-name">Cardholder Name</label> */}
 
                             <div className="input-group">
                                 <CreditCard className="icon" />
@@ -124,7 +126,8 @@ export default function RoomPreview({ rooms_data }) {
             </section>
             <section className="main-content">
                 <div>
-                    <img src={img} alt="room img" className="room-img" />
+                    {/* <ImageComponent imageName='img6.'/> */}
+                    <img src={`${process.env.PUBLIC_URL}/imgs/${roomData.img}`}  alt="room img" className="room-img" />
                     {/* <div className="room-img"> </div> */}
                     <div className="preview-status">
                         <h3> Room Status </h3>
@@ -132,7 +135,7 @@ export default function RoomPreview({ rooms_data }) {
                             <span className="green-dot"></span>
                             {roomData?.status}</p>
                         <h3>Current Occupancy </h3>
-                        <p>  <Users /> {roomData.occupants} of {roomData.capacity} occupants</p>
+                        <p>  <Users /> {roomData.occupants?.length} of {roomData.capacity} occupants</p>
                     </div>
                 </div>
                 <div className="sub-info">
@@ -140,7 +143,7 @@ export default function RoomPreview({ rooms_data }) {
                     <div className="data-box">
                         <div className="row">
                             <p>Block:</p>
-                            <p>{roomData.building}</p>
+                            <p>{roomData.block}</p>
 
                         </div>
                         <div className="row">
@@ -158,7 +161,7 @@ export default function RoomPreview({ rooms_data }) {
                     </div>
                     <h3>Amenities</h3>
                     <div className="row amenities-box">
-                        {roomData.amenities?.slice(0, 3).map(amenity => (
+                        {roomData.amenities?.[0].split(',').slice(0, 3).map(amenity => (
                             <div key={amenity} className="amenitie">{amenity}</div>
                         ))}
                     </div>

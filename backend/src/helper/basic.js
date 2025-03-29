@@ -5,9 +5,9 @@ const path = require('path')
 const verifyToken = (req, res, next) => {
     const userInfo = req.cookies.userInfo;
 
-    console.log("Headers:", req.headers);
-    console.log("Cookies received:", req.cookies);
-    console.log('userInfo: ', userInfo)
+    // console.log("Headers:", req.headers);
+    // console.log("Cookies received:", req.cookies);
+    // console.log('userInfo: ', userInfo)
     if (!userInfo) return res.status(401).json({ msg: 'Access denied' });
     
     try {
@@ -54,4 +54,4 @@ function daysPassed(date) {
     return days;
 }
 
-module.exports = {verifyToken, doDataBaseThing,daysPassed};
+module.exports = {verifyToken, doDataBaseThing,daysPassed,delay};

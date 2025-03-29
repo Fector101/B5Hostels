@@ -40,7 +40,7 @@ function getInitials(name) {
     const lastInitial = parts[1]?.[0] || "";
     return (firstInitial + lastInitial).toUpperCase();
 }
-router.get("/dashboard", verifyToken, async (req, res) => {
+router.get("/profile", verifyToken, async (req, res) => {
     const userInfo = req.user;
     // const token = jwt.sign({ id: user._id, username: user.username, matric_no: user.matric_no }, process.env.JWT_SECRET, { expiresIn: '1h' });
     // res.cookie('userInfo', token
@@ -56,8 +56,9 @@ router.get("/dashboard", verifyToken, async (req, res) => {
     
     total = total > 0?'₦ '+ total:0
     let room_mates = []
+    let room;
     if (user.room){
-        let room = await doDataBaseThing(() => Room.findOne({ room_number:user.room }));
+     room = await doDataBaseThing(() => Room.findOne({ room_number:user.room }));
         // console.log(room)
         room_mates = room.occupants.map(each => each.name || each.matric_no)
     }
@@ -67,17 +68,21 @@ router.get("/dashboard", verifyToken, async (req, res) => {
         name: user.name,
         initials: getInitials(userInfo.name),
         matric_no: user.matric_no,
+        email: user.email,
         level: user.level,
-        room: user.room || "Nil",
-        preference: user.preference || "Nil",
+        room: user.room,
+        preference: user.preference,
         date_booked: userInfo.days_left || 0,
         days_passed: daysPassed(user.payments[0]?.date),
-        total_paid: total || "Nil",
-        room_mates
+        total_paid: total ,
+
+        floor: room?.floor,
+        room_mates,
+        msg: "Login In Session"
     };
     
     console.log(data,'------')
-    res.render("dashboard", data);
+    return res.status(200).json({ data });
 });
 
 router.get("/room/:room_number", async (req, res) => {

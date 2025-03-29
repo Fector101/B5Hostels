@@ -1,24 +1,27 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const cookieParser = require("cookie-parser");
 const Student = require("../models/Student");
+const { doDataBaseThing } = require("../helper/basic");
 
 const router = express.Router();
-router.use(cookieParser());
+const CLIENT_URL = process.env.CLIENT_URL;
 
 router.post("/signup", async (req, res) => {
     try {
+        // console.log(req.headers)
         const { name, email, matric_no, password, gender, level } = req.body;
         // console.log(name, email, matric_no, password, gender, level);
-
+        // let user = await doDataBaseThing(() => Student.findOne({ matric_no }));
         let user = await Student.findOne({ matric_no });
 
         if (user)
             return res
                 .status(400)
                 .json({ exists: true, msg: "Matric Number Already Register" });
-        user = await Student.findOne({ email });
+
+        user = await doDataBaseThing(() => Student.findOne({ email }));
+        // user = await Student.findOne({ email });
         if (user)
             return res
                 .status(400)
@@ -33,31 +36,52 @@ router.post("/signup", async (req, res) => {
             gender,
             level,
         });
-        await user.save();
-const days_left = "";
-        const total_paid = user.payments.reduce((sum, payment) => sum + payment.amount, 0);
-        const data = {
-            id: user._id,
-            name,
-            matric_no,
-            preference: user.preference,
-            room: user.room,
-            level,
-            days_left,
-            total_paid,
-gender,email
-        };
-        const token = jwt.sign(data,
-            process.env.JWT_SECRET,
-            { expiresIn: "1h" }
+        user = await doDataBaseThing(() => user.save());
+        if (user === "db_error") {
+            return res
+                .status(400)
+                .json({
+                    exists: true,
+                    msg: "An error occurred while saving the user.",
+                });
+        }
+
+        console.log("bad code----- ", user);
+        const days_left = "";
+        const total_paid = user.payments.reduce(
+            (sum, payment) => sum + payment.amount,
+            0
         );
+        // const data = {
+        //     id: user._id,
+        //     name,
+        //     matric_no:1111,
+        //     preference: user.preference,
+        //     room: user.room,
+        //     level,
+        //     days_left,
+        //     total_paid,
+        //     gender,
+        //     email,
+        // };
+        const data = {matric_no}
+        const token = jwt.sign(data, process.env.JWT_SECRET, {
+            expiresIn: "1h",
+        });
         res.cookie("userInfo", token, {
             httpOnly: true,
-            secure: true,
+            secure: false,//process.env.NODE_ENV === "production", // 🔥 Only secure in production
+            sameSite:  process.env.NODE_ENV === "production" ? "None" : "Lax",// 🔥 Use Lax for localhost
             maxAge: 3600000,
         }); // 1 hour
 
-        res.redirect("/home");
+        return res
+            .status(200)
+            .json({
+                redirect: true,
+                url: "/profile",
+                msg: "Signup SuccessFul",
+            });
     } catch (err) {
         console.log("signup error: ", err);
         res.status(500).json({ error: "Server error" });
@@ -78,7 +102,10 @@ router.post("/login", async (req, res) => {
 
         // console.log(user, " <--- heres user");
         const days_left = "";
-        const total_paid = user.payments.reduce((sum, payment) => sum + payment.amount, 0);
+        const total_paid = user.payments.reduce(
+            (sum, payment) => sum + payment.amount,
+            0
+        );
         const data = {
             id: user._id,
             name: user.name,
@@ -89,7 +116,7 @@ router.post("/login", async (req, res) => {
             days_left,
             total_paid,
         };
-        console.log(data)
+        console.log(data);
         const token = jwt.sign(data, process.env.JWT_SECRET, {
             expiresIn: "1h",
         });

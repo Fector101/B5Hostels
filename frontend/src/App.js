@@ -15,9 +15,10 @@ import Roomspage from "./pages/Roomspage";
 import { useEffect, useState } from "react";
 import Loginpage from "./pages/Loginpage";
 import Landingpage from "./pages/Landingpage";
-import Adminpanelpage from "./pages/Adminpanelpage";
+// import Adminpanelpage from "./pages/Adminpanelpage";
 import SignupPage from "./pages/Signuppage";
 import Profilepage from "./pages/Profilepage";
+import { ToastContainer } from 'react-toastify';
 import RoomDetailsPage from "./pages/RoomDetailsPage";
 // import SignupPage from "./pages/Signuppage";
 // import LoginPage from "./pages/Loginpage";
@@ -123,11 +124,13 @@ function App() {
     return (
         <>
             {!["/", "/login", '/signup'].includes(location.pathname) && <Header />}
+            <ToastContainer />
+
             <Routes>
                 {/* <Route path="/signup" element={ <SignupPage /> }/> */}
                 {/* <Route path="/login" element={ <LoginPage /> }/> */}
                 <Route path="/" element={<Landingpage />} />
-                <Route path="/admin" element={<Adminpanelpage />} />
+                {/* <Route path="/admin" element={<Adminpanelpage />} /> */}
                 <Route path="/login" element={<Loginpage />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/profile" element={<Profilepage />} />
@@ -151,10 +154,6 @@ function App() {
 
             <Footer />
         </>
-        // <div className="App">
-        // <Homepage top_movies_data__={top_movies_data}/>
-        // {/* <Homepage top_movies_data__={top_10_movies.results?.slice(0,7)}/> */}
-        // </div>
     );
 }
 

@@ -1,6 +1,8 @@
 import { TrendingUp, Tv, ChartNoAxesColumn, ChartColumn, Vote, ChevronRight, ArrowRight, Clock, Users, MoveRight, Plus, User, Home, Building, Check, CheckCircle, Info } from "lucide-react"
 import '../components/css/profilepage.css'
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
+
 function Myprogress({ value }) {
     console.log(value + '%')
     return (
@@ -44,6 +46,37 @@ export default function Profilepage() {
     const [room, setRoom] = useState(() => '2')
     const [verified, setVerified] = useState(() => '1')
     const [preference, setPreference] = useState(() => '1')
+    const [userData, setUserDate] = useState({})
+
+    useEffect(() => {
+        async function getData() {
+            try {
+
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/profile`, {
+                    method: "GET",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                const data = await response.json()
+                if (response.ok) {
+                    toast(data.msg || 'Successfully Fetched User Data', { type: 'success' });
+                    console.log(data.data)
+                    setUserDate(data.data)
+                } else {
+                    toast(data.msg || 'Login Session Expired', { type: 'warning' });
+                }
+            } catch (error) {
+                console.error("Network error:", error);
+                toast('Something went wrong! ' + error, { type: 'error' });
+            }
+        }
+        getData()
+    }, []);
+
+
+
 
     return (
         <div className="profile-page page">
@@ -60,20 +93,20 @@ export default function Profilepage() {
                     <div className="profile-img">
                         <p>FJ</p>
                     </div>
-                    <h3 className="name">Fabian Joseph</h3>
-                    <p className="caption matric-no">FT23CMP0040</p>
+                    <h3 className="name">{userData.name}</h3>
+                    <p className="caption matric-no">{userData.matric_no}</p>
 
                     <div className="row email-level-box">
                         <p className="email">
                             <User />
-                            fabian@gmail.com</p>
-                        <p className="level">100 Level</p>
+                            {userData.email}</p>
+                        <p className="level">{userData.level} Level</p>
                     </div>
 
                     <hr />
 
                     <h4 className="status-txt">Account Status</h4>
-                    <p className="status-txt"> {verified?"Your account has been verified. You are eligible for a room.":"Your account is pending verification. Please check back later." }</p>
+                    <p className="status-txt"> {verified ? "Your account has been verified. You are eligible for a room." : "Your account is pending verification. Please check back later."}</p>
                 </section>
 
 
@@ -103,19 +136,19 @@ export default function Profilepage() {
                                         <div className="name-floor-box">
                                             <Home />
                                             <div>
-                                                <p>Room 101, Block A</p>
-                                                <p className="caption">Floor 1</p>
+                                                <p>Room {room}, Block A</p>
+                                                <p className="caption">Floor {userData.floor}</p>
                                             </div>
                                         </div>
 
                                         <div className="occupants-box">
                                             <div className="occupant">
                                                 <h3 className="caption">Capacity</h3>
-                                                <p>4 Students</p>
+                                                <p> {userData.floor} Students</p>
                                             </div>
                                             <div className="occupant">
                                                 <h3 className="caption">Current Occupants</h3>
-                                                <p>1 Students</p>
+                                                <p>{userData.room_mates?.length} Students</p>
                                             </div>
                                         </div>
 
@@ -154,7 +187,7 @@ export default function Profilepage() {
                                         </p>
                                         : <div className="sub-box">
                                             <p className="heading">Current Preference</p>
-                                            <p className="caption">{preference?"Room Number: "+preference:"You haven't set a room preference yet."}</p>
+                                            <p className="caption">{preference ? "Room Number: " + preference : "You haven't set a room preference yet."}</p>
                                         </div>
 
                                     :

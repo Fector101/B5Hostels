@@ -1,26 +1,68 @@
 import '../components/css/login-signuppage.css';
 import GoToTop from "../components/js/GoToTop";
 import { useState } from "react";
-import {  Lock,  IdCard, User, GraduationCap } from "lucide-react";
-import { Link } from 'react-router-dom';
+import { Lock, IdCard, User, GraduationCap } from "lucide-react";
+import { Link, useNavigate } from 'react-router-dom';
 import NotSignedIn from '../components/ui/header/NotSignedIn';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 export default function SignupPage() {
-    const [email, setEmail] = useState("");
-    const [matric_no, setMatricNo] = useState("");
-    const [password, setPassword] = useState("");
-    const [fullname, setFullName] = useState("");
-    const [level, setLevel] = useState("");
-    const [gender, setGender] = useState("");
+    const navigate = useNavigate()
 
-    const handleSubmit = (e) => {
+    const usefiller = 1
+    const [email, setEmail] = useState(usefiller ? "f@gmail.com" : '');
+    const [matric_no, setMatricNo] = useState(usefiller ? "FT23CMP00001" : '');
+    const [password, setPassword] = useState(usefiller ? "1" : '');
+    const [fullname, setFullName] = useState(usefiller ? "Fabian Joseph" : '');
+    const [level, setLevel] = useState(usefiller ? 100 : "");
+    const [gender, setGender] = useState(usefiller ? 'Male' : "");
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log({ email, password, level, gender });
+
+        const formData = {
+            name: fullname,
+            // fullname,
+            email,
+            matric_no,
+            password,
+            gender,
+            level
+        };
+
+        try {
+            console.log('process.env.REACT_APP_BACKEND_URL ', process.env.REACT_APP_BACKEND_URL)
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/authn/signup`, {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log("User created:", data);
+                toast(data.msg || 'Signup successful!', { type: 'success' });
+                navigate(data.url);
+                // Redirect or update UI
+            } else {
+                console.error("Signup error:", data);
+                toast(data.msg || 'Check your inputs.', { type: 'warning' });
+            }
+        } catch (error) {
+            console.error("Network error:", error);
+            toast('Something went wrong! ' + error, { type: 'error' });
+            // alert("Network error. Please try again.");
+        }
     };
 
     return (
         <div className="form-page page">
-            <NotSignedIn/>
+            <NotSignedIn />
             <div className="form-box">
                 <h2>Create Your Account</h2>
                 <p className="subtitle">Join our hostel management system</p>

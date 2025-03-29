@@ -4,17 +4,20 @@ const path = require('path')
 
 const verifyToken = (req, res, next) => {
     const userInfo = req.cookies.userInfo;
-    // console.log('userInfo: ', userInfo)
-    if (!userInfo) return res.status(401).sendFile(path.join(__dirname, '../../public/pages/login.html'));
-    // if (!userInfo) return res.status(401).json({ error: 'Access denied' });
 
+    console.log("Headers:", req.headers);
+    console.log("Cookies received:", req.cookies);
+    console.log('userInfo: ', userInfo)
+    if (!userInfo) return res.status(401).json({ msg: 'Access denied' });
+    
     try {
         const verified = jwt.verify(userInfo, process.env.JWT_SECRET);
         req.user = verified;
         next();
     } catch (err) {
+        console.log(err)
         // res.status(400).json({ error: 'Invalid token' });
-        res.status(400).sendFile(path.join(__dirname, '../../public/pages/login.html'));
+        return res.status(400).json({ msg: 'Bad Request' });
     }
 };
 

@@ -8,7 +8,7 @@ import { useSearchParams } from "react-router-dom";
 export default function RoomPreview({ rooms_data }) {
     const [searchParams] = useSearchParams();
     const requested_room = searchParams.get('id');
-    const [modal, setModal] = useState('false');
+    const [modal, setModal] = useState(false);
 
     let roomData = { ...rooms_data?.find(({ room_number }) => room_number === requested_room) }
     console.log(roomData);
@@ -26,7 +26,7 @@ export default function RoomPreview({ rooms_data }) {
     //     imageUrl: "https://via.placeholder.com/400x300", // Replace with a real image
     // };
 
-    const isRoomFull = roomData.currentOccupants >= roomData.capacity;
+    // const isRoomFull = roomData.currentOccupants >= roomData.capacity;
 
     return (
         <div className="page room-details-page">

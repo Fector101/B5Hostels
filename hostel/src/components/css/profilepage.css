@@ -193,8 +193,8 @@
     --size: 42px;
     width: var(--size);
     height: var(--size);
-    background-color: rgb(178, 221, 255);
-    color: rgba(5, 116, 243, 0.742);
+    background-color:#f2b2ff;
+    color: #6f0a9dbd;
     padding: 6px;
     border-radius: 8px;
 }
@@ -261,6 +261,68 @@
     width: var(--size);
     height: var(--size);
 }
+/* No room box */
+.profile-page .sub-box {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    gap: 5px;
+    align-items: center;
+}
+.profile-page .sub-box .svg-box{
+    --size: 70px;
+    width: var(--size);
+    height: var(--size);
+    padding: 5px;
+    display: flex;
+    border-radius: 60%;
+    background-color:#a383a93d;
+}
+.profile-page .sub-box svg{
+    --size: 30px;
+    width: var(--size);
+    height: var(--size);
+    color: #5c3a6cbd;
+    margin: auto;
+}
+.profile-page .sub-box p.heading{
+    font-size: 17px;
+}
+.profile-page .sub-box p.caption{
+    font-size: 14px;
+}
+
+/* Second tab */
+
+.profile-page .preference-tab{
+    margin: auto;
+    margin-top: 20px;
+    width: 100%;
+}
+.profile-page .preference-tab .sub-box{
+    align-items: flex-start;
+    text-align: left;
+}
+.profile-page .room-status{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    
+}
+.profile-page .assigned-txt{
+    color: rgb(79, 0, 128);
+    background-color: rgb(220, 176, 248);
+}
+.profile-page .unassigned-txt{
+    color: rgb(128, 124, 0);
+    background-color: rgb(248, 224, 176);
+}
+
 
 /*
 @media screen and (max-width:500px) {

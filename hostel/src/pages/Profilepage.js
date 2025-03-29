@@ -1,9 +1,10 @@
-import { TrendingUp, Tv, ChartNoAxesColumn, ChartColumn, Vote, ChevronRight, ArrowRight, Clock, Users, MoveRight, Plus, User, Home, Building, Check, CheckCircle } from "lucide-react"
+import { TrendingUp, Tv, ChartNoAxesColumn, ChartColumn, Vote, ChevronRight, ArrowRight, Clock, Users, MoveRight, Plus, User, Home, Building, Check, CheckCircle, Info } from "lucide-react"
 // import Carousel from "../components/ui/carousel/Carousel"
 // import SectionPreview from "./../components/js/SectionPreview"
 // import Recommendations from "./../components/js/Recommendations"
 // import LoginComponent from "../components/ui/login-signup/LoginForm"
 import '../components/css/profilepage.css'
+import { useState } from "react";
 function Myprogress({ value }) {
     console.log(value + '%')
     return (
@@ -43,42 +44,16 @@ function VotingStats({ title, des, runners_info_tuple }) {
     )
 }
 export default function Profilepage() {
-    const votingStatsArray = [
-        {
-            title: "Best Student Representative",
-            des: "Vote for the best candidate to represent the student body.",
-            runners_info_tuple: [
-                ["Alice Johnson", 250],
-                ["Bob Smith", 180],
-                ["Charlie Brown", 320],
-                ["Diana Prince", 210]
-            ]
-        },
-        {
-            title: "Sports Captain Election",
-            des: "Choose the next leader for our sports team.",
-            runners_info_tuple: [
-                ["Ethan Williams", 200],
-                ["Sophie Turner", 340],
-                ["Liam Brown", 275]
-            ]
-        },
-        {
-            title: "Best Club of the Year",
-            des: "Vote for your favorite club on campus.",
-            runners_info_tuple: [
-                ["Drama Club", 410],
-                ["Robotics Club", 350],
-                ["Music Club", 290]
-            ]
-        }
-    ];
+    const [current_tab, setCurrentTab] = useState(() => 'room')
+    const [room, setRoom] = useState(() => '2')
+    const [verified, setVerified] = useState(() => '1')
+    const [preference, setPreference] = useState(() => '1')
 
     return (
         <div className="profile-page page">
             <section className="heading">
                 <div>
-                    <h1>Student Dashboard</h1>
+                    <h1>Student Profile</h1>
                     <p className="caption"> View your account details</p>
                 </div>
             </section>
@@ -91,15 +66,15 @@ export default function Profilepage() {
                     </div>
                     <h3 className="name">Fabian Joseph</h3>
                     <p className="caption matric-no">FT23CMP0040</p>
-                    
+
                     <div className="row email-level-box">
                         <p className="email">
-                        <User />
+                            <User />
                             fabian@gmail.com</p>
                         <p className="level">100 Level</p>
                     </div>
-                    
-                    <hr/>
+
+                    <hr />
 
                     <h4 className="status-txt">Account Status</h4>
                     <p className="status-txt"> Your account has been verified. You are eligible for a room. </p>
@@ -111,11 +86,11 @@ export default function Profilepage() {
                     <div className="row room-header">
                         <h3>Room Details</h3>
                         <div className="tab-btns">
-                            <button className="active">
+                            <button onClick={() => setCurrentTab('room')} className={current_tab === 'room' ? 'active' : ''}>
                                 <Home />
                                 Room
                             </button>
-                            <button>
+                            <button onClick={() => setCurrentTab('preference')} className={current_tab === 'preference' ? 'active' : ''}>
                                 <Building />
                                 <p>Preference</p>
                             </button>
@@ -123,37 +98,81 @@ export default function Profilepage() {
                     </div>
 
                     <p className="caption header-cap">View your assigned room or set your preference</p>
+                    {
+                        current_tab === 'room' ?
+                            <div className="room-tab">
 
-                    <div className="name-floor-box">
-                        <Home />
-                        <div>
-                            <p>Room 101, Block A</p>
-                            <p className="caption">Floor 1</p>
-                        </div>
-                    </div>
+                                {room ?
+                                    <>
+                                        <div className="name-floor-box">
+                                            <Home />
+                                            <div>
+                                                <p>Room 101, Block A</p>
+                                                <p className="caption">Floor 1</p>
+                                            </div>
+                                        </div>
 
-                    <div className="occupants-box">
-                        <div className="occupant">
-                            <h3 className="caption">Capacity</h3>
-                            <p>4 Students</p>
-                        </div>
-                        <div className="occupant">
-                            <h3 className="caption">Current Occupants</h3>
-                            <p>1 Students</p>
-                        </div>
-                    </div>
+                                        <div className="occupants-box">
+                                            <div className="occupant">
+                                                <h3 className="caption">Capacity</h3>
+                                                <p>4 Students</p>
+                                            </div>
+                                            <div className="occupant">
+                                                <h3 className="caption">Current Occupants</h3>
+                                                <p>1 Students</p>
+                                            </div>
+                                        </div>
 
-                    <div className="amenities-box">
-                        <h3>Amenities</h3>
-                        <div>
+                                        <div className="amenities-box">
+                                            <h3>Amenities</h3>
+                                            <div>
 
-                        <p>Wifi</p>
-                        <p>Desk</p>
-                        <p>Wardrobe</p>
-                        </div>
-                    </div>
+                                                <p>Wifi</p>
+                                                <p>Desk</p>
+                                                <p>Wardrobe</p>
+                                            </div>
+                                        </div>
 
-                    <p className="last-p">  <CheckCircle /> You have been assigned to this room.</p>
+                                        <p className="last-p">  <CheckCircle /> You have been assigned to this room.</p>
+                                    </>
+                                    :
+                                    <div className="sub-box">
+                                        <div className="svg-box">
+                                            <Home />
+                                        </div>
+                                        <p className="heading">No Room Assigned Yet</p>
+                                        <p className="caption">
+                                            {verified ? "You've been verified, but no room has been assigned to you yet." : "You need to be verified before a room can be assigned to you."}
+                                        </p>
+                                    </div>
+                                }
+                            </div>
+                            :
+                            <div className="preference-tab">
+
+                                {verified ?
+                                    room ?
+                                        <p className={room ? "assigned-txt room-status" : 'unassigned-txt room-status'}>
+                                            <Info />
+                                            You already have a room assigned. If you need to change rooms, please contact the hostel administration.
+                                        </p>
+                                        : <div className="sub-box">
+                                            <p className="heading">Current Preference</p>
+                                            <p className="caption">{preference?"Room Number: "+preference:"You haven't set a room preference yet."}</p>
+                                        </div>
+
+                                    :
+                                    <div>
+                                        <p className='unassigned-txt room-status'>
+                                            <Info />
+                                            Your account must be verified before you can set room preferences.
+                                        </p>
+                                    </div>
+                                }
+
+                            </div>
+                    }
+
                 </section>
 
             </section>

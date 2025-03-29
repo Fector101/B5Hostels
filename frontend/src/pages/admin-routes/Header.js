@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 export default function Header() {
     const location = useLocation();
     return (
-        <header>
+        <header className="admin-header">
             <div className="menu-btn-box">
                 <h1>Hostel Manager</h1>
                 <button className="menu-btn">

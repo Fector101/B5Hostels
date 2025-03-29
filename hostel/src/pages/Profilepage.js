@@ -1,8 +1,4 @@
 import { TrendingUp, Tv, ChartNoAxesColumn, ChartColumn, Vote, ChevronRight, ArrowRight, Clock, Users, MoveRight, Plus, User, Home, Building, Check, CheckCircle, Info } from "lucide-react"
-// import Carousel from "../components/ui/carousel/Carousel"
-// import SectionPreview from "./../components/js/SectionPreview"
-// import Recommendations from "./../components/js/Recommendations"
-// import LoginComponent from "../components/ui/login-signup/LoginForm"
 import '../components/css/profilepage.css'
 import { useState } from "react";
 function Myprogress({ value }) {
@@ -77,7 +73,7 @@ export default function Profilepage() {
                     <hr />
 
                     <h4 className="status-txt">Account Status</h4>
-                    <p className="status-txt"> Your account has been verified. You are eligible for a room. </p>
+                    <p className="status-txt"> {verified?"Your account has been verified. You are eligible for a room.":"Your account is pending verification. Please check back later." }</p>
                 </section>
 
 

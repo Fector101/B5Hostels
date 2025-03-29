@@ -92,7 +92,19 @@ body>#root {
 .caption{
     color: grey;
 }
-
+.modal:not(.display-none){
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.784);
+}
 @keyframes bounce {
     0% {
         transform: translateY(0);

@@ -10,7 +10,7 @@ import Header from "./components/ui/header/Header";
 // import "./components/css/responsive.css"
 import Footer from "./components/ui/footer/Footer";
 // import Moviepage from "./pages/stuff/Moviepage";
-import Pollspage from "./pages/Pollspage";
+import Roomspage from "./pages/Roomspage";
 // import Historypage from "./pages/Historypage";
 import { useEffect, useState } from "react";
 import Loginpage from "./pages/Loginpage";
@@ -18,6 +18,7 @@ import Landingpage from "./pages/Landingpage";
 import Adminpanelpage from "./pages/Adminpanelpage";
 import SignupPage from "./pages/Signuppage";
 import Profilepage from "./pages/Profilepage";
+import RoomDetailsPage from "./pages/RoomDetailsPage";
 // import SignupPage from "./pages/Signuppage";
 // import LoginPage from "./pages/Loginpage";
 // import ForgotPSPage from "./pages/ForgotPSpage";
@@ -41,6 +42,56 @@ function App() {
     const location = useLocation();
     const [header_state, setHeaderState] = useState(window.innerWidth > 500);
     // const [btn_state, setBtnState] = useState(window.innerWidth > 500);
+    const rooms = [
+        {
+            room_number: "H101",
+            building: "Hostel A",
+            capacity: 4,
+            floor: 1,
+            occupants: 3,
+            amenities: ["Bunk Beds", "Shared Bathroom", "WiFi", "Study Desk"]
+        },
+        {
+            room_number: "H202",
+            building: "Hostel B",
+            capacity: 2,
+            floor: 2,
+            occupants: 2,
+            amenities: ["Single Beds", "Private Bathroom", "WiFi", "Closet"]
+        },
+        {
+            room_number: "H303",
+            building: "Hostel C",
+            capacity: 6,
+            floor: 3,
+            occupants: 4,
+            amenities: ["Bunk Beds", "Shared Bathroom", "Reading Lamp", "Laundry Access"]
+        },
+        {
+            room_number: "H404",
+            building: "Hostel D",
+            capacity: 3,
+            floor: 4,
+            occupants: 2,
+            amenities: ["Single Beds", "Shared Bathroom", "Mini Fridge", "Study Desk"]
+        },
+        {
+            room_number: "H505",
+            building: "Hostel E",
+            capacity: 5,
+            floor: 5,
+            occupants: 5,
+            amenities: ["Bunk Beds", "WiFi", "Shared Kitchen", "Lockers"]
+        },
+        {
+            room_number: "H606",
+            building: "Hostel F",
+            capacity: 4,
+            floor: 6,
+            occupants: 3,
+            amenities: ["Single Beds", "WiFi", "AC", "Wardrobe"]
+        }
+    ];
 
     useEffect(
         function () {
@@ -71,7 +122,7 @@ function App() {
 
     return (
         <>
-            {!["/", "/login",'/signup'].includes(location.pathname) &&  <Header/>}
+            {!["/", "/login", '/signup'].includes(location.pathname) && <Header />}
             <Routes>
                 {/* <Route path="/signup" element={ <SignupPage /> }/> */}
                 {/* <Route path="/login" element={ <LoginPage /> }/> */}
@@ -84,7 +135,8 @@ function App() {
                     path="/home"
                     element={<Homepage top_movies_data__={top_movies_data} />}
                 />
-                <Route path="/polls" element={<Pollspage />} />
+                <Route path="/room" element={<RoomDetailsPage rooms_data={rooms}/>} />
+                <Route path="/rooms" element={<Roomspage rooms_data={rooms}/>} />
                 {/*
         <Route path="/forgot-ps" element={ <ForgotPSPage /> }/>
         <Route path="/list/*" element={<ListRoutes />} /> 
@@ -92,12 +144,12 @@ function App() {
                 <Route
                     path="*"
                     element={
-                        <NotFoundpage redirect_path="/" timeout_secs={5*1000} />
+                        <NotFoundpage redirect_path="/" timeout_secs={5 * 1000} />
                     }
                 />
             </Routes>
-           
-            <Footer/>
+
+            <Footer />
         </>
         // <div className="App">
         // <Homepage top_movies_data__={top_movies_data}/>

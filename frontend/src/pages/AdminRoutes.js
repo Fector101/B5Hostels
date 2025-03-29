@@ -1,24 +1,27 @@
-import { Link, Route, Routes } from "react-router-dom";
+import { useLocation, Link, Route, Routes } from "react-router-dom";
 import Loginpage from "./admin-routes/Loginpage";
 import Dashboard from "./admin-routes/Dashboard";
 import Header from "./admin-routes/Header";
 import '../components/css/admin.css'
 import Students from "./admin-routes/Students";
 import Rooms from "./admin-routes/Rooms";
-export default function AdminRoutes({text}){
+
+export default function AdminRoutes({ text }) {
+    const location = useLocation();
+
     return (
         <>
-        <Header/>
-        <Routes>
-            <Route>
-                {/* <Route index  element={ <Listspage text='Frm App Component to Route'/> } />
+            {!["/admin/login"].includes(location.pathname) && <Header /> }
+            <Routes>
+                <Route>
+                    {/* <Route index  element={ <Listspage text='Frm App Component to Route'/> } />
                 <Route path=":list_name" element={ <Listpage text='Frm App Component to Route'/> }/> */}
-                <Route path="rooms" element={ <Rooms text='Frm App Component to Route'/> }/>
-                <Route path="students" element={ <Students text='Frm App Component to Route'/> }/>
-                <Route path="dashboard" element={ <Dashboard text='Frm App Component to Route'/> }/>
-                <Route path="login" element={ <Loginpage text='Frm App Component to Route'/> }/>
-            </Route>
-        </Routes >
+                    <Route path="rooms" element={<Rooms text='Frm App Component to Route' />} />
+                    <Route path="students" element={<Students text='Frm App Component to Route' />} />
+                    <Route path="dashboard" element={<Dashboard text='Frm App Component to Route' />} />
+                    <Route path="login" element={<Loginpage text='Frm App Component to Route' />} />
+                </Route>
+            </Routes >
         </>
         // <>
         //     <p>{text}</p>

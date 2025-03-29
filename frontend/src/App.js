@@ -43,36 +43,7 @@ import AdminRoutes from "./pages/AdminRoutes";
 // /site-collection/
 function App() {
     const location = useLocation();
-    const [header_state, setHeaderState] = useState(window.innerWidth > 500);
-    // const [btn_state, setBtnState] = useState(window.innerWidth > 500);
-   
-    useEffect(
-        function () {
-            // setBtnState(["/", "/login"].includes(location.pathname));
-
-            setHeaderState(false);
-        },
-        [location]
-    );
-
-
-    // function toggleHeader() {
-    //     setHeaderState((prev) => !prev);
-    // }
-
-    useEffect(() => {
-        function handleResize() {
-            if (window.innerWidth > 800) {
-                // setHeaderState(true);
-            } else {
-                // setHeaderState(false);
-            }
-        }
-
-        window.addEventListener("resize", handleResize);
-        // return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
+  
     return (
         <>
             {!["/", "/login", '/signup'].includes(location.pathname) && !location.pathname.startsWith('/admin')&& <Header />}

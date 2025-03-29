@@ -34,7 +34,7 @@
     border-radius: 10px;
 }
 
-header {
+header.admin-header{
     --primary-btn-bg:hotpink;
 
     display: flex;
@@ -46,19 +46,19 @@ header {
     align-items: center;
 }
 
-header h1 {
+header.admin-header h1 {
     font-size: 20px;
     margin-block: auto;
 
 }
 
-.menu-btn-box {
+.admin-header .menu-btn-box {
     display: flex;
     align-items: center;
 
 }
 
-.menu-btn-box button {
+.admin-header .menu-btn-box button {
     display: none;
     align-items: center;
     justify-content: center;
@@ -71,18 +71,18 @@ header h1 {
 
 }
 
-.menu-btn-box button svg {
+.admin-header .menu-btn-box button svg {
     --size: 20px;
     width: var(--size);
     height: var(--size);
 }
 
-.menu-btn-box button:hover {
+.admin-header .menu-btn-box button:hover {
     background: #e0dede;
     cursor: pointer;
 }
 
-header nav {
+header.admin-header nav {
     margin: auto;
     display: flex;
     gap: 10px;
@@ -90,17 +90,17 @@ header nav {
     justify-content: center;
 }
 
-header nav a:hover {
+header.admin-header nav a:hover {
     background-color: hsl(210, 6.6%, 70.2%);
 
 }
 
-header nav a.active {
+header.admin-header nav a.active {
     color: white;
     background-color: var(--primary-btn-bg);
 }
 
-header nav a {
+header.admin-header nav a {
     color: inherit;
     cursor: pointer;
     text-decoration: none;
@@ -116,14 +116,14 @@ header nav a {
     font-size: 14px;
 }
 
-header nav a svg {
+header.admin-header nav a svg {
     --size: 16px;
     width: var(--size);
     height: var(--size);
     margin: 0 5px;
 }
 
-header>button:last-child {
+header.admin-header >button:last-child {
     /* margin-left: auto; */
     width: 100px;
     display: flex;
@@ -135,7 +135,7 @@ header>button:last-child {
     border-radius: 10px;
 }
 
-header>button:last-child svg {
+header.admin-header >button:last-child svg {
     --size: 20px;
     margin-right: 5px;
     height: var(--size);
@@ -800,15 +800,15 @@ header>button:last-child svg {
         max-width: 400px;
     }
 
-    header h1 {
+    header.admin-header h1 {
         font-size: 21px;
     }
 
-    header {
+    header.admin-header {
         padding: 1rem;
     }
 
-    header nav {
+    header.admin-header nav {
         flex-direction: column;
         height: 0;
         width: 0;
@@ -816,11 +816,11 @@ header>button:last-child svg {
         transition: height 0.5s ease;
     }
 
-    header nav button {
+    header.admin-header nav button {
         width: 100%;
     }
 
-    header button.signout-btn {
+    header.admin-header button.signout-btn {
         height: 0;
         width: 0;
         overflow: hidden;

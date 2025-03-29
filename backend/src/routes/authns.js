@@ -36,33 +36,28 @@ router.post("/signup", async (req, res) => {
         });
         user = await doDataBaseThing(() => user.save());
         if (user === "db_error") {
-            return res
-                .status(400)
-                .json({
-                    exists: true,
-                    msg: "An error occurred while saving the user.",
-                });
+            return res.status(400).json({
+                exists: true,
+                msg: "An error occurred while saving the user.",
+            });
         }
 
-
-        const data = { matric_no }
+        const data = { matric_no };
         const token = jwt.sign(data, process.env.JWT_SECRET, {
             expiresIn: "1h",
         });
         res.cookie("userInfo", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production", // 🔥 Only secure in production
-            sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",// 🔥 Use Lax for localhost
+            sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // 🔥 Use Lax for localhost
             maxAge: 3600000,
         }); // 1 hour
 
-        return res
-            .status(200)
-            .json({
-                redirect: true,
-                url: "/profile",
-                msg: "Signup SuccessFul",
-            });
+        return res.status(200).json({
+            redirect: true,
+            url: "/profile",
+            msg: "Signup SuccessFul",
+        });
     } catch (err) {
         console.log("signup error: ", err);
         res.status(500).json({ error: "Server error" });
@@ -93,13 +88,11 @@ router.post("/login", async (req, res) => {
             secure: process.env.NODE_ENV === "production",
             maxAge: 3600000,
         }); // 1 hour
-        return res
-            .status(200)
-            .json({
-                redirect: true,
-                url: "/profile",
-                msg: "Login SuccessFul",
-            });
+        return res.status(200).json({
+            redirect: true,
+            url: "/profile",
+            msg: "Login SuccessFul",
+        });
     } catch (err) {
         console.log("login error: ", err);
         res.status(500).json({ msg: "Server error" });
@@ -114,23 +107,30 @@ router.post("/logout", (req, res) => {
     res.redirect("/login");
 });
 
-router.post('/admin-login', async (req, res) => {
+router.post("/admin-login", async (req, res) => {
     try {
         const { password } = req.body;
         // const user = await Student.findOne({ matric_no });
-        const isMatch = password === process.env.admin_password || 'admin' 
-        if (!isMatch) return res.status(400).json({ msg: 'Invalid password' });
+        const isMatch = password === process.env.admin_password || "admin";
+        if (!isMatch) return res.status(400).json({ msg: "Invalid password" });
 
-        const token = jwt.sign({ id: process.env.JWT_SECRET}, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign(
+            { id: process.env.JWT_SECRET },
+            process.env.JWT_SECRET,
+            { expiresIn: "1h" }
+        );
 
         // Set token in HTTP-only cookie
-        res.cookie('token', token, { httpOnly: true, secure: true, maxAge: 3600000 }); // 1 hour
+        res.cookie("adminInfo", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 3600000,
+        }); // 1 hour
 
-        res.status(201).json({ url: '/admin/dashboard' });
-
+        res.status(201).json({ url: "/admin/dashboard" });
     } catch (err) {
-        console.log('login error: ', err)
-        res.status(500).json({ msg: 'Server error' });
+        console.log("login error: ", err);
+        res.status(500).json({ msg: "Server error" });
     }
 });
 

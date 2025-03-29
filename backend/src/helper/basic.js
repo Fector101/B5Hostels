@@ -22,6 +22,26 @@ const verifyToken = (req, res, next) => {
 };
 
 
+const verifyTokenAdmin = (req, res, next) => {
+    const adminInfo = req.cookies.adminInfo;
+
+    // console.log("Headers:", req.headers);
+    // console.log("Cookies received:", req.cookies);
+    // console.log('userInfo: ', userInfo)
+    if (!adminInfo) return res.status(401).json({ msg: 'Access denied' });
+    
+    try {
+        const verified = jwt.verify(adminInfo, process.env.JWT_SECRET);
+        req.admin = verified;
+        next();
+    } catch (err) {
+        console.log(err)
+        // res.status(400).json({ error: 'Invalid token' });
+        return res.status(400).json({ msg: 'Bad Request' });
+    }
+};
+
+
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -54,4 +74,4 @@ function daysPassed(date) {
     return days;
 }
 
-module.exports = {verifyToken, doDataBaseThing,daysPassed,delay};
+module.exports = {verifyToken,verifyTokenAdmin, doDataBaseThing,daysPassed,delay};

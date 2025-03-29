@@ -1,11 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import GoToTop from "../components/js/GoToTop";
 import '../components/css/roomspage.css';
 import { Building, Users } from "lucide-react";
 import { UserContext } from '../components/js/UserContext';
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 
-function RoomCard({ amenities, status, img, room_number, block, capacity, floor, occupants }) {
+function RoomCard({ status, img, room_number, block, capacity, floor, occupants }) {
     const navigate = useNavigate()
     const goToRoom = () => {
         navigate(`/room?id=${room_number}`);

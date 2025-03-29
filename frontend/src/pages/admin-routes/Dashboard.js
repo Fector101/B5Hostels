@@ -1,5 +1,22 @@
+import { UserContext } from '../../components/js/UserContext';
+import { useContext, useEffect, useState } from "react";
+
+
 export default function Dashboard() {
-    
+    const { RoomsData } = useContext(UserContext);
+    const [total_rooms,setTotalRooms] = useState(0);
+    const [full_rooms,setFullRooms] = useState(0);
+    const [available_rooms,setAvailableRooms] = useState(0);
+    const [under_maintenance,setUnderMaintenance] = useState(0);
+    const [total_students,setTotalStudents] = useState(0);
+    const [awaiting_approval,setAwaitingApproval] = useState(0);
+    const [total_students_that_have_rooms,settotal_students_that_have_rooms] = useState(0);
+    useEffect(() => {
+        setTotalRooms(RoomsData.length)
+        setAvailableRooms(RoomsData.filter( room => room.occupants < room.capacity ).length)
+        setFullRooms(RoomsData.filter( room => room.occupants === room.capacity ).length)
+        setUnderMaintenance(RoomsData.filter( room => room.status === "maintenance").length) 
+    },[])
     return (
         <div className="page adminpage">
             <div className="welcome-box">
@@ -17,7 +34,7 @@ export default function Dashboard() {
                             <h3>Total Students</h3>
                         </div>
                         <p>Registered in system</p>
-                        <span>total_students</span>
+                        <span>{total_students}</span>
                     </div>
                 </div>
                 <div className="card">
@@ -28,7 +45,7 @@ export default function Dashboard() {
                             <h3>Pending Verification</h3>
                         </div>
                         <p>Awaiting approval</p>
-                        <span>awaiting_approval</span>
+                        <span>{awaiting_approval}</span>
                     </div>
                 </div>
                 <div className="card">
@@ -39,7 +56,7 @@ export default function Dashboard() {
                             <h3>Verified Students</h3>
                         </div>
                         <p>Approved for accommodation</p>
-                        <span>total_students_that_have_rooms</span>
+                        <span>{total_students_that_have_rooms}</span>
                     </div>
                 </div>
                 <div className="card">
@@ -50,7 +67,7 @@ export default function Dashboard() {
                             <h3>Total Rooms</h3>
                         </div>
                         <p>Available in the hostel</p>
-                        <span>total_rooms</span>
+                        <span>{total_rooms}</span>
                     </div>
                 </div>
                 <div className="card">
@@ -61,7 +78,7 @@ export default function Dashboard() {
                             <h3>Available Rooms</h3>
                         </div>
                         <p>Ready for allocation</p>
-                        <span>available_rooms</span>
+                        <span>{available_rooms}</span>
                     </div>
                 </div>
             </div>
@@ -73,7 +90,7 @@ export default function Dashboard() {
                         <span className="icon">⏳</span>
                         <div>
                             <strong>Pending Verification</strong>
-                            <p> awaiting_approval students awaiting verification</p>
+                            <p> {awaiting_approval} students awaiting verification</p>
                         </div>
                         <button className="view-btn">View All</button>
                     </div>
@@ -81,7 +98,7 @@ export default function Dashboard() {
                         <span className="icon">🏠</span>
                         <div>
                             <strong>Verification Students</strong>
-                            <p>awaiting_approval students with assigned rooms</p>
+                            <p>{awaiting_approval} students with assigned rooms</p>
                         </div>
                         <button className="view-btn">View All</button>
                     </div>
@@ -94,15 +111,15 @@ export default function Dashboard() {
                         <div className="status-item">
                             <span className="status-dot available"></span> Available
                             Rooms
-                            <span className="count">available_rooms </span>
+                            <span className="count">{available_rooms} </span>
                         </div>
                         <div className="status-item">
                             <span className="status-dot occupied"></span> Fully Occupied
-                            <span className="count"> full_rooms</span>
+                            <span className="count"> {full_rooms}</span>
                         </div>
                         <div className="status-item">
                             <span className="status-dot maintenance"></span> Under
-                            Maintenance <span className="count">under_maintenance </span>
+                            Maintenance <span className="count">{under_maintenance} </span>
                         </div>
                     </div>
                     <button className="view-btn" id="view-all-rooms">View All Rooms</button>

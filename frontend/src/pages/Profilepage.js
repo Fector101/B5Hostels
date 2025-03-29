@@ -1,8 +1,7 @@
-import { TrendingUp, Tv, ChartNoAxesColumn, ChartColumn, Vote, ChevronRight, ArrowRight, Clock, Users, MoveRight, Plus, User, Home, Building, Check, CheckCircle, Info } from "lucide-react"
+import { User, Home, Building, CheckCircle, Info } from "lucide-react"
 import '../components/css/profilepage.css'
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from '../components/js/UserContext';
-import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 
 // const { user, setUser } = useContext(null);

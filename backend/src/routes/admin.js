@@ -1,16 +1,15 @@
 const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const { verifyToken, doDataBaseThing } = require("../helper/basic");
-const Room = require("../models/Room"); // Import the Room model
+const { verifyTokenAdmin, doDataBaseThing } = require("../helper/basic");
+const Room = require("../models/Room");
 const Student = require("../models/Student");
 
 const router = express.Router();
-router.use(cookieParser());
+
 let all_students;
 let all_rooms;
-router.get("/dashboard", async (req, res) => {
-    all_students =(await doDataBaseThing(() => Student.find()));
+
+router.get("/dashboard", verifyTokenAdmin, async (req, res) => {
+    all_students = (await doDataBaseThing(() => Student.find()));
     all_rooms = (await doDataBaseThing(() => Room.find()));
 
     const total_students = all_students && all_students.length;
@@ -22,6 +21,7 @@ router.get("/dashboard", async (req, res) => {
     const total_students_that_have_rooms = all_students.filter(
         (student) => student.room
     ).length;
+    
     const total_rooms = all_rooms.length;
     const available_rooms = all_rooms.filter(
         (room) => room.occupants < room.capacity
@@ -42,7 +42,7 @@ router.get("/dashboard", async (req, res) => {
     //     total_students,
     //     awaiting_approval,
     // })
-    res.render("admin-dashboard", {
+    const data = {
         page_title: "dashboard",
         under_maintenance,
         full_rooms,
@@ -51,7 +51,9 @@ router.get("/dashboard", async (req, res) => {
         total_students_that_have_rooms,
         total_students,
         awaiting_approval,
-    });
+        msg: 'Successfully Fetched Data'
+    }
+    res.status(201).json(data);
 });
 
 router.get("/students", async (req, res) => {
@@ -61,7 +63,7 @@ router.get("/students", async (req, res) => {
     // console.log(students)
     res.render("admin-students", {
         page_title: "students",
-        students:all_students,
+        students: all_students,
         rooms: all_rooms,
     });
 });
@@ -90,7 +92,7 @@ router.post("/assign-room", async (req, res) => {
             .json({ exists: true, msg: "Student doesn't Exist" });
     }
     let room = await doDataBaseThing(() => Room.findOne({ room_number }));
-    if(room.occupants.find(each => each.matric_no === matric_no) ){
+    if (room.occupants.find(each => each.matric_no === matric_no)) {
         return res
             .status(400)
             .json({ exists: true, msg: "Student Already in Room" });
@@ -105,7 +107,7 @@ router.post("/assign-room", async (req, res) => {
         user.room = room_number;
         user.save();
     });
-    console.log('ME ',user)
+    console.log('ME ', user)
     return res.status(200).json({ msg: "Student Successfully Added to Room" });
 });
 router.post("/add-room", async (req, res) => {
@@ -131,10 +133,10 @@ router.post("/add-room", async (req, res) => {
         capacity,
         amenities,
         floor: floorNumber,
-        title:room_number,
+        title: room_number,
         img: randomImg(),
     });
-    console.log('This is room --> ',room)
+    console.log('This is room --> ', room)
 
     const result = await doDataBaseThing(() => room.save());
 
@@ -193,17 +195,17 @@ router.post("/reject-student-room", async (req, res) => {
             .status(400)
             .json({ exists: true, msg: "Student doesn't Exist" });
     }
-    try{
+    try {
         await doDataBaseThing(() => {
-            user.preference=''
+            user.preference = ''
             user.save();
         });
         return res.status(200).json({ msg: "Rejected Student Room Successfully" });
-    }catch(err){
+    } catch (err) {
         console.log(err)
         return res
-        .status(400)
-        .json({ msg: "-Network Error, Try Refreshing Page" });
+            .status(400)
+            .json({ msg: "-Network Error, Try Refreshing Page" });
     }
 
 })

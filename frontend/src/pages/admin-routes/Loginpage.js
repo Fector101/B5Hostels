@@ -42,7 +42,6 @@ export default function Loginpage() {
                 await fetchRoomsData()
                 await fetchUserData()
                 navigate(data.url);
-                // Redirect or update UI
             } else {
                 console.error("Login error:", data);
                 toast(data.msg || 'Check your inputs.', { type: 'warning' });

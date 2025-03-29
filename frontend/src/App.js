@@ -75,7 +75,7 @@ function App() {
 
     return (
         <>
-            {!["/", "/login", '/signup',"/admin/login"].includes(location.pathname) && <Header />}
+            {!["/", "/login", '/signup'].includes(location.pathname) && !location.pathname.startsWith('/admin')&& <Header />}
             <ToastContainer />
 
             <Routes>

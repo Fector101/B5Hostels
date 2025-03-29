@@ -78,8 +78,9 @@
     font-weight: 600;
     border: 1px solid grey;
     width: max-content;
-    padding: 2px;
+    padding: 2px 6px;
     border-radius: 6px;
+    font-size: 13px;
 }
 
 .profile-page .student-details-box hr {
@@ -105,9 +106,7 @@
 
     font-size: 13px;
     padding: 5px 10px;
-    background: rgba(181, 181, 181, 0.649);
-    /* background: rgba(181, 181, 181, 0.765); */
-    /* background: rgba(181, 181, 181, 0.765); */
+    background:rgba(181, 181, 181, 0.44);
     border-radius: 8px;
     margin-top: 5px;
 }
@@ -118,7 +117,9 @@
 }
 
 .profile-page .room-details .room-header {
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    flex-wrap: wrap;
+    gap: 10px;
     margin-bottom: 15px;
 }
 .profile-page .room-details .room-header h3{
@@ -135,6 +136,7 @@
     align-items: center;
     gap: 10px;
     border-radius: 5px;
+    margin-left: auto;
 }
 
 .profile-page .tab-btns button.active {

@@ -20,11 +20,13 @@ export const UserProvider = ({ children }) => {
                 setUser(data.data);  // Save user data globally
                 console.log('Getting user profile data...')
             } else {
-                setUser(null);
+                console.log(' Bad Request user profile data...')
+                setUser({});
             }
         } catch (error) {
+            console.log(error,' Error Getting user profile data...')
             console.error("Network error:", error);
-            setUser(null);
+            setUser({});
         }
     };
 

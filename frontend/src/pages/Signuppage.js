@@ -32,7 +32,6 @@ export default function SignupPage() {
         };
 
         try {
-            console.log('process.env.REACT_APP_BACKEND_URL ', process.env.REACT_APP_BACKEND_URL)
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/authn/signup`, {
                 method: "POST",
                 credentials: "include",

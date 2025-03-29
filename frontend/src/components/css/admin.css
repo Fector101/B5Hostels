@@ -1,11 +1,12 @@
-.page.adminpage{
+.page.adminpage {
     padding: 0;
     letter-spacing: 0.6px;
-    --primary-btn-bg:hotpink;
+    --primary-btn-bg: hotpink;
     font-family: SF Pro Display, system-ui, sans-serif;
     display: flex;
     flex-direction: column;
 }
+
 /* body {
     display: flex;
     flex-direction: column;
@@ -14,18 +15,21 @@
 .page.adminpage .dim-text {
     color: #666;
 }
-.page.adminpage .close-btn{
+
+.page.adminpage .close-btn {
     border-radius: 10px;
-  --size: 25px;
-  height: var(--size);
-  width: var(--size);
-  border-style: none;
-  background-color: transparent;
+    --size: 25px;
+    height: var(--size);
+    width: var(--size);
+    border-style: none;
+    background-color: transparent;
 }
-.page.adminpage .close-btn:hover{
+
+.page.adminpage .close-btn:hover {
     background: #e7e4e4;
     cursor: pointer;
 }
+
 .page.adminpage .primary-btn {
     background-color: var(--primary-btn-bg);
     color: white;
@@ -34,8 +38,8 @@
     border-radius: 10px;
 }
 
-header.admin-header{
-    --primary-btn-bg:hotpink;
+header.admin-header {
+    --primary-btn-bg: hotpink;
 
     display: flex;
     box-shadow: -1px 0px 0.8px grey;
@@ -58,7 +62,7 @@ header.admin-header h1 {
 
 }
 
-.admin-header .menu-btn-box button {
+.admin-header button {
     display: none;
     align-items: center;
     justify-content: center;
@@ -123,7 +127,7 @@ header.admin-header nav a svg {
     margin: 0 5px;
 }
 
-header.admin-header >button:last-child {
+header.admin-header>button:last-child {
     /* margin-left: auto; */
     width: 100px;
     display: flex;
@@ -135,7 +139,7 @@ header.admin-header >button:last-child {
     border-radius: 10px;
 }
 
-header.admin-header >button:last-child svg {
+header.admin-header>button:last-child svg {
     --size: 20px;
     margin-right: 5px;
     height: var(--size);
@@ -405,9 +409,10 @@ header.admin-header >button:last-child svg {
     justify-content: center;
 }
 
-.page.adminpage .student-card.pending{
+.page.adminpage .student-card.pending {
     border-color: hsl(45 80% 60%);
 }
+
 .page.adminpage .student-card {
     width: 400px;
     max-width: 99%;
@@ -789,7 +794,7 @@ header.admin-header >button:last-child svg {
         width: 400px;
     }
 
-   .page.adminpage .room-selection-card.student-card {
+    .page.adminpage .room-selection-card.student-card {
         width: 100%;
     }
 }
@@ -806,6 +811,7 @@ header.admin-header >button:last-child svg {
 
     header.admin-header {
         padding: 1rem;
+        flex-direction: column;
     }
 
     header.admin-header nav {
@@ -827,7 +833,8 @@ header.admin-header >button:last-child svg {
         border: none;
         transition: height 0.5s ease;
     }
-.menu-btn-box {
+
+    .menu-btn-box {
         width: 100%;
     }
 
@@ -840,7 +847,7 @@ header.admin-header >button:last-child svg {
 
 
 @media screen and (max-width:550px) {
-  .page.adminpage .main-page-details-box .card {
+    .page.adminpage .main-page-details-box .card {
         min-width: 400px;
         max-width: 400px;
     }
@@ -852,7 +859,20 @@ header.admin-header >button:last-child svg {
         max-width: auto;
     }
 
-   .page.adminpage .main-page-details-box .card .card-item {
+    .page.adminpage .main-page-details-box .card .card-item {
         gap: 10px;
     }
-}   
+}
+
+
+.show-signout-btn{
+    height: 35px !important;
+    width: 100px !important;
+    border: 1px solid grey !important;
+    /* overflow: hidden !important; */
+    /* border: none !important; */
+}
+.show-nav-phone{
+    width: 100% !important;
+    height: 130px !important;
+}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./../components/css/roomdetailspage.css"; // Make sure to create this file and import it
+import "../components/css/roomdetailspage.css"; // Make sure to create this file and import it
 import { Building, CreditCard, Users, X } from "lucide-react";
 import img from './img6.jpg'
 import { useSearchParams } from "react-router-dom";

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import GoToTop from "../components/js/GoToTop";
-import './../components/css/roomspage.css';
+import '../components/css/roomspage.css';
 import { Building, Users } from "lucide-react";
 
 function RoomCard({ amenities, room_number, building, capacity, floor, occupants }) {

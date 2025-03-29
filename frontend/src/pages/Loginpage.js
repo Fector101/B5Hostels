@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {  Lock, Bed, GraduationCap  } from "lucide-react";
 
-import './../components/css/login-signuppage.css'
+import '../components/css/login-signuppage.css'
 import GoToTop from "../components/js/GoToTop";
 import { Link } from "react-router-dom";
 import NotSignedIn from "../components/ui/header/NotSignedIn";

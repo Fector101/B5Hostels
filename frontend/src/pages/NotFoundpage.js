@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import './../components/css/page-not-found.css'
+import '../components/css/page-not-found.css'
 
 
 export default function NotFoundpage({redirect_path,timeout_secs}){

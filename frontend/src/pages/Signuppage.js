@@ -1,4 +1,4 @@
-import './../components/css/login-signuppage.css';
+import '../components/css/login-signuppage.css';
 import GoToTop from "../components/js/GoToTop";
 import { useState } from "react";
 import {  Lock,  IdCard, User, GraduationCap } from "lucide-react";

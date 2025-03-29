@@ -50,16 +50,16 @@ const resolveModule = (resolveFn, filePath) => {
 module.exports = {
   dotenv: resolveApp('.env'),
   // appPath: resolveApp('.'),
-  appPath: path.resolve('hostel'),
+  appPath: path.resolve('frontend'),
 
   appBuild: resolveApp(buildPath),
-  appPublic: path.resolve('hostel','public'),
-  appHtml: path.resolve('hostel','public','index.html'),
+  appPublic: path.resolve('frontend','public'),
+  appHtml: path.resolve('frontend','public','index.html'),
   // appPublic: resolveApp('public'),
   // appHtml: resolveApp('public/index.html'),
   // appIndexJs: resolveModule(resolveApp, 'src/index'),
-  appIndexJs: path.resolve('hostel','src/index.js'),
-  appSrc: path.resolve('hostel','src'),
+  appIndexJs: path.resolve('frontend','src/index.js'),
+  appSrc: path.resolve('frontend','src'),
 
   appPackageJson: resolveApp('package.json'),
   appTsConfig: resolveApp('tsconfig.json'),

@@ -79,10 +79,7 @@ function App() {
             <ToastContainer />
 
             <Routes>
-                {/* <Route path="/signup" element={ <SignupPage /> }/> */}
-                {/* <Route path="/login" element={ <LoginPage /> }/> */}
                 <Route path="/" element={<Landingpage />} />
-                {/* <Route path="/admin" element={<Adminpanelpage />} /> */}
                 <Route path="/login" element={<Loginpage />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/profile" element={<Profilepage />} />

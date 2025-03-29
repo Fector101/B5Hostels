@@ -42,7 +42,7 @@ function getInitials(name) {
 }
 router.get("/profile", verifyToken, async (req, res) => {
     const userInfo = req.user;
-    await delay(1000*2)
+    await delay(1000*200)
     console.log('done waiting........................')
     // const token = jwt.sign({ id: user._id, username: user.username, matric_no: user.matric_no }, process.env.JWT_SECRET, { expiresIn: '1h' });
     // res.cookie('userInfo', token

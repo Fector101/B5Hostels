@@ -3,10 +3,12 @@ import '../components/css/profilepage.css'
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from '../components/js/UserContext';
 import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 // const { user, setUser } = useContext(null);
 export default function Profilepage() {
     const [current_tab, setCurrentTab] = useState(() => 'room')
+    const navigate = useNavigate()
 
     const { userData } = useContext(UserContext);
     // console.log(userData)
@@ -41,6 +43,17 @@ export default function Profilepage() {
             //  getData();
     //     }
     // }, [userData]);
+    useEffect(() => {
+        const timeout_secs=15
+        const timeout = setTimeout(()=>{
+            navigate('/login')
+        },1000 * timeout_secs)
+        if(Object.keys(userData).length){
+            clearTimeout(timeout)
+        }
+        return () => {clearTimeout(timeout)}
+
+    }, [userData]);
 
 
     return (

@@ -3,20 +3,30 @@ import { useContext, useEffect, useState } from "react";
 
 
 export default function Dashboard() {
-    const { RoomsData } = useContext(UserContext);
-    const [total_rooms,setTotalRooms] = useState(0);
-    const [full_rooms,setFullRooms] = useState(0);
-    const [available_rooms,setAvailableRooms] = useState(0);
-    const [under_maintenance,setUnderMaintenance] = useState(0);
-    const [total_students,setTotalStudents] = useState(0);
-    const [awaiting_approval,setAwaitingApproval] = useState(0);
-    const [total_students_that_have_rooms,settotal_students_that_have_rooms] = useState(0);
+    const { RoomsData, StudentsData } = useContext(UserContext);
+    const [total_rooms, setTotalRooms] = useState(0);
+    const [full_rooms, setFullRooms] = useState(0);
+    const [available_rooms, setAvailableRooms] = useState(0);
+    const [under_maintenance, setUnderMaintenance] = useState(0);
+    const [total_students, setTotalStudents] = useState(0);
+    const [awaiting_approval, setAwaitingApproval] = useState(0);
+    const [total_students_that_have_rooms, settotal_students_that_have_rooms] = useState(0);
+    
     useEffect(() => {
         setTotalRooms(RoomsData.length)
-        setAvailableRooms(RoomsData.filter( room => room.occupants < room.capacity ).length)
-        setFullRooms(RoomsData.filter( room => room.occupants === room.capacity ).length)
-        setUnderMaintenance(RoomsData.filter( room => room.status === "maintenance").length) 
-    },[])
+        setAvailableRooms(RoomsData.filter(room => room.occupants < room.capacity).length)
+        setFullRooms(RoomsData.filter(room => room.occupants === room.capacity).length)
+        setUnderMaintenance(RoomsData.filter(room => room.status === "maintenance").length)
+        setTotalStudents(StudentsData.length)
+        setAwaitingApproval(StudentsData.filter(
+            (student) =>
+                (!student.room && student.preference) ||
+                (!student.room && student.payments)
+        ).length)
+        settotal_students_that_have_rooms(StudentsData.filter(
+            (student) => student.room
+        ).length)
+    }, [])
     return (
         <div className="page adminpage">
             <div className="welcome-box">

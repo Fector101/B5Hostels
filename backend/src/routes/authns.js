@@ -113,12 +113,9 @@ router.post("/admin-login", async (req, res) => {
         // const user = await Student.findOne({ matric_no });
         const isMatch = password === process.env.admin_password || "admin";
         if (!isMatch) return res.status(400).json({ msg: "Invalid password" });
-
-        const token = jwt.sign(
-            { id: process.env.JWT_SECRET },
-            process.env.JWT_SECRET,
-            { expiresIn: "1h" }
-        );
+        
+        const data = { id: process.env.JWT_SECRET }
+        const token = jwt.sign( data, process.env.JWT_SECRET, { expiresIn: "1h" } );
 
         // Set token in HTTP-only cookie
         res.cookie("adminInfo", token, {

@@ -53,19 +53,21 @@ router.get("/dashboard", verifyTokenAdmin, async (req, res) => {
         awaiting_approval,
         msg: 'Successfully Fetched Data'
     }
-    res.status(201).json(data);
+    return res.status(201).json(data);
 });
 
-router.get("/students", async (req, res) => {
+router.get("/all-data", verifyTokenAdmin,async (req, res) => {
     all_students = (await doDataBaseThing(() => Student.find()));
     all_rooms = (await doDataBaseThing(() => Room.find()));
     // const rooms = await doDataBaseThing(() => Room.find());
     // console.log(students)
-    res.render("admin-students", {
-        page_title: "students",
+    const data = {
         students: all_students,
         rooms: all_rooms,
-    });
+        msg: 'Successfully Fetched Data'
+        
+    }
+    return res.status(201).json(data);
 });
 
 router.get("/rooms", async (req, res) => {

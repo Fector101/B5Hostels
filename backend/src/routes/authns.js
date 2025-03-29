@@ -70,7 +70,7 @@ router.post("/signup", async (req, res) => {
         });
         res.cookie("userInfo", token, {
             httpOnly: true,
-            secure: false,//process.env.NODE_ENV === "production", // 🔥 Only secure in production
+            secure: process.env.NODE_ENV === "production", // 🔥 Only secure in production
             sameSite:  process.env.NODE_ENV === "production" ? "None" : "Lax",// 🔥 Use Lax for localhost
             maxAge: 3600000,
         }); // 1 hour

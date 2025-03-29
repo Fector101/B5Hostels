@@ -11,10 +11,10 @@
     flex-direction: column;
 } */
 
-.dim-text {
+.page.adminpage .dim-text {
     color: #666;
 }
-.close-btn{
+.page.adminpage .close-btn{
     border-radius: 10px;
   --size: 25px;
   height: var(--size);
@@ -22,11 +22,11 @@
   border-style: none;
   background-color: transparent;
 }
-.close-btn:hover{
+.page.adminpage .close-btn:hover{
     background: #e7e4e4;
     cursor: pointer;
 }
-.primary-btn {
+.page.adminpage .primary-btn {
     background-color: var(--primary-btn-bg);
     color: white;
     border-color: var(--primary-btn-bg);
@@ -142,7 +142,7 @@ header>button:last-child svg {
     width: var(--size);
 }
 
-.tabs {
+.page.adminpage .tabs {
     display: flex;
     gap: 10px;
     margin-top: 15px;
@@ -153,12 +153,12 @@ header>button:last-child svg {
     border-radius: 5px;
 }
 
-.tabs button:hover {
+.page.adminpage .tabs button:hover {
     background: #ddd;
     cursor: pointer;
 }
 
-.tabs button {
+.page.adminpage .tabs button {
     min-width: 90px;
     height: 32px;
     border: none;
@@ -168,25 +168,25 @@ header>button:last-child svg {
     color: grey;
 }
 
-.tabs button.active {
+.page.adminpage .tabs button.active {
     background: white;
     color: black;
 }
 
-.filters {
+.page.adminpage .filters {
     display: flex;
     justify-content: space-between;
     margin-block: 15px;
 }
 
-.filters input,
-.filters select {
+.page.adminpage .filters input,
+.page.adminpage .filters select {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-.welcome-box {
+.page.adminpage .welcome-box {
     width: 100%;
     /* max-width: 900px; */
     display: flex;
@@ -196,13 +196,13 @@ header>button:last-child svg {
     gap: 5px;
 }
 
-.welcome-box.rooms-welcome-box {
+.page.adminpage .welcome-box.rooms-welcome-box {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 10px;
 }
 
-.welcome-box .add-room-btn {
+.page.adminpage .welcome-box .add-room-btn {
     display: flex;
     align-items: center;
     padding: 0 5px;
@@ -210,7 +210,7 @@ header>button:last-child svg {
     margin-left: auto;
 }
 
-.cards {
+.page.adminpage .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
@@ -218,33 +218,33 @@ header>button:last-child svg {
     margin-top: 20px;
 }
 
-.card {
+.page.adminpage .card {
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.card span.strip {
+.page.adminpage .card span.strip {
     background-color: var(--primary-btn-bg);
     height: 5px;
     display: flex;
     border-radius: 5px 5px 0 0;
 }
 
-.card .content {
+.page.adminpage .card .content {
     padding: 15px;
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-.card .content .row {
+.page.adminpage .card .content .row {
     display: flex;
     gap: 10px;
     align-items: center;
 }
 
-.card .content .row svg {
+.page.adminpage .card .content .row svg {
 
     padding: 3px;
     --size: 30px;
@@ -253,48 +253,48 @@ header>button:last-child svg {
     border-radius: 5px;
 }
 
-.card .content .row.total-students svg {
+.page.adminpage .card .content .row.total-students svg {
     color: rgb(37 99 235);
     background: rgb(239 246 255);
 }
 
-.card .content .row.pending-students svg {
+.page.adminpage .card .content .row.pending-students svg {
     background-color: rgb(250, 245, 203);
     color: rgb(202 138 4);
 }
 
-.card .content .row.verified-students svg {
+.page.adminpage .card .content .row.verified-students svg {
     color: rgb(22 163 74);
     background-color: rgb(240 253 244);
 }
 
-.card .content .row.total-rooms svg {
+.page.adminpage .card .content .row.total-rooms svg {
     color: rgb(147 51 234);
 }
 
 /*.card .content .row.total-students{
 .card .content .row.total-students{ */
 
-.card h3 {
+.page.adminpage .card h3 {
     margin: 0;
     font-size: 1em;
     color: #333;
 }
 
-.card p {
+.page.adminpage .card p {
     font-size: 15px;
     margin: 5px 0;
     color: #666;
 }
 
-.card .content span {
+.page.adminpage .card .content span {
     /* lager number in card */
     font-size: 1.875rem;
     line-height: 2.25rem;
     font-weight: bold;
 }
 
-.main-page-details-box {
+.page.adminpage .main-page-details-box {
     gap: 20px;
     align-items: center;
     justify-content: center;
@@ -304,13 +304,13 @@ header>button:last-child svg {
     /* background: #000; */
 }
 
-.main-page-details-box .card {
+.page.adminpage .main-page-details-box .card {
     flex: 1;
     /* width: 455px; */
 
 }
 
-.card-item {
+.page.adminpage .card-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -321,11 +321,11 @@ header>button:last-child svg {
     flex-wrap: wrap;
 }
 
-.icon {
+.page.adminpage .icon {
     font-size: 1.5em;
 }
 
-.view-btn {
+.page.adminpage .view-btn {
     background: var(--primary-btn-bg);
     color: #fff;
     border: none;
@@ -334,13 +334,13 @@ header>button:last-child svg {
     cursor: pointer;
 }
 
-.view-btn:hover {
+.page.adminpage .view-btn:hover {
     background: #0056b3;
 }
 
 /* Room Status Styling */
-.card.status-card,
-.card.attention-card {
+.page.adminpage .card.status-card,
+.page.adminpage .card.attention-card {
     padding: 1rem;
     margin-bottom: 10px;
     display: flex;
@@ -348,11 +348,11 @@ header>button:last-child svg {
     margin: 20px;
 }
 
-.status-list {
+.page.adminpage .status-list {
     margin-top: 10px;
 }
 
-.status-item {
+.page.adminpage .status-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -360,7 +360,7 @@ header>button:last-child svg {
     font-size: 1em;
 }
 
-.status-dot {
+.page.adminpage .status-dot {
     width: 12px;
     height: 12px;
     border-radius: 50%;
@@ -368,19 +368,19 @@ header>button:last-child svg {
     margin-right: 10px;
 }
 
-.status-dot.available {
+.page.adminpage .status-dot.available {
     background-color: green;
 }
 
-.status-dot.occupied {
+.page.adminpage .status-dot.occupied {
     background-color: red;
 }
 
-.status-dot.maintenance {
+.page.adminpage .status-dot.maintenance {
     background-color: orange;
 }
 
-.count {
+.page.adminpage .count {
     font-weight: bold;
     color: #333;
 }
@@ -389,7 +389,7 @@ header>button:last-child svg {
 
 
 /* admin-students page */
-section.main-content {
+.page.adminpage section.main-content {
     width: 1000px;
     max-width: 99%;
     align-self: center;
@@ -398,17 +398,17 @@ section.main-content {
     padding-bottom: 20px;
 }
 
-section.main-content .cards-box {
+.page.adminpage section.main-content .cards-box {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
 }
 
-.student-card.pending{
+.page.adminpage .student-card.pending{
     border-color: hsl(45 80% 60%);
 }
-.student-card {
+.page.adminpage .student-card {
     width: 400px;
     max-width: 99%;
     background: #000;
@@ -424,53 +424,53 @@ section.main-content .cards-box {
     overflow: hidden;
 }
 
-.card-header {
+.page.adminpage .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
 }
 
-.student-id {
+.page.adminpage .student-id {
     font-weight: bold;
 }
 
-.badge {
+.page.adminpage .badge {
     padding: 5px 10px;
     border-radius: 15px;
     font-size: 12px;
     color: white;
 }
 
-.badge.level {
+.page.adminpage .badge.level {
     background-color: #3b193b;
 }
 
-.free .badge.hostel {
+.page.adminpage .free .badge.hostel {
     background-color: rgb(34 197 94);
 }
 
-.maintenance .badge.hostel {
+.page.adminpage .maintenance .badge.hostel {
     background-color: hsl(45 80% 60%);
 }
 
-.full .badge.hostel {
+.page.adminpage .full .badge.hostel {
     background-color: rgb(239 68 68);
 }
 
-.student-card .name-box,
-.student-card .card-header,
-.student-card .info {
+.page.adminpage .student-card .name-box,
+.page.adminpage .student-card .card-header,
+.page.adminpage .student-card .info {
     margin: 0 15px;
 }
 
-.student-card .name-box {
+.page.adminpage .student-card .name-box {
     display: flex;
     gap: 15px;
     width: 100%;
 }
 
-.student-card .avatar {
+.page.adminpage .student-card .avatar {
     width: 45px;
     height: 45px;
     border-radius: 50%;
@@ -483,20 +483,20 @@ section.main-content .cards-box {
     font-size: 16px;
 }
 
-.student-card .email {
+.page.adminpage .student-card .email {
     color: gray;
     font-size: 14px;
 }
 
-.student-card .row {
+.page.adminpage .student-card .row {
     display: flex;
 }
 
-.student-card .row p {
+.page.adminpage .student-card .row p {
     width: 50%;
 }
 
-.student-card .btns-box {
+.page.adminpage .student-card .btns-box {
     display: flex;
     gap: 10px;
     background-color: #F2F2F2;
@@ -505,7 +505,7 @@ section.main-content .cards-box {
     padding: 15px;
 }
 
-.student-card .btns-box button {
+.page.adminpage .student-card .btns-box button {
     width: 100px;
     flex: 1;
     height: 35px;
@@ -514,13 +514,13 @@ section.main-content .cards-box {
     background: white;
 }
 
-.student-card .btns-box .assign-btn {
+.page.adminpage .student-card .btns-box .assign-btn {
     background-color: var(--primary-btn-bg);
     color: white;
     border-color: var(--primary-btn-bg);
 }
 
-.student-card .btns-box .reject-room-btn {
+.page.adminpage .student-card .btns-box .reject-room-btn {
     color: white;
 }
 
@@ -532,11 +532,11 @@ section.main-content .cards-box {
 
 /* still admin-students page but modal*/
 
-.allocation-modal {
+.page.adminpage .allocation-modal {
     padding: 20px 0;
 }
 
-.allocation-box {
+.page.adminpage .allocation-box {
     margin: auto;
     width: 700px;
     max-width: 99%;
@@ -551,7 +551,7 @@ section.main-content .cards-box {
     flex-direction: column;
 }
 
-.allocation-box .rooms-box {
+.page.adminpage .allocation-box .rooms-box {
     /* background:red;*/
     width: 100%;
     flex: 1;
@@ -562,24 +562,24 @@ section.main-content .cards-box {
     justify-content: space-between;
 }
 
-.room-selection-card.student-card {
+.page.adminpage .room-selection-card.student-card {
     font-size: 13px;
     gap: 10px;
     width: 45%;
 }
 
-.allocation-box h1 {
+.page.adminpage .allocation-box h1 {
     font-size: 25px;
     align-self: center;
 }
 
-.allocation-box .header-caption {
+.page.adminpage .allocation-box .header-caption {
     font-size: 14px;
     margin-block: 5px 15px;
     align-self: center;
 }
 
-.allocation-box .close-btn {
+.page.adminpage .allocation-box .close-btn {
     --size: 25px;
     height: var(--size);
     width: var(--size);
@@ -633,19 +633,19 @@ section.main-content .cards-box {
 
 /* admin-rooms */
 
-.amenities-box {
+.page.adminpage .amenities-box {
     margin: 20px;
     margin-top: 8px;
 }
 
-.amenities-box .con {
+.page.adminpage .amenities-box .con {
     margin-top: 8px;
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
 }
 
-.amenities-box .con>div {
+.page.adminpage .amenities-box .con>div {
     padding: 2px 6px;
     background: #E5E5E5;
     /* margin-left: 5px; */
@@ -660,7 +660,7 @@ section.main-content .cards-box {
     justify-content: center;
 }
 
-.amenities-box .con>div:first-of-type {
+.page.adminpage .amenities-box .con>div:first-of-type {
     margin-left: 0;
 }
 
@@ -671,7 +671,7 @@ section.main-content .cards-box {
 }
 
 /* Add Room Modal */
-.add-container {
+.page.adminpage .add-container {
     /* background: #000; */
     background: #fff;
     margin: auto;
@@ -684,20 +684,20 @@ section.main-content .cards-box {
     gap: 10px;
 }
 
-.add-container .header-sub {
+.page.adminpage .add-container .header-sub {
     font-size: 13px;
 }
 
-.add-container>h3,
-.add-container>p {
+.page.adminpage .add-container>h3,
+.page.adminpage .add-container>p {
     align-self: center;
 }
 
-.add-container button {
+.page.adminpage .add-container button {
     align-self: flex-end;
 }
 
-.add-container form {
+.page.adminpage .add-container form {
     /* background: #000; */
     padding: 20px;
     display: flex;
@@ -708,19 +708,19 @@ section.main-content .cards-box {
     max-width: 99%;
 }
 
-.form-group {
+.page.adminpage .form-group {
     margin-bottom: 15px;
 }
 
-.add-container label {
+.page.adminpage .add-container label {
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
 }
 
-.add-container input,
-.add-container select,
-.add-container textarea {
+.page.adminpage .add-container input,
+.page.adminpage .add-container select,
+.page.adminpage .add-container textarea {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
@@ -776,7 +776,7 @@ section.main-content .cards-box {
 
 
 @media screen and (max-width:930px) {
-    .main-page-details-box .card {
+    .page.adminpage .main-page-details-box .card {
         min-width: 455px;
         max-width: 455px;
     }
@@ -784,18 +784,18 @@ section.main-content .cards-box {
 
 @media screen and (max-width:700px) {
 
-    .allocation-box {
+    .page.adminpage .allocation-box {
         margin: auto;
         width: 400px;
     }
 
-    .room-selection-card.student-card {
+   .page.adminpage .room-selection-card.student-card {
         width: 100%;
     }
 }
 
 @media screen and (max-width:770px) {
-    .main-page-details-box .card {
+    .page.adminpage .main-page-details-box .card {
         min-width: 400px;
         max-width: 400px;
     }
@@ -827,8 +827,7 @@ section.main-content .cards-box {
         border: none;
         transition: height 0.5s ease;
     }
-
-    .menu-btn-box {
+.menu-btn-box {
         width: 100%;
     }
 
@@ -841,19 +840,19 @@ section.main-content .cards-box {
 
 
 @media screen and (max-width:550px) {
-    .main-page-details-box .card {
+  .page.adminpage .main-page-details-box .card {
         min-width: 400px;
         max-width: 400px;
     }
 }
 
 @media screen and (max-width:426px) {
-    .main-page-details-box .card {
+    .page.adminpage .main-page-details-box .card {
         min-width: auto;
         max-width: auto;
     }
 
-    .main-page-details-box .card .card-item {
+   .page.adminpage .main-page-details-box .card .card-item {
         gap: 10px;
     }
 }   

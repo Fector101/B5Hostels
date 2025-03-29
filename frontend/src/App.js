@@ -1,12 +1,15 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 
+// Parent Less specfic styles should be before main component style
+import "./components/css/quick-style.css"
+import "./components/css/App.css";
+
 import AdminRoutes from "./pages/AdminRoutes";
 
 import Header from "./components/ui/header/Header";
 import Footer from "./components/ui/footer/Footer";
 
-import Homepage from "./pages/Homepage";
 import NotFoundpage from "./pages/NotFoundpage";
 import Roomspage from "./pages/Roomspage";
 import Loginpage from "./pages/Loginpage";
@@ -15,9 +18,6 @@ import SignupPage from "./pages/Signuppage";
 import Profilepage from "./pages/Profilepage";
 import RoomDetailsPage from "./pages/RoomDetailsPage";
 import ChooseUserpage from "./pages/ChooseUserpage";
-
-import "./components/css/quick-style.css"
-import "./components/css/App.css";
 
 function App() {
     const location = useLocation();
@@ -33,7 +33,6 @@ function App() {
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/profile" element={<Profilepage />} />
                 <Route path="/choose-user" element={<ChooseUserpage />} />
-                <Route path="/home" element={<Homepage />} />
                 <Route path="/room" element={<RoomDetailsPage />} />
                 <Route path="/rooms" element={<Roomspage />} />
                 <Route path="/admin/*" element={<AdminRoutes />} />

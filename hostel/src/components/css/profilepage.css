@@ -1,12 +1,15 @@
-.profile-page.page{
-    padding:    20px;
+.profile-page.page {
+    padding: 20px;
 }
-.profile-page.page section{
+
+.profile-page.page section {
     margin-bottom: 30px;
 }
-.profile-page.page .caption{
+
+.profile-page.page .caption {
     color: rgb(83, 83, 83);
 }
+
 .profile-page .main-content {
     display: flex;
     flex-wrap: wrap;
@@ -20,6 +23,7 @@
     display: flex;
     flex-direction: column;
     padding: 25px;
+    background-color: #fab8f824;
 }
 
 .profile-page .student-details-box {
@@ -40,15 +44,31 @@
     font-size: 250%;
     color: white;
     margin-bottom: 10px;
+    position: relative;
 }
 
-.profile-page .student-details-box .name{
+.profile-page .student-details-box .profile-img::after {
+    content: "";
+    position: absolute;
+    --size: 15px;
+    width: var(--size);
+    height: var(--size);
+    background-color: rgb(68, 212, 68);
+    border-radius: 50%;
+    bottom: 5px;
+    left: 80%;
+    transform: translateX(-50%);
+}
+
+.profile-page .student-details-box .name {
     font-size: 22px;
 }
-.profile-page .student-details-box .matric-no{
+
+.profile-page .student-details-box .matric-no {
     margin-top: 5px;
     font-size: 14px;
 }
+
 .profile-page .email-level-box {
     margin-top: 20px;
     display: flex;
@@ -88,7 +108,7 @@
     width: 100%;
     color: #9826cd;
     border-top: 1px solid grey;
-    border-color:rgba(177, 177, 177, 0.407);
+    border-color: rgba(177, 177, 177, 0.407);
 
     margin-block: 15px;
 }
@@ -102,11 +122,12 @@
     font-weight: 400;
     font-size: 14px;
 }
+
 .profile-page .student-details-box p.status-txt {
 
     font-size: 13px;
     padding: 5px 10px;
-    background:rgba(181, 181, 181, 0.44);
+    background: rgba(226, 167, 217, 0.44);
     border-radius: 8px;
     margin-top: 5px;
 }
@@ -122,15 +143,17 @@
     gap: 10px;
     margin-bottom: 15px;
 }
-.profile-page .room-details .room-header h3{
+
+.profile-page .room-details .room-header h3 {
     font-size: 22px;
 }
-.profile-page .room-details .header-cap{
+
+.profile-page .room-details .header-cap {
     font-size: 14px;
 }
 
 .profile-page .tab-btns {
-    background: rgb(181, 181, 181);
+    background: rgba(185, 155, 181, 0.44);
     padding: 5px;
     display: flex;
     align-items: center;
@@ -159,63 +182,72 @@
     width: var(--size);
     height: var(--size);
 }
-.profile-page .name-floor-box{
+
+.profile-page .name-floor-box {
     margin-block: 20px;
     display: flex;
     gap: 10px;
 }
-.profile-page .name-floor-box svg{
-    --size: 40px;
+
+.profile-page .name-floor-box svg {
+    --size: 42px;
     width: var(--size);
     height: var(--size);
     background-color: rgb(178, 221, 255);
     color: rgba(5, 116, 243, 0.742);
-    padding: 5px;
+    padding: 6px;
     border-radius: 8px;
 }
-.profile-page .name-floor-box .caption{
+
+.profile-page .name-floor-box .caption {
     margin-top: 3px;
     font-size: 14px;
 }
 
-.profile-page .occupants-box{
+.profile-page .occupants-box {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     align-items: center;
     justify-content: center;
-    /* background: #000; */
 }
-.profile-page .occupants-box .occupant{
-    background: rgba(181, 181, 181, 0.494);
-    width: calc(50% - 10px);
+
+.profile-page .occupants-box .occupant {
+    background: rgba(226, 167, 217, 0.44);
+    flex: 1;
     min-width: 200px;
     border-radius: 10px;
     padding: 15px;
 }
-.profile-page .occupants-box .occupant h3{
+
+.profile-page .occupants-box .occupant h3 {
     font-weight: 500;
     font-size: 14px;
-    
+
 }
-.profile-page .occupants-box .occupant p{
+
+.profile-page .occupants-box .occupant p {
     font-weight: 600;
     margin-top: 10px;
 }
-.profile-page .amenities-box{
+
+.profile-page .amenities-box {
     margin-block: 20px;
 }
-.profile-page .amenities-box div{
+
+.profile-page .amenities-box div {
     display: flex;
     gap: 10px;
     font-size: 14px;
 }
-.profile-page .amenities-box h3{
+
+.profile-page .amenities-box h3 {
     font-weight: 400;
     font-size: 15px;
     margin-bottom: 10px;
 }
-.profile-page .last-p{
+
+.profile-page .last-p {
     color: green;
     display: flex;
     align-items: center;
@@ -223,11 +255,13 @@
     font-size: 14px;
     /* background: #000; */
 }
-.profile-page .last-p svg{
+
+.profile-page .last-p svg {
     --size: 18px;
     width: var(--size);
     height: var(--size);
 }
+
 /*
 @media screen and (max-width:500px) {
 

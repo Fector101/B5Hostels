@@ -139,7 +139,7 @@ export default function SignupPage() {
                         </div>
                     </div>
 
-                    <button type="submit" className="primary-btn signin-btn">Sign in</button>
+                    <button type="submit" className="primary-btn signin-btn">Sign Up</button>
                 </form>
                 <div className='row redirect'>
                     <p>Already have an account?</p>

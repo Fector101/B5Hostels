@@ -46,6 +46,7 @@ export default function Profilepage() {
     const [current_tab, setCurrentTab] = useState(() => 'room')
 
     const { userData } = useContext(UserContext);
+    console.log(userData)
     // useEffect(() => {
     //     async function getData() {
     //         const cachedUser = localStorage.getItem("userData");
@@ -75,7 +76,6 @@ export default function Profilepage() {
     //     if (!Object.keys(userData).length) getData();
     // }, []);
     
-
 
 
 

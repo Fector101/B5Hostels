@@ -66,17 +66,18 @@ router.get("/profile", verifyToken, async (req, res) => {
     const data = {
         page_title: "dashboard",
         name: user.name,
-        initials: getInitials(userInfo.name),
+        initials: getInitials(user.name),
         matric_no: user.matric_no,
         email: user.email,
         level: user.level,
-        room: user.room,
         preference: user.preference,
         date_booked: userInfo.days_left || 0,
         days_passed: daysPassed(user.payments[0]?.date),
         total_paid: total ,
-
+        
+        room: user.room,
         floor: room?.floor,
+        block: room?.block,
         room_mates,
         msg: "Login In Session"
     };

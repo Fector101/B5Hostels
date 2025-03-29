@@ -1,8 +1,8 @@
 import { TrendingUp, Tv, ChartNoAxesColumn, ChartColumn, Vote, ChevronRight, ArrowRight, Clock, Users, MoveRight, Plus, User, Home, Building, Check, CheckCircle, Info } from "lucide-react"
 import '../components/css/profilepage.css'
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from 'react-toastify';
-
+import { UserContext } from '../components/js/UserContext';
 function Myprogress({ value }) {
     console.log(value + '%')
     return (
@@ -41,39 +41,40 @@ function VotingStats({ title, des, runners_info_tuple }) {
         </div>
     )
 }
+// const { user, setUser } = useContext(null);
 export default function Profilepage() {
     const [current_tab, setCurrentTab] = useState(() => 'room')
-    const [room, setRoom] = useState(() => '2')
-    const [verified, setVerified] = useState(() => '1')
-    const [preference, setPreference] = useState(() => '1')
-    const [userData, setUserDate] = useState({})
 
-    useEffect(() => {
-        async function getData() {
-            try {
-
-                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/profile`, {
-                    method: "GET",
-                    credentials: "include",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                })
-                const data = await response.json()
-                if (response.ok) {
-                    toast(data.msg || 'Successfully Fetched User Data', { type: 'success' });
-                    console.log(data.data)
-                    setUserDate(data.data)
-                } else {
-                    toast(data.msg || 'Login Session Expired', { type: 'warning' });
-                }
-            } catch (error) {
-                console.error("Network error:", error);
-                toast('Something went wrong! ' + error, { type: 'error' });
-            }
-        }
-        getData()
-    }, []);
+    const { userData } = useContext(UserContext);
+    // useEffect(() => {
+    //     async function getData() {
+    //         const cachedUser = localStorage.getItem("userData");
+    //         if (cachedUser) {
+    //             setUserData(JSON.parse(cachedUser)); // Use cached data
+    //             return;
+    //         }
+    //         console.log(userData,!Object.keys(userData).length)
+    //         try {
+    //             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/profile`, {
+    //                 method: "GET",
+    //                 credentials: "include",
+    //                 headers: { "Content-Type": "application/json" },
+    //             });
+    //             const data = await response.json();
+    //             if (response.ok) {
+    //                 setUserData(data.data);
+    //                 console.log(data.data);
+    //                 localStorage.setItem("userData", JSON.stringify(data.data)); // Cache it
+    //             } else {
+    //                 toast("Login Session Expired", { type: "warning" });
+    //             }
+    //         } catch (error) {
+    //             console.error("Network error:", error);
+    //         }
+    //     }
+    //     if (!Object.keys(userData).length) getData();
+    // }, []);
+    
 
 
 
@@ -91,7 +92,7 @@ export default function Profilepage() {
 
                 <section className="student-details-box">
                     <div className="profile-img">
-                        <p>FJ</p>
+                        <p>{userData.initials}</p>
                     </div>
                     <h3 className="name">{userData.name}</h3>
                     <p className="caption matric-no">{userData.matric_no}</p>
@@ -106,7 +107,7 @@ export default function Profilepage() {
                     <hr />
 
                     <h4 className="status-txt">Account Status</h4>
-                    <p className="status-txt"> {verified ? "Your account has been verified. You are eligible for a room." : "Your account is pending verification. Please check back later."}</p>
+                    <p className="status-txt"> {userData.verified ? "Your account has been verified. You are eligible for a room." : "Your account is pending verification. Please check back later."}</p>
                 </section>
 
 
@@ -131,12 +132,12 @@ export default function Profilepage() {
                         current_tab === 'room' ?
                             <div className="room-tab">
 
-                                {room ?
+                                {userData.room ?
                                     <>
                                         <div className="name-floor-box">
                                             <Home />
                                             <div>
-                                                <p>Room {room}, Block A</p>
+                                                <p>Room {userData.room}, {userData.block}</p>
                                                 <p className="caption">Floor {userData.floor}</p>
                                             </div>
                                         </div>
@@ -171,7 +172,7 @@ export default function Profilepage() {
                                         </div>
                                         <p className="heading">No Room Assigned Yet</p>
                                         <p className="caption">
-                                            {verified ? "You've been verified, but no room has been assigned to you yet." : "You need to be verified before a room can be assigned to you."}
+                                            {userData.verified ? "You've been verified, but no room has been assigned to you yet." : "You need to be verified before a room can be assigned to you."}
                                         </p>
                                     </div>
                                 }
@@ -179,15 +180,15 @@ export default function Profilepage() {
                             :
                             <div className="preference-tab">
 
-                                {verified ?
-                                    room ?
-                                        <p className={room ? "assigned-txt room-status" : 'unassigned-txt room-status'}>
+                                {userData.verified ?
+                                    userData.room ?
+                                        <p className={userData.room ? "assigned-txt room-status" : 'unassigned-txt room-status'}>
                                             <Info />
                                             You already have a room assigned. If you need to change rooms, please contact the hostel administration.
                                         </p>
                                         : <div className="sub-box">
                                             <p className="heading">Current Preference</p>
-                                            <p className="caption">{preference ? "Room Number: " + preference : "You haven't set a room preference yet."}</p>
+                                            <p className="caption">{userData.preference ? "Room Number: " + userData.preference : "You haven't set a room preference yet."}</p>
                                         </div>
 
                                     :

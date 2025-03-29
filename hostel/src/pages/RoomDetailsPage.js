@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./../components/css/roomdetailspage.css"; // Make sure to create this file and import it
-import { Building, CreditCard, Users } from "lucide-react";
+import { Building, CreditCard, Users, X } from "lucide-react";
 import img from './img6.jpg'
 import { useSearchParams } from "react-router-dom";
 
@@ -8,6 +8,7 @@ import { useSearchParams } from "react-router-dom";
 export default function RoomPreview({ rooms_data }) {
     const [searchParams] = useSearchParams();
     const requested_room = searchParams.get('id');
+    const [modal, setModal] = useState('false');
 
     let roomData = { ...rooms_data?.find(({ room_number }) => room_number === requested_room) }
     console.log(roomData);
@@ -29,87 +30,91 @@ export default function RoomPreview({ rooms_data }) {
 
     return (
         <div className="page room-details-page">
-            <div className="modal display-non">
-                <div className="content">
-                    <h1 className="topic">Complete Payment</h1>
-                    <p className="caption">
-                        Enter your payment details to book Room {roomData.room_number}
-                    </p>
-                    <div className="booking">
-                        <h3>Booking Summary</h3>
-                        <ol className="vaild-date">
-                            <li>
-                                <p>CHECK-IN</p>
-                                <p>12-01-2025</p>
-                            </li>
-                            <li>
-                                <p>CHECK-OUT</p>
-                                <p>15-01-2026</p>
-                            </li>
-                        </ol>
+            {modal &&
+                <div className="modal">
+                    <div className="content">
+                        <button className="close-btn" onClick={()=>setModal(false)}>
+                            <X/>
+                        </button>
+                        <h1 className="topic">Complete Payment</h1>
+                        <p className="caption">
+                            Enter your payment details to book Room {roomData.room_number}
+                        </p>
+                        <div className="booking">
+                            <h3>Booking Summary</h3>
+                            <ol className="vaild-date">
+                                <li>
+                                    <p>CHECK-IN</p>
+                                    <p>12-01-2025</p>
+                                </li>
+                                <li>
+                                    <p>CHECK-OUT</p>
+                                    <p>15-01-2026</p>
+                                </li>
+                            </ol>
 
-                        <ol className="fees-box table-look">
-                            <li>
-                                <p>Hostel Fee</p>
-                                <p>₦ 6,000</p>
-                            </li>
-                            <li>
-                                <p>Room Chagers</p>
-                                <p>₦ 3,000</p>
-                            </li>
-                            <li>
-                                <p>Maintancence Fee</p>
-                                <p>₦ 3,000</p>
-                            </li>
-                        </ol>
-                        <hr className="total-ruler"/>
-                        <ol className="table-look">
-                            <li>
+                            <ol className="fees-box table-look">
+                                <li>
+                                    <p>Hostel Fee</p>
+                                    <p>₦ 6,000</p>
+                                </li>
+                                <li>
+                                    <p>Room Chagers</p>
+                                    <p>₦ 3,000</p>
+                                </li>
+                                <li>
+                                    <p>Maintancence Fee</p>
+                                    <p>₦ 3,000</p>
+                                </li>
+                            </ol>
+                            <hr className="total-ruler" />
+                            <ol className="table-look">
+                                <li>
 
-                                <p>Total:</p>
-                                <p>₦ 12,000</p>
-                            </li>
-                        </ol>
-                        {/* <button className="primary-btn" id="pay">Book Now <CreditCard /> </button> */}
+                                    <p>Total:</p>
+                                    <p>₦ 12,000</p>
+                                </li>
+                            </ol>
+                            {/* <button className="primary-btn" id="pay">Book Now <CreditCard /> </button> */}
+                        </div>
+                        <h3 className="form-start-header">Card Information</h3>
+                        <form id="payment-form">
+                            {/* <label htmlFor="card-name">Cardholder Name</label> */}
+
+                            <div className="input-group">
+                                <CreditCard className="icon" />
+                                <input
+                                    type="text"
+                                    placeholder="********"
+                                    value="1234 5678 91112"
+                                    required
+                                />
+                            </div>
+
+                            <div className="row date-cvv-box">
+                                <input
+                                    type="date"
+                                    id="expiry-date"
+                                    placeholder="MM/YY"
+                                    required
+                                />
+                                <input type="number" required value='007' />
+
+                            </div>
+
+                            <label htmlFor="card-number" className="card-number-label">Cardholder Name</label>
+                            <input type="text" id="card-number-input" required />
+
+                            <div className="row">
+                                <button className="cancel-btn" type="submit">Cancel</button>
+                                <button className="pay primary-btn" type="submit">Pay ₦ 12,000</button>
+                            </div>
+                        </form>
                     </div>
-                    <h3 className="form-start-header">Card Information</h3>
-                    <form id="payment-form">
-                        {/* <label for="card-name">Cardholder Name</label> */}
 
-                        <div className="input-group">
-                            <CreditCard className="icon" />
-                            <input
-                                type="text"
-                                placeholder="********"
-                                value="1234 5678 91112"
-                                required
-                            />
-                        </div>
-
-                        <div className="row date-cvv-box">
-                            <input
-                                type="date"
-                                id="expiry-date"
-                                placeholder="MM/YY"
-                                required
-                            />
-                            <input type="number" required value='007'/>
-
-                        </div>
-
-                        <label for="card-number" className="card-number-label">Cardholder Name</label>
-                        <input type="text" id="card-number-input" required />
-                        
-                        <div className="row">
-                            <button class="cancel-btn" type="submit">Cancel</button>
-                            <button class="pay primary-btn" type="submit">₦ 12,000</button>
-                        </div>
-                    </form>
                 </div>
 
-            </div>
-
-
+            }
 
             <section className="heading">
                 <div>
@@ -164,7 +169,7 @@ export default function RoomPreview({ rooms_data }) {
 
                         <div className="row price-box">
                             <p>₦ 12,000 / Semester</p>
-                            <button className="primary-btn" disabled>Book Now</button>
+                            <button onClick={()=>setModal(true)} className="primary-btn">Book Now</button>
                         </div>
                     </div>
                 </div>

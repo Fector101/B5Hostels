@@ -92,12 +92,10 @@ body>#root {
 .caption{
     color: grey;
 }
-.modal:not(.display-none){
+.modal{
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.modal{
     position: fixed;
     top: 0;
     left: 0;

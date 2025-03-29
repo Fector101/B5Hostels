@@ -24,14 +24,15 @@ export default function Header({ userName }) {
     function displayMenu() {
         setNavState(old => !old)
         setFlexDirState('fd-column')
-        document.querySelector('header.header').classList.toggle('fd-column')
+        document.querySelector('header.header')?.classList.toggle('fd-column')
     }
     
     
     useEffect(() => {
         function handleResize() {
             setFlexDirState('fd-row')
-            document.querySelector('header.header').classList.remove('fd-column')
+            console.log(document.querySelector('header.header'))
+            document.querySelector('header.header')?.classList.remove('fd-column')
             setNavState(window.innerWidth > 500);
         }
 

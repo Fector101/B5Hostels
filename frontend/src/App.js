@@ -20,6 +20,8 @@ import SignupPage from "./pages/Signuppage";
 import Profilepage from "./pages/Profilepage";
 import { ToastContainer } from 'react-toastify';
 import RoomDetailsPage from "./pages/RoomDetailsPage";
+import ChooseUserpage from "./pages/ChooseUserpage";
+import AdminRoutes from "./pages/AdminRoutes";
 // import SignupPage from "./pages/Signuppage";
 // import LoginPage from "./pages/Loginpage";
 // import ForgotPSPage from "./pages/ForgotPSpage";
@@ -43,57 +45,7 @@ function App() {
     const location = useLocation();
     const [header_state, setHeaderState] = useState(window.innerWidth > 500);
     // const [btn_state, setBtnState] = useState(window.innerWidth > 500);
-    const rooms = [
-        {
-            room_number: "H101",
-            building: "Hostel A",
-            capacity: 4,
-            floor: 1,
-            occupants: 3,
-            amenities: ["Bunk Beds", "Shared Bathroom", "WiFi", "Study Desk"]
-        },
-        {
-            room_number: "H202",
-            building: "Hostel B",
-            capacity: 2,
-            floor: 2,
-            occupants: 2,
-            amenities: ["Single Beds", "Private Bathroom", "WiFi", "Closet"]
-        },
-        {
-            room_number: "H303",
-            building: "Hostel C",
-            capacity: 6,
-            floor: 3,
-            occupants: 4,
-            amenities: ["Bunk Beds", "Shared Bathroom", "Reading Lamp", "Laundry Access"]
-        },
-        {
-            room_number: "H404",
-            building: "Hostel D",
-            capacity: 3,
-            floor: 4,
-            occupants: 2,
-            amenities: ["Single Beds", "Shared Bathroom", "Mini Fridge", "Study Desk"]
-        },
-        {
-            room_number: "H505",
-            building: "Hostel E",
-            capacity: 5,
-            floor: 5,
-            occupants: 5,
-            amenities: ["Bunk Beds", "WiFi", "Shared Kitchen", "Lockers"]
-        },
-        {
-            room_number: "H606",
-            building: "Hostel F",
-            capacity: 4,
-            floor: 6,
-            occupants: 3,
-            amenities: ["Single Beds", "WiFi", "AC", "Wardrobe"]
-        }
-    ];
-
+   
     useEffect(
         function () {
             // setBtnState(["/", "/login"].includes(location.pathname));
@@ -123,7 +75,7 @@ function App() {
 
     return (
         <>
-            {!["/", "/login", '/signup'].includes(location.pathname) && <Header />}
+            {!["/", "/login", '/signup',"/admin/login"].includes(location.pathname) && <Header />}
             <ToastContainer />
 
             <Routes>
@@ -134,15 +86,13 @@ function App() {
                 <Route path="/login" element={<Loginpage />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/profile" element={<Profilepage />} />
-                <Route
-                    path="/home"
-                    element={<Homepage top_movies_data__={top_movies_data} />}
-                />
+                <Route path="/choose-user" element={<ChooseUserpage />} />
+                <Route path="/home" element={<Homepage top_movies_data__={top_movies_data} />}/>
                 <Route path="/room" element={<RoomDetailsPage/>} />
                 <Route path="/rooms" element={<Roomspage />} />
+                <Route path="/admin/*" element={<AdminRoutes />} /> 
                 {/*
         <Route path="/forgot-ps" element={ <ForgotPSPage /> }/>
-        <Route path="/list/*" element={<ListRoutes />} /> 
         */}
                 <Route
                     path="*"

@@ -1,0 +1,28 @@
+.choose-userpage.page {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.choose-userpage.page .choice {
+    --size: 200px;
+    display: flex;
+    border-radius: 10px;
+    flex-direction: column;
+    gap: 10px;
+    width: 200px;
+    height: var(--size);
+    align-items: center;
+    justify-content: center;
+    box-shadow: 1px 1px 1px 1px rgba(161, 161, 161, 0.548);
+    animation: bounce_mini 2s ease-in-out infinite;
+    background-color: #e62eb01c;
+    color: #ce4b89;
+}
+
+.choose-userpage.page .choice svg {
+    --size: 100px;
+    width: var(--size);
+    height: var(--size);
+}

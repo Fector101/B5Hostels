@@ -11,13 +11,13 @@ import Header from "./components/ui/header/Header";
 import Footer from "./components/ui/footer/Footer";
 // import Moviepage from "./pages/stuff/Moviepage";
 import Pollspage from "./pages/Pollspage";
-import Historypage from "./pages/Historypage";
+// import Historypage from "./pages/Historypage";
 import { useEffect, useState } from "react";
 import Loginpage from "./pages/Loginpage";
 import Landingpage from "./pages/Landingpage";
 import Adminpanelpage from "./pages/Adminpanelpage";
 import SignupPage from "./pages/Signuppage";
-import Studentpage from "./pages/Historypage";
+import Profilepage from "./pages/Profilepage";
 // import SignupPage from "./pages/Signuppage";
 // import LoginPage from "./pages/Loginpage";
 // import ForgotPSPage from "./pages/ForgotPSpage";
@@ -71,7 +71,7 @@ function App() {
 
     return (
         <>
-            {!["/", "/login",'/signup'].includes(location.pathname) &&  <Header className={`sidebar ${header_state ? "show" : "hide"}`} />}
+            {!["/", "/login",'/signup'].includes(location.pathname) &&  <Header/>}
             <Routes>
                 {/* <Route path="/signup" element={ <SignupPage /> }/> */}
                 {/* <Route path="/login" element={ <LoginPage /> }/> */}
@@ -79,13 +79,12 @@ function App() {
                 <Route path="/admin" element={<Adminpanelpage />} />
                 <Route path="/login" element={<Loginpage />} />
                 <Route path="/signup" element={<SignupPage />} />
-                <Route path="/student" element={<Studentpage />} />
+                <Route path="/profile" element={<Profilepage />} />
                 <Route
                     path="/home"
                     element={<Homepage top_movies_data__={top_movies_data} />}
                 />
                 <Route path="/polls" element={<Pollspage />} />
-                <Route path="/history" element={<Historypage />} />
                 {/*
         <Route path="/forgot-ps" element={ <ForgotPSPage /> }/>
         <Route path="/list/*" element={<ListRoutes />} /> 

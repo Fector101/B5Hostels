@@ -1,0 +1,244 @@
+.profile-page.page{
+    padding:    20px;
+}
+.profile-page.page section{
+    margin-bottom: 30px;
+}
+.profile-page.page .caption{
+    color: rgb(83, 83, 83);
+}
+.profile-page .main-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    /* justify-content: center; */
+}
+
+.profile-page .main-content>section {
+    border: 1px solid rgb(177, 177, 177);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+}
+
+.profile-page .student-details-box {
+    align-items: center;
+    max-width: 400px;
+}
+
+.profile-page .student-details-box .profile-img {
+    --size: 100px;
+    width: var(--size);
+    height: var(--size);
+    background: #9826cd;
+    border-radius: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 250%;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.profile-page .student-details-box .name{
+    font-size: 22px;
+}
+.profile-page .student-details-box .matric-no{
+    margin-top: 5px;
+    font-size: 14px;
+}
+.profile-page .email-level-box {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+    align-content: center;
+
+    align-self: flex-start;
+}
+
+.profile-page .email-level-box .email {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+}
+
+.profile-page .email-level-box .email svg {
+    color: rgb(94, 93, 93);
+    --size: 16px;
+    width: var(--size);
+    height: var(--size);
+}
+
+.profile-page .email-level-box .level {
+    font-weight: 600;
+    border: 1px solid grey;
+    width: max-content;
+    padding: 2px;
+    border-radius: 6px;
+}
+
+.profile-page .student-details-box hr {
+    height: 5px;
+    width: 100%;
+    color: #9826cd;
+    border-top: 1px solid grey;
+    border-color:rgba(177, 177, 177, 0.407);
+
+    margin-block: 15px;
+}
+
+.profile-page .student-details-box .status-txt {
+    align-self: flex-start;
+
+}
+
+.profile-page .student-details-box h4.status-txt {
+    font-weight: 400;
+    font-size: 14px;
+}
+.profile-page .student-details-box p.status-txt {
+
+    font-size: 13px;
+    padding: 5px 10px;
+    background: rgba(181, 181, 181, 0.649);
+    /* background: rgba(181, 181, 181, 0.765); */
+    /* background: rgba(181, 181, 181, 0.765); */
+    border-radius: 8px;
+    margin-top: 5px;
+}
+
+.profile-page .room-details {
+    flex: 1;
+    /* background: #000; */
+}
+
+.profile-page .room-details .room-header {
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+.profile-page .room-details .room-header h3{
+    font-size: 22px;
+}
+.profile-page .room-details .header-cap{
+    font-size: 14px;
+}
+
+.profile-page .tab-btns {
+    background: rgb(181, 181, 181);
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 5px;
+}
+
+.profile-page .tab-btns button.active {
+    color: black;
+}
+
+.profile-page .tab-btns button {
+    color: grey;
+    height: 30px;
+    padding: 0 6px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+}
+
+.profile-page .tab-btns button svg {
+    --size: 18px;
+    width: var(--size);
+    height: var(--size);
+}
+.profile-page .name-floor-box{
+    margin-block: 20px;
+    display: flex;
+    gap: 10px;
+}
+.profile-page .name-floor-box svg{
+    --size: 40px;
+    width: var(--size);
+    height: var(--size);
+    background-color: rgb(178, 221, 255);
+    color: rgba(5, 116, 243, 0.742);
+    padding: 5px;
+    border-radius: 8px;
+}
+.profile-page .name-floor-box .caption{
+    margin-top: 3px;
+    font-size: 14px;
+}
+
+.profile-page .occupants-box{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    /* background: #000; */
+}
+.profile-page .occupants-box .occupant{
+    background: rgba(181, 181, 181, 0.494);
+    width: calc(50% - 10px);
+    min-width: 200px;
+    border-radius: 10px;
+    padding: 15px;
+}
+.profile-page .occupants-box .occupant h3{
+    font-weight: 500;
+    font-size: 14px;
+    
+}
+.profile-page .occupants-box .occupant p{
+    font-weight: 600;
+    margin-top: 10px;
+}
+.profile-page .amenities-box{
+    margin-block: 20px;
+}
+.profile-page .amenities-box div{
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+}
+.profile-page .amenities-box h3{
+    font-weight: 400;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+.profile-page .last-p{
+    color: green;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    /* background: #000; */
+}
+.profile-page .last-p svg{
+    --size: 18px;
+    width: var(--size);
+    height: var(--size);
+}
+/*
+@media screen and (max-width:500px) {
+
+    .history-page.page .heading{
+        padding: 20px 20px;
+        padding-bottom: 0;
+        margin-bottom: 10px;
+
+    }
+    .history-page.page{
+        padding: 20px;
+    }
+    .history-page .recent-votings .voting-stats-card{
+        width: 100%;
+    }
+} */

@@ -55,6 +55,9 @@
 }
 
 /* Logged In Header */
+header{
+    gap: 10px;
+}
 header .nav {
     padding: 0 10px;
     display: flex;
@@ -72,9 +75,10 @@ header .nav a {
     align-items: center;
     border-radius: 10px;
     padding: 0 5px;
+    justify-content: center;
 }
 
-header .nav a svg{
+header .nav a svg {
     --size: 20px;
     height: var(--size);
     width: var(--size);
@@ -83,6 +87,9 @@ header .nav a svg{
 header .nav a:hover {
     background-color: rgba(128, 128, 128, 0.345);
     cursor: pointer;
+}
+header .nav .notification-txt{
+    display: none;
 }
 
 .header button {
@@ -95,7 +102,7 @@ header .nav a:hover {
     border: none;
     background: transparent;
     border-radius: 8px;
-
+    margin-left: auto;
 }
 
 .header button svg {
@@ -120,9 +127,6 @@ header .nav a:hover {
         /* top: 0; */
         /* Always show on larger screens */
     }
-    .header button {
-        display: flex;
-    }
 
     header .heading {
         /* padding-left: 20px; */
@@ -132,9 +136,23 @@ header .nav a:hover {
 
 
 @media screen and (max-width:500px) {
+
     .header a.btn {
         font-size: 13px;
 
         height: 35px;
+    }
+
+
+    .header button {
+        display: flex;
+    }
+
+    header .nav {
+        margin: auto;
+        /* display: none; */
+    }
+    header .nav .notification-txt{
+        display: block;
     }
 }

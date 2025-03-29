@@ -114,24 +114,24 @@ router.post("/logout", (req, res) => {
     res.redirect("/login");
 });
 
-// router.post('/admin-login', async (req, res) => {
-//     try {
-//         const { password } = req.body;
-//         // const user = await Student.findOne({ matric_no });
-//         const isMatch = password === 'admin' // process.env.admin_password)
-//         if (!isMatch) return res.status(400).json({ error: 'Invalid password' });
+router.post('/admin-login', async (req, res) => {
+    try {
+        const { password } = req.body;
+        // const user = await Student.findOne({ matric_no });
+        const isMatch = password === 'admin' // process.env.admin_password)
+        if (!isMatch) return res.status(400).json({ error: 'Invalid password' });
 
-//         const token = jwt.sign({ id: process.env.JWT_SECRET}, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: process.env.JWT_SECRET}, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-//         // Set token in HTTP-only cookie
-//         res.cookie('token', token, { httpOnly: true, secure: true, maxAge: 3600000 }); // 1 hour
+        // Set token in HTTP-only cookie
+        res.cookie('token', token, { httpOnly: true, secure: true, maxAge: 3600000 }); // 1 hour
 
-//         res.json({ redirect: '/admin-dashboard' });
+        res.json({ redirect: '/admin-dashboard' });
 
-//     } catch (err) {
-//         console.log('login error: ', err)
-//         res.status(500).json({ error: 'Server error' });
-//     }
-// });
+    } catch (err) {
+        console.log('login error: ', err)
+        res.status(500).json({ error: 'Server error' });
+    }
+});
 
 module.exports = router;

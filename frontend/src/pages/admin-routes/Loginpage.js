@@ -25,7 +25,7 @@ export default function Loginpage() {
                 password,
             };
 
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/authn/login`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/authn/admin-login`, {
                 method: "POST",
                 credentials: "include",
                 headers: {

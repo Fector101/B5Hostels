@@ -10,7 +10,7 @@ import { UserContext } from '../../components/js/UserContext';
 
 export default function Loginpage() {
     const navigate = useNavigate()
-    const { fetchRoomsData, fetchUserData } = useContext(UserContext);
+    const { fetchAdminData } = useContext(UserContext);
 
     const usefiller = process.env.NODE_ENV === 'dev'
     const [matric_no, setMatricNo] = useState(usefiller ? 'FT23CMP00001' : "");
@@ -39,8 +39,7 @@ export default function Loginpage() {
             if (response.ok) {
                 console.log("User created:", data);
                 toast(data.msg || 'Login successful!', { type: 'success' });
-                await fetchRoomsData()
-                await fetchUserData()
+                await fetchAdminData()
                 navigate(data.url);
             } else {
                 console.error("Login error:", data);

@@ -26,7 +26,7 @@ export default function Dashboard() {
         settotal_students_that_have_rooms(StudentsData.filter(
             (student) => student.room
         ).length)
-    }, [])
+    }, [RoomsData,StudentsData])
     return (
         <div className="page adminpage">
             <div className="welcome-box">

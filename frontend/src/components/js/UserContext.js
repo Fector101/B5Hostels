@@ -73,7 +73,7 @@ export const UserProvider = ({ children }) => {
             if (response.ok) {
                 setRooms(data.rooms);  // Save user data globally
                 setStudents(data.students);  // Save user data globally
-                console.log('Getting Rooms data...')
+                console.log('Successfully Fetched Rooms data...')
                 if(!silent)toast("Successfully Fetched Rooms Data", { type: "success" });
 
             } else {

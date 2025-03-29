@@ -1,14 +1,16 @@
 import '../components/css/login-signuppage.css';
 import GoToTop from "../components/js/GoToTop";
-import { useState } from "react";
+import {useContext, useState } from "react";
 import { Lock, IdCard, User, GraduationCap } from "lucide-react";
 import { Link, useNavigate } from 'react-router-dom';
 import NotSignedIn from '../components/ui/header/NotSignedIn';
 import { toast } from 'react-toastify';
+import { UserContext } from '../components/js/UserContext';
 
 
 export default function SignupPage() {
     const navigate = useNavigate()
+    const { fetchRoomsData, fetchUserData } = useContext(UserContext);
 
     const usefiller = process.env.NODE_ENV === 'dev'
     const [email, setEmail] = useState(usefiller ? "f@gmail.com" : '');
@@ -45,6 +47,8 @@ export default function SignupPage() {
             if (response.ok) {
                 console.log("User created:", data);
                 toast(data.msg || 'Signup successful!', { type: 'success' });
+                await fetchRoomsData()
+                await fetchUserData()
                 navigate(data.url);
                 // Redirect or update UI
             } else {

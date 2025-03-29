@@ -27,10 +27,10 @@ router.get("/dashboard", async (req, res) => {
         (room) => room.occupants < room.capacity
     ).length;
     const full_rooms = all_rooms.filter(
-        (room) => room.occupants == room.capacity
+        (room) => room.occupants === room.capacity
     ).length;
     const under_maintenance = all_rooms.filter(
-        (room) => room.status == "maintenance"
+        (room) => room.status === "maintenance"
     ).length;
     // console.log({
     //     page_title: "dashboard",
@@ -73,14 +73,14 @@ router.get("/rooms", async (req, res) => {
 });
 
 function randomImg() {
-    return "img" + Math.floor(Math.random() * 21) + ".jpg";
+    return "img" + Math.floor(Math.random() * 15) + ".jpg";
 }
 
 router.post("/assign-room", async (req, res) => {
     const { matric_no, room_number } = req.body;
     const user = await doDataBaseThing(() => Student.findOne({ matric_no }));
 
-    if (user == "db_error") {
+    if (user === "db_error") {
         return res
             .status(400)
             .json({ msg: "-Network Error, Try Refreshing Page" });
@@ -114,7 +114,7 @@ router.post("/add-room", async (req, res) => {
     // console.log({ room_number, block, floor, status, capacity, amenities })
     let room = await doDataBaseThing(() => Room.findOne({ room_number }));
 
-    if (room == "db_error") {
+    if (room === "db_error") {
         return res
             .status(400)
             .json({ msg: "-Network Error, Try Refreshing Page" });
@@ -138,7 +138,7 @@ router.post("/add-room", async (req, res) => {
 
     const result = await doDataBaseThing(() => room.save());
 
-    if (result == "db_error") {
+    if (result === "db_error") {
         return res
             .status(400)
             .json({ msg: "Network Error, Try Refreshing Page" });
@@ -184,7 +184,7 @@ router.post("/reject-student-room", async (req, res) => {
     const { matric_no } = req.body;
     const user = await doDataBaseThing(() => Student.findOne({ matric_no }));
 
-    if (user == "db_error") {
+    if (user === "db_error") {
         return res
             .status(400)
             .json({ msg: "-Network Error, Try Refreshing Page" });

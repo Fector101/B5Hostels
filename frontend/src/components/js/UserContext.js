@@ -9,8 +9,8 @@ export const UserProvider = ({ children }) => {
     const [RoomsData, setRooms] = useState([]);
 
     // Function to fetch user data
-    
-    const fetchUserData = async () => {
+
+    const fetchUserData = async (silent=false) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/profile`, {
                 method: "GET",
@@ -22,20 +22,20 @@ export const UserProvider = ({ children }) => {
             if (response.ok) {
                 setUser(data.data);  // Save user data globally
                 console.log('Getting user profile data...')
-                toast("Successfully Fetched User Data", { type: "success" });
-                
+                if(!silent)toast("Successfully Fetched User Data", { type: "success" })
+
             } else {
                 console.log(' Bad Request user profile data...')
                 setUser({});
             }
         } catch (error) {
-            console.log(error,' Error Getting user profile data...')
+            console.log(error, ' Error Getting user profile data...')
             console.error("Network error:", error);
             setUser({});
         }
     };
-    
-    const fetchRoomsData = async () => {
+
+    const fetchRoomsData = async (silent=false) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/rooms`, {
                 method: "GET",
@@ -47,14 +47,14 @@ export const UserProvider = ({ children }) => {
             if (response.ok) {
                 setRooms(data.data);  // Save user data globally
                 console.log('Getting Rooms data...')
-                toast("Successfully Fetched Rooms Data", { type: "success" });
-                
+                if(!silent)toast("Successfully Fetched Rooms Data", { type: "success" });
+
             } else {
                 console.log(' Bad Request Rooms data...')
                 setRooms([]);
             }
         } catch (error) {
-            console.log(error,' Error Getting user profile data...')
+            console.log(error, ' Error Getting user profile data...')
             console.error("Network error:", error);
             setRooms([]);
         }
@@ -62,12 +62,12 @@ export const UserProvider = ({ children }) => {
 
     // Fetch user data on mount
     useEffect(() => {
-        fetchUserData();
-        fetchRoomsData();
+        fetchUserData(true);
+        fetchRoomsData(true);
     }, []);
 
     return (
-        <UserContext.Provider value={{ userData,RoomsData, setUser }}>
+        <UserContext.Provider value={{ userData, RoomsData, fetchRoomsData, fetchUserData }}>
             {children}
         </UserContext.Provider>
     );

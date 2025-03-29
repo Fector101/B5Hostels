@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Lock, Bed, GraduationCap } from "lucide-react";
 
 import '../components/css/login-signuppage.css'
 import GoToTop from "../components/js/GoToTop";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NotSignedIn from "../components/ui/header/NotSignedIn";
 import { toast } from 'react-toastify';
+import { UserContext } from '../components/js/UserContext';
 
 export default function Loginpage() {
     const navigate = useNavigate()
-    
+    const { fetchRoomsData, fetchUserData } = useContext(UserContext);
+
     const usefiller = process.env.NODE_ENV === 'dev'
     const [matric_no, setMatricNo] = useState(usefiller ? 'FT23CMP00001' : "");
     const [password, setPassword] = useState(usefiller ? '1' : "");
@@ -37,6 +39,8 @@ export default function Loginpage() {
             if (response.ok) {
                 console.log("User created:", data);
                 toast(data.msg || 'Login successful!', { type: 'success' });
+                await fetchRoomsData()
+                await fetchUserData()
                 navigate(data.url);
                 // Redirect or update UI
             } else {

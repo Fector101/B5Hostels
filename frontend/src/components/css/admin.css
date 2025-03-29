@@ -1,8 +1,15 @@
-body {
+.page.adminpage{
+    padding: 0;
+    letter-spacing: 0.6px;
+    --primary-btn-bg:hotpink;
     font-family: SF Pro Display, system-ui, sans-serif;
     display: flex;
     flex-direction: column;
 }
+/* body {
+    display: flex;
+    flex-direction: column;
+} */
 
 .dim-text {
     color: #666;
@@ -20,19 +27,22 @@ body {
     cursor: pointer;
 }
 .primary-btn {
-    background-color: var(--btn-bg);
+    background-color: var(--primary-btn-bg);
     color: white;
-    border-color: var(--btn-bg);
+    border-color: var(--primary-btn-bg);
     border-style: solid;
     border-radius: 10px;
 }
 
 header {
+    --primary-btn-bg:hotpink;
+
     display: flex;
     box-shadow: -1px 0px 0.8px grey;
     padding: 1rem 2rem;
     /*  background: #000; */
-
+    font-family: SF Pro Display, system-ui, sans-serif;
+    letter-spacing: 0.6px;
     align-items: center;
 }
 
@@ -87,7 +97,7 @@ header nav a:hover {
 
 header nav a.active {
     color: white;
-    background-color: var(--btn-bg);
+    background-color: var(--primary-btn-bg);
 }
 
 header nav a {
@@ -215,7 +225,7 @@ header>button:last-child svg {
 }
 
 .card span.strip {
-    background-color: var(--btn-bg);
+    background-color: var(--primary-btn-bg);
     height: 5px;
     display: flex;
     border-radius: 5px 5px 0 0;
@@ -316,7 +326,7 @@ header>button:last-child svg {
 }
 
 .view-btn {
-    background: var(--btn-bg);
+    background: var(--primary-btn-bg);
     color: #fff;
     border: none;
     padding: 8px 12px;
@@ -505,9 +515,9 @@ section.main-content .cards-box {
 }
 
 .student-card .btns-box .assign-btn {
-    background-color: var(--btn-bg);
+    background-color: var(--primary-btn-bg);
     color: white;
-    border-color: var(--btn-bg);
+    border-color: var(--primary-btn-bg);
 }
 
 .student-card .btns-box .reject-room-btn {
@@ -584,11 +594,11 @@ section.main-content .cards-box {
 
 
 .room-selection-card.active {
-    border: 1px solid var(--btn-bg);
+    border: 1px solid var(--primary-btn-bg);
 }
 
 .room-selection-card.active button.select-btn {
-    background-color: var(--btn-bg);
+    background-color: var(--primary-btn-bg);
     color: white;
 }
 
@@ -616,7 +626,7 @@ section.main-content .cards-box {
 }
 
 .allocation-btns-box button.ok {
-    background-color: var(--btn-bg);
+    background-color: var(--primary-btn-bg);
     color: white;
 }
 
@@ -655,9 +665,9 @@ section.main-content .cards-box {
 }
 
 .student-card button.primary-btn {
-    background-color: var(--btn-bg);
+    background-color: var(--primary-btn-bg);
     color: white;
-    border-color: var(--btn-bg);
+    border-color: var(--primary-btn-bg);
 }
 
 /* Add Room Modal */
@@ -757,3 +767,93 @@ section.main-content .cards-box {
 .free {
     border-top-color: rgb(34 197 94) !important;
 }
+
+
+
+
+
+
+
+
+@media screen and (max-width:930px) {
+    .main-page-details-box .card {
+        min-width: 455px;
+        max-width: 455px;
+    }
+}
+
+@media screen and (max-width:700px) {
+
+    .allocation-box {
+        margin: auto;
+        width: 400px;
+    }
+
+    .room-selection-card.student-card {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width:770px) {
+    .main-page-details-box .card {
+        min-width: 400px;
+        max-width: 400px;
+    }
+
+    header h1 {
+        font-size: 21px;
+    }
+
+    header {
+        padding: 1rem;
+    }
+
+    header nav {
+        flex-direction: column;
+        height: 0;
+        width: 0;
+        overflow: hidden;
+        transition: height 0.5s ease;
+    }
+
+    header nav button {
+        width: 100%;
+    }
+
+    header button.signout-btn {
+        height: 0;
+        width: 0;
+        overflow: hidden;
+        border: none;
+        transition: height 0.5s ease;
+    }
+
+    .menu-btn-box {
+        width: 100%;
+    }
+
+    .menu-btn-box button {
+        margin-left: auto;
+        display: flex;
+
+    }
+}
+
+
+@media screen and (max-width:550px) {
+    .main-page-details-box .card {
+        min-width: 400px;
+        max-width: 400px;
+    }
+}
+
+@media screen and (max-width:426px) {
+    .main-page-details-box .card {
+        min-width: auto;
+        max-width: auto;
+    }
+
+    .main-page-details-box .card .card-item {
+        gap: 10px;
+    }
+}   

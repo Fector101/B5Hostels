@@ -1,7 +1,7 @@
 export default function Dashboard() {
     
     return (
-        <div className="page">
+        <div className="page adminpage">
             <div className="welcome-box">
                 <h1>Admin Dashboard</h1>
                 <p className="dim-text">

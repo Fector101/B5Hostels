@@ -91,7 +91,7 @@ export default function Students() {
     const [rooms, SetRooms] = useState([])
     const [students, SetStudents] = useState([])
     return (
-        <>
+        <div className='page adminpage'>
 
             <div id="notification" className="notification"></div>
             <div style={{zIndex: "3"}} className="spinner-cover cover display-none">
@@ -147,6 +147,6 @@ export default function Students() {
                     {students.forEach(student => { <StudentCard /> })}
                 </div>
             </section>
-        </>
+        </div>
     )
 }

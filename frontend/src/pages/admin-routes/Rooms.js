@@ -54,7 +54,8 @@ export default function Rooms() {
 
     }
     return (
-        <>
+        <div className='page adminpage'>
+
             <div style={{ zIndex: "3" }} className="spinner-cover cover display-none">
                 <div id="spinner" className="spinner"></div>
             </div>
@@ -194,6 +195,6 @@ export default function Rooms() {
                 </div>
 
             </section>
-        </>
+        </div>
     )
 }

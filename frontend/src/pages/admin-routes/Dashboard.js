@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { UserContext } from '../../components/js/UserContext';
 import { useContext, useEffect, useState } from "react";
 
@@ -102,7 +103,7 @@ export default function Dashboard() {
                             <strong>Pending Verification</strong>
                             <p> {awaiting_approval} students awaiting verification</p>
                         </div>
-                        <button className="view-btn">View All</button>
+                        <Link to='/admin/students' className="view-btn">View All</Link>
                     </div>
                     <div className="card-item">
                         <span className="icon">🏠</span>
@@ -110,7 +111,7 @@ export default function Dashboard() {
                             <strong>Verification Students</strong>
                             <p>{awaiting_approval} students with assigned rooms</p>
                         </div>
-                        <button className="view-btn">View All</button>
+                        <Link to='/admin/students' className="view-btn">View All</Link>
                     </div>
                 </div>
 
@@ -132,7 +133,7 @@ export default function Dashboard() {
                             Maintenance <span className="count">{under_maintenance} </span>
                         </div>
                     </div>
-                    <button className="view-btn" id="view-all-rooms">View All Rooms</button>
+                    <Link to='/admin/rooms' className="view-btn" id="view-all-rooms">View All Rooms</Link>
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@ const studentSchema = new mongoose.Schema({
   password: { type: String, required: true },
   gender: { type: String, required: true },
   level: { type: String, required: true },
-  verified: { type: String,default: false, required: false },
+  verified: { type: Boolean,default: false, required: false },
   rejected_room: { type: Boolean, required: false },
 
   room: { type: String, required: false },

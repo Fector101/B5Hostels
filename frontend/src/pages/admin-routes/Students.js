@@ -1,7 +1,23 @@
-import { useState } from "react"
-function PopupRoomCard({capacity,block,room_number,status,floor,occupants,i}) {
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../components/js/UserContext";
+
+function PopupRoomCard({
+    amenities,
+    capacity,
+    block,
+    room_number,
+    status,
+    floor,
+    occupants,
+    i,
+}) {
     return (
-        <div className={"student-card room-selection-card free" + (i === 0 ? "active" : "")} >
+        <div
+            className={
+                "student-card room-selection-card free" +
+                (i === 0 ? "active" : "")
+            }
+        >
             <div className="card-header">
                 <div className="student-id-box">
                     <p className="dim-text">Room</p>
@@ -16,8 +32,9 @@ function PopupRoomCard({capacity,block,room_number,status,floor,occupants,i}) {
                 </div>
                 <div className="row">
                     <p className="dim-text">Capacity:</p>
-                    <p>{occupants?.length} /{capacity}</p>
-
+                    <p>
+                        {occupants?.length} /{capacity}
+                    </p>
                 </div>
 
                 <div className="row">
@@ -26,29 +43,41 @@ function PopupRoomCard({capacity,block,room_number,status,floor,occupants,i}) {
                 </div>
             </div>
             <div className="amenities-box">
-                <p className="dim-text">
-                    Amenities:
-                </p>
+                <p className="dim-text">Amenities:</p>
                 <div className="con">
-                    <div className="sub-container"><p>Wifi</p></div>
-
-                    <div className="sub-container"><p>Desk</p></div>
-
-                    <div className="sub-container"><p>Wardrobe</p></div>
-
-                    <div className="sub-container"><p>Study Area</p></div>
+                    {amenities?.[0]
+                        .split(",")
+                        .slice(0, 3)
+                        .map((amenity) => (
+                            <div key={amenity} className="sub-container">
+                                <p>{amenity}</p>
+                            </div>
+                        ))}
                 </div>
             </div>
 
             <div className="btns-box">
-                <button className='select-btn'>{i === 0 ? "Selected" : "Select Room"}</button>
+                <button className="select-btn">
+                    {i === 0 ? "Selected" : "Select Room"}
+                </button>
             </div>
         </div>
-    )
+    );
 }
-function StudentCard({ name, matric_no, email, preference,level,room }) {
+function StudentCard({
+    name,
+    matric_no,
+    email,
+    preference,
+    level,
+    room,
+    verified,
+}) {
     return (
-        <div data-level={level} className="student-card <%= state %> <%= student.payments &&student.payments.length > 0? ' paid':''%>">
+        <div
+            data-level={level}
+            className="student-card <%= state %> <%= student.payments &&student.payments.length > 0? ' paid':''%>"
+        >
             <div className="card-header">
                 <div className="student-id-box">
                     <p className="dim-text">Matric N0</p>
@@ -66,7 +95,7 @@ function StudentCard({ name, matric_no, email, preference,level,room }) {
             <div className="info">
                 <div className="row">
                     <p className="dim-text">Status:</p>
-                    <p>{room}</p>
+                    <p>{verified ? "Verified" : "Pending"}</p>
                 </div>
                 <div className="row">
                     <p className="dim-text">Room:</p>
@@ -79,22 +108,29 @@ function StudentCard({ name, matric_no, email, preference,level,room }) {
                 </div>
             </div>
             <div className="btns-box">
-
                 <button className="assign-btn">Assign Room</button>
                 <button className="random-room-btn">Random Room</button>
-
             </div>
         </div>
-    )
+    );
 }
 export default function Students() {
-    const [rooms, SetRooms] = useState([])
-    const [students, SetStudents] = useState([])
-    return (
-        <div className='page adminpage'>
+    const [rooms, SetRooms] = useState([]);
+    const [students, SetStudents] = useState([]);
+    const { RoomsData, StudentsData } = useContext(UserContext);
 
+    useEffect(() => {
+        SetRooms(RoomsData);
+        SetStudents(StudentsData);
+    }, [RoomsData, StudentsData]);
+    console.log(students);
+    return (
+        <div className="page adminpage">
             <div id="notification" className="notification"></div>
-            <div style={{zIndex: "3"}} className="spinner-cover cover display-none">
+            <div
+                style={{ zIndex: "3" }}
+                className="spinner-cover cover display-none"
+            >
                 <div id="spinner" className="spinner"></div>
             </div>
             <div className="flex cover display-none choices">
@@ -102,18 +138,30 @@ export default function Students() {
                     <button className="close-btn">X</button>
                     <h1>Room Allocation</h1>
                     <p className="header-caption dim-text">
-                        Assign a room to <span className="--name">Evelyn</span> <span className="--matric_no">(FT23CMP0007)</span>
+                        Assign a room to <span className="--name">Evelyn</span>{" "}
+                        <span className="--matric_no">(FT23CMP0007)</span>
                     </p>
                     <p>Available Rooms (6)</p>
                     <div className="rooms-box">
-                        {rooms.forEach((room, i) => <PopupRoomCard />)
-
-
-                        }
+                        {rooms?.map((room, i) => (
+                            <PopupRoomCard
+                                amenities={room.amenities}
+                                capacity={room.capacity}
+                                block={room.block}
+                                room_number={room.room_number}
+                                status={room.status}
+                                floor={room.floor}
+                                occupants={room.occupants}
+                                key={i}
+                                i={i}
+                            />
+                        ))}
                     </div>
 
                     <div className="allocation-btns-box">
-                        <button id="accept-room" className="ok">Assign Room</button>
+                        <button id="accept-room" className="ok">
+                            Assign Room
+                        </button>
                         <button>Cancel</button>
                     </div>
                 </div>
@@ -126,7 +174,9 @@ export default function Students() {
 
             <section className="main-content">
                 <div className="tabs">
-                    <button value="student-card" className="active">All Students</button>
+                    <button value="student-card" className="active">
+                        All Students
+                    </button>
                     <button value="pending">Pending</button>
                     <button value="verified">Verified</button>
                     <button value="paid">Paid</button>
@@ -144,9 +194,20 @@ export default function Students() {
                     </select>
                 </div>
                 <div className="cards-box">
-                    {students.forEach(student => { <StudentCard /> })}
+                    {students.map((student, i) => (
+                        <StudentCard
+                            key={i}
+                            verified={student.verified}
+                            name={student.name}
+                            matric_no={student.matric_no}
+                            email={student.email}
+                            preference={student.preference}
+                            level={student.level}
+                            room={student.room}
+                        />
+                    ))}
                 </div>
             </section>
         </div>
-    )
+    );
 }

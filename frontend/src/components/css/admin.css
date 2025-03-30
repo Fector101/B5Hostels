@@ -183,6 +183,9 @@ header.admin-header>button:last-child svg {
     margin-block: 15px;
 }
 
+.page.adminpage .filters select {
+    margin-left: auto;
+}
 .page.adminpage .filters input,
 .page.adminpage .filters select {
     padding: 8px;
@@ -195,7 +198,7 @@ header.admin-header>button:last-child svg {
     /* max-width: 900px; */
     display: flex;
     flex-direction: column;
-    margin: auto;
+    /* margin: auto; */
     padding: 20px;
     gap: 5px;
 }
@@ -432,7 +435,9 @@ header.admin-header>button:last-child svg {
     border-top: 5px solid #ddd;
     overflow: hidden;
 }
-
+.page.adminpage .student-card.display-none{
+    display: none;
+}
 .page.adminpage .card-header {
     display: flex;
     justify-content: space-between;
@@ -521,6 +526,10 @@ header.admin-header>button:last-child svg {
     border-radius: 10px;
     border: 1px solid grey;
     background: white;
+}
+.page.adminpage .student-card .btns-box button.primary-btn{
+    border-color: var(--primary-btn-bg);
+    background-color: var(--primary-btn-bg);
 }
 
 .page.adminpage .student-card .btns-box .assign-btn {

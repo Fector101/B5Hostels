@@ -22,7 +22,7 @@ export const UserProvider = ({ children }) => {
             const data = await response.json();
             if (response.ok) {
                 setUser(data.data);  // Save user data globally
-                console.log('Getting user profile data...')
+                console.log('Successfully Fetched profile data...')
                 if(!silent)toast("Successfully Fetched User Data", { type: "success" })
 
             } else {
@@ -47,7 +47,7 @@ export const UserProvider = ({ children }) => {
             const data = await response.json();
             if (response.ok) {
                 setRooms(data.data);  // Save user data globally
-                console.log('Getting Rooms data...')
+                console.log('Successfully Fetched Rooms data...')
                 if(!silent)toast("Successfully Fetched Rooms Data", { type: "success" });
 
             } else {

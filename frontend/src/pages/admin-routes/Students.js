@@ -64,19 +64,31 @@ function PopupRoomCard({
         </div>
     );
 }
-function StudentCard({
-    name,
-    matric_no,
-    email,
-    preference,
-    level,
-    room,
-    verified,
-}) {
+function StudentCard({ tab,name, matric_no, email, preference, level, room, verified, payments }) {
+    // let state = 'all-students pending-verification-account verified-account paid'
+    // pending verified paid
+    // not verfing payment but student account
+    function Btns({ verified, room, payments_length }) {
+        if (!verified) {
+            return <>
+                <button className="primary-btn verify-btn">Verify</button>
+                <button className="red-color reject-room-btn"> Reject </button>
+            </>
+        } else if (!room && payments_length > 0) {
+            return <>
+                <button className="assign-btn">Assign Room</button>
+                <button className="random-room-btn">Random Room</button>
+            </>
+        } else if (room) {
+            return <button disabled className="assigned-room-btn"> Room Assigned </button>
+        } else {
+            return <button disabled className="assigned-room-btn"> No Payment Made</button>
+        }
+    }
     return (
         <div
             data-level={level}
-            className="student-card <%= state %> <%= student.payments &&student.payments.length > 0? ' paid':''%>"
+            className={"student-card" + (verified? ' verified': ' pending') + (payments.length > 0?' paid':'')}
         >
             <div className="card-header">
                 <div className="student-id-box">
@@ -108,8 +120,7 @@ function StudentCard({
                 </div>
             </div>
             <div className="btns-box">
-                <button className="assign-btn">Assign Room</button>
-                <button className="random-room-btn">Random Room</button>
+                <Btns verified={verified} room={room} payments_length={payments?.length}/>
             </div>
         </div>
     );
@@ -119,11 +130,49 @@ export default function Students() {
     const [students, SetStudents] = useState([]);
     const { RoomsData, StudentsData } = useContext(UserContext);
 
+    function showTab(tab) {
+        // tab = 'pending' or 'verified' or 'paid' or ('student-card' <--- for all)
+        document.querySelector(".tabs button.active")?.classList.remove("active");
+        document.querySelector(`.tabs button.${tab}-tab-btn`)?.classList.add("active");
+
+        document.querySelectorAll(".main-content .student-card").forEach((card) => {
+            if (!card.classList.contains(tab)) {
+                card.classList.add("display-none");
+            } else {
+                card.classList.remove("display-none");
+            }
+        });
+        // const currentLevel = document.querySelector('.select-level').value
+        // displayLevel(currentLevel)
+        document.querySelector('.select-level').value = 'all'
+        displayLevel('all')
+    }
+    
+    function displayLevel(level) {
+        // level --> data-level='level'
+        console.log(level)
+        const currentTab = document.querySelector('.tabs button.active').value
+        document.querySelectorAll(`.main-content .cards-box > div.${currentTab}`).forEach(card => {
+            if (card.getAttribute('data-level') === level) {
+                card.classList.remove('display-none')
+            } else if (level === 'all') {
+                card.classList.remove('display-none')
+            }
+            else {
+                card.classList.add('display-none')
+            }
+        })
+    }
     useEffect(() => {
         SetRooms(RoomsData);
         SetStudents(StudentsData);
     }, [RoomsData, StudentsData]);
-    console.log(students);
+    useEffect(() => {
+
+    }, []);
+        
+
+    // console.log(students);
     return (
         <div className="page adminpage">
             <div id="notification" className="notification"></div>
@@ -174,17 +223,17 @@ export default function Students() {
 
             <section className="main-content">
                 <div className="tabs">
-                    <button value="student-card" className="active">
+                    <button value="student-card" onClick={(e)=>showTab(e.target.value)} className="active student-card-tab-btn">
                         All Students
                     </button>
-                    <button value="pending">Pending</button>
-                    <button value="verified">Verified</button>
-                    <button value="paid">Paid</button>
+                    <button className="pending-tab-btn" onClick={(e)=>showTab(e.target.value)} value="pending">Pending</button>
+                    <button className="verified-tab-btn" onClick={(e)=>showTab(e.target.value)} value="verified">Verified</button>
+                    <button className="paid-tab-btn" onClick={(e)=>showTab(e.target.value)} value="paid">Paid</button>
                 </div>
 
                 <div className="filters">
-                    <input type="text" placeholder="Search students..." />
-                    <select className="select-level">
+                    {/* <input type="text" placeholder="Search students..." /> */}
+                    <select className="select-level" onChange={(e)=>displayLevel(e.target.value)}>
                         <option value="all">All Levels</option>
                         <option value="100">100</option>
                         <option value="200">200</option>
@@ -198,6 +247,7 @@ export default function Students() {
                         <StudentCard
                             key={i}
                             verified={student.verified}
+                            payments={student.payments}
                             name={student.name}
                             matric_no={student.matric_no}
                             email={student.email}

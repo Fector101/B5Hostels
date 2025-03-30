@@ -1,7 +1,9 @@
-import { useState } from "react"
-function RoomCard({ floor, room_number, block, occupants, capacity }) {
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../components/js/UserContext";
+
+function RoomCard({ amenities, floor, room_number, block, occupants, capacity, status }) {
     return (
-        <div className="student-card room-card { room.status } { room.block == 'New Hostel'? 'new-hostel': 'old-hostel' }">
+        <div className={`student-card room-card ${status} ${block === 'New Hostel' ? 'new-hostel' : 'old-hostel'}`}>
             <div className="card-header">
                 <div className="student-id-box">
                     <p className="dim-text">Room</p>
@@ -27,13 +29,14 @@ function RoomCard({ floor, room_number, block, occupants, capacity }) {
             <div className="amenities-box">
                 <p className="dim-text">Amenities:</p>
                 <div className="con">
-                    <div className="sub-container"><p>Wifi</p></div>
-
-                    <div className="sub-container"><p>Desk</p></div>
-
-                    <div className="sub-container"><p>Wardrobe</p></div>
-
-                    <div className="sub-container"><p>Study Area</p></div>
+                    {amenities?.[0]
+                        .split(",")
+                        .slice(0, 3)
+                        .map((amenity) => (
+                            <div key={amenity} className="sub-container">
+                                <p>{amenity}</p>
+                            </div>
+                        ))}
                 </div>
             </div>
         </div>
@@ -46,13 +49,52 @@ export default function Rooms() {
     const [room_number, setRoomNumber] = useState(usefiller ? 101 : '');
     const [floor, setFloor] = useState(usefiller ? 1 : '');
     const [capacity, setCapacity] = useState(usefiller ? 4 : '');
-    const [search_text, setSearchText] = useState(usefiller ? "111" : '');
+    // const [search_text, setSearchText] = useState(usefiller ? "111" : '');
     // const [level, setLevel] = useState(usefiller ? 100 : "");
     // const [gender, setGender] = useState(usefiller ? 'Male' : "");
+    const { RoomsData } = useContext(UserContext);
+
+
+    useEffect(() => {
+        SetRooms(RoomsData);
+    }, [RoomsData]);
+
+    function showTab(tab) {
+        // tab = 'maintenance' or 'free' or 'full' or ('room-card' <--- for all)
+        document.querySelector(".tabs button.active")?.classList.remove("active");
+        document.querySelector(`.tabs button.${tab}-tab-btn`)?.classList.add("active");
+
+
+        document.querySelectorAll('.room-card').forEach(card => {
+            if (!card.classList.contains(tab)) {
+                card.classList.add('display-none')
+            } else {
+                card.classList.remove('display-none')
+            }
+        })
+        // const currentHostel = document.querySelector('.select-hostel').value
+        // displayHostel(currentHostel)
+        document.querySelector('.select-hostel').value = 'room-card'
+        displayHostel('room-card')
+    }
+
+    function displayHostel(hostel) {
+        // hostel ---> 'room-card' || 'new-hostel || 'old-hostel
+        const currentTab = document.querySelector('.tabs button.active').value
+        document.querySelectorAll(`.cards-box > div.${currentTab}`).forEach(card => {
+            if (card.classList.contains(hostel)) {
+                card.classList.remove('display-none')
+            } else {
+                card.classList.add('display-none')
+            }
+        })
+    }
 
     const handleSubmit = async (e) => {
 
     }
+
+
     return (
         <div className='page adminpage'>
 
@@ -83,7 +125,7 @@ export default function Rooms() {
                             <div className="form-group">
                                 <label htmlFor="block">Block</label>
 
-                                <select name="block">
+                                <select id="block">
                                     <option>Old Hostel</option>
                                     <option>New Hostel</option>
                                 </select>
@@ -93,30 +135,30 @@ export default function Rooms() {
                         <div className="grid-container">
                             <div className="form-group">
                                 <label htmlFor="floor">Floor</label>
-                                <input 
-                                
-                                value={floor}
+                                <input
+
+                                    value={floor}
                                     onChange={(e) => setFloor(e.target.value)}
-                                type="number" name="floor" min="1" max="3"  />
+                                    type="number" id="floor" min="1" max="3" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="capacity">Capacity</label>
                                 <input
-
+                                    id='capacity'
                                     type="number"
                                     name="capacity"
                                     min="1"
                                     max="4"
-                                    
-                                value={capacity}
-                                onChange={(e) => setCapacity(e.target.value)}
+
+                                    value={capacity}
+                                    onChange={(e) => setCapacity(e.target.value)}
                                 />
                             </div>
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="status">Status</label>
-                            <select name="status">
+                            <select id="status">
                                 <option value="free">Available</option>
                                 <option value="full">Occupied</option>
                                 <option value="maintenance">Under Maintenance</option>
@@ -126,7 +168,7 @@ export default function Rooms() {
                         <div className="form-group">
                             <label htmlFor="amenities">Amenities</label>
                             <textarea
-                                name="amenities"
+                                id="amenities"
                                 placeholder="WiFi, Desk, Wardrobe"
                             ></textarea>
                             <small
@@ -171,19 +213,15 @@ export default function Rooms() {
             </div>
             <section className="main-content">
                 <div className="tabs">
-                    <button value="room-card" className="active">All Rooms</button>
-                    <button value="free">Available</button>
-                    <button value="full">Occupied</button>
-                    <button value="maintenance">Maintenance</button>
+                    <button onClick={(e) => showTab(e.target.value)} className="room-card-tab-btn active" value="room-card">All Rooms</button>
+                    <button onClick={(e) => showTab(e.target.value)} className="free-tab-btn " value="free">Available</button>
+                    <button onClick={(e) => showTab(e.target.value)} className="full-tab-btn " value="full">Occupied</button>
+                    <button onClick={(e) => showTab(e.target.value)} className="maintenance-tab-btn " value="maintenance">Maintenance</button>
                 </div>
 
                 <div className="filters">
-                    <input type="text"
-                        
-                        value={search_text}
-                        onChange={(e) => setSearchText(e.target.value)}
-                     placeholder="Search rooms..." />
-                    <select className="select-hostel">
+                    {/* <input type="text" value={search_text} onChange={(e) => setSearchText(e.target.value)} placeholder="Search rooms..." /> */}
+                    <select onChange={(e) => displayHostel(e.target.value)} className="select-hostel">
                         <option value="room-card">All Blocks</option>
                         <option value="new-hostel">New Hostel</option>
                         <option value="old-hostel">Old Hostel</option>
@@ -191,7 +229,16 @@ export default function Rooms() {
                 </div>
 
                 <div className="cards-box">
-                    {rooms.forEach(room => <RoomCard />)}
+                    {rooms.map((room, i) => <RoomCard
+                        key={i}
+                        amenities={room.amenities}
+                        capacity={room.capacity}
+                        block={room.block}
+                        room_number={room.room_number}
+                        status={room.status}
+                        floor={room.floor}
+                        occupants={room.occupants}
+                    />)}
                 </div>
 
             </section>

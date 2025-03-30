@@ -64,7 +64,7 @@ function PopupRoomCard({
         </div>
     );
 }
-function StudentCard({ tab,name, matric_no, email, preference, level, room, verified, payments }) {
+function StudentCard({ name, matric_no, email, preference, level, room, verified, payments }) {
     // let state = 'all-students pending-verification-account verified-account paid'
     // pending verified paid
     // not verfing payment but student account
@@ -142,8 +142,6 @@ export default function Students() {
                 card.classList.remove("display-none");
             }
         });
-        // const currentLevel = document.querySelector('.select-level').value
-        // displayLevel(currentLevel)
         document.querySelector('.select-level').value = 'all'
         displayLevel('all')
     }
@@ -167,9 +165,9 @@ export default function Students() {
         SetRooms(RoomsData);
         SetStudents(StudentsData);
     }, [RoomsData, StudentsData]);
-    useEffect(() => {
+    // useEffect(() => {
 
-    }, []);
+    // }, []);
         
 
     // console.log(students);

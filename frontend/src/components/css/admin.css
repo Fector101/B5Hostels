@@ -50,10 +50,12 @@ header.admin-header {
     align-items: center;
 }
 
-header.admin-header h1 {
+header.admin-header .brand {
     font-size: 20px;
     margin-block: auto;
-
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
 }
 
 .admin-header .menu-btn-box {

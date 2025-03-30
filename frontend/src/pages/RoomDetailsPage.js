@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useContext} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "../components/css/roomdetailspage.css"; // Make sure to create this file and import it
 import { Building, CreditCard, Users, X } from "lucide-react";
 // import img from './img6.jpg'
 import { useSearchParams } from "react-router-dom";
-import ImageComponent from "../components/js/imgs";
 import { UserContext } from '../components/js/UserContext';
 
 export default function RoomPreview() {
@@ -11,34 +10,23 @@ export default function RoomPreview() {
     const requested_room = searchParams.get('id');
     const [modal, setModal] = useState(false);
     const { RoomsData } = useContext(UserContext);
-
+    const [card_number, setCardNumber] = useState("1234 5678 91112")
+    const [expiry_date, setExpiryDate] = useState("2024-03-30")
+    const [cvv, setCvv] = useState("007")
+    const [card_name, setCardName] = useState("Dan")
     let roomData = { ...RoomsData?.find(({ room_number }) => room_number === requested_room) }
     console.log(roomData);
-    useEffect(()=>{
-        
-    },[])
-    // Sample data (you can replace this with props or API data)
-    // const roomData = {
-    //     building: "Block A",
-    //     roomNumber: "101",
-    //     floorLevel: 1,
-    //     capacity: 2,
-    //     currentOccupants: 1,
-    //     amenities: ["WiFi", "Desk", "Wardrobe"],
-    //     status: "Available", // or "Full", "Unavailable", etc.
-    //     price: 1200,
-    //     imageUrl: "https://via.placeholder.com/400x300", // Replace with a real image
-    // };
+    useEffect(() => {
 
-    // const isRoomFull = roomData.currentOccupants >= roomData.capacity;
+    }, [])
 
     return (
         <div className="page room-details-page">
             {modal &&
                 <div className="modal">
                     <div className="content">
-                        <button className="close-btn" onClick={()=>setModal(false)}>
-                            <X/>
+                        <button className="close-btn" onClick={() => setModal(false)}>
+                            <X />
                         </button>
                         <h1 className="topic">Complete Payment</h1>
                         <p className="caption">
@@ -88,7 +76,8 @@ export default function RoomPreview() {
                                 <input
                                     type="text"
                                     placeholder="********"
-                                    value="1234 5678 91112"
+                                    value={card_number}
+                                    onChange={(e) => setCardNumber(e.target.value)}
                                     required
                                 />
                             </div>
@@ -98,14 +87,23 @@ export default function RoomPreview() {
                                     type="date"
                                     id="expiry-date"
                                     placeholder="MM/YY"
+                                    value={expiry_date}
+                                    onChange={(e) => setExpiryDate(e.target.value)}
                                     required
                                 />
-                                <input type="number" required value='007' />
+                                <input
+                                    value={cvv}
+                                    onChange={(e) => setCvv(e.target.value)}
+                                    type="number" required />
 
                             </div>
 
                             <label htmlFor="card-number" className="card-number-label">Cardholder Name</label>
-                            <input type="text" id="card-number-input" required />
+                            <input 
+                            value={card_name}
+                            onChange={(e) => setCardName(e.target.value)}
+                            type="text" 
+                            id="card-number-input" required />
 
                             <div className="row">
                                 <button className="cancel-btn" type="submit">Cancel</button>
@@ -127,7 +125,7 @@ export default function RoomPreview() {
             <section className="main-content">
                 <div>
                     {/* <ImageComponent imageName='img6.'/> */}
-                    <img src={`${process.env.PUBLIC_URL}/imgs/${roomData.img}`}  alt="room img" className="room-img" />
+                    <img src={`${process.env.PUBLIC_URL}/imgs/${roomData.img}`} alt="room img" className="room-img" />
                     {/* <div className="room-img"> </div> */}
                     <div className="preview-status">
                         <h3> Room Status </h3>
@@ -172,7 +170,7 @@ export default function RoomPreview() {
 
                         <div className="row price-box">
                             <p>₦ 12,000 / Semester</p>
-                            <button onClick={()=>setModal(true)} className="primary-btn">Book Now</button>
+                            <button onClick={() => setModal(true)} className="primary-btn">Book Now</button>
                         </div>
                     </div>
                 </div>

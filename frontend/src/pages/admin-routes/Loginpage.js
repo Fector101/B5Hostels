@@ -11,7 +11,7 @@ export default function Loginpage() {
     const navigate = useNavigate()
     const { fetchAdminData } = useContext(UserContext);
 
-    const usefiller = process.env.NODE_ENV === 'dev'
+    const usefiller = process.env.NODE_ENV === 'development'
     const [matric_no, setMatricNo] = useState(usefiller ? 'FT23CMP00001' : "");
     const [password, setPassword] = useState(usefiller ? '1' : "");
 

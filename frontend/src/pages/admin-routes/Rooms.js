@@ -60,7 +60,7 @@ function RoomCard({
 function AddRoomForm({ setAddingRoom, setSpinner }) {
     const { setRooms, RoomsData } = useContext(UserContext);
 
-    const usefiller = process.env.NODE_ENV === "dev";
+    const usefiller = process.env.NODE_ENV === "development";
     const [room_number, setRoomNumber] = useState(usefiller ? 101 : "");
     const [floor, setFloor] = useState(usefiller ? 1 : "");
     const [capacity, setCapacity] = useState(usefiller ? 4 : "");

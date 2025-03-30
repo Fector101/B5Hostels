@@ -37,7 +37,7 @@ export default function Header({ userName }) {
         }
 
         window.addEventListener("resize", handleResize);
-        // return () => window.removeEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
     }, []);
 
     return (

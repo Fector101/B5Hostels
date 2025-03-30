@@ -22,8 +22,12 @@ const CLIENT_URL = process.env.CLIENT_URL
 if (!CLIENT_URL){
     throw new Error('Please add CLIENT_URL to env vars')
 }
-app.use(cors({ origin: CLIENT_URL, credentials: true }))
-
+// app.use(cors({ origin: CLIENT_URL, credentials: true }))
+app.use(cors({
+    origin: "https://b5hostel.vercel.app",  // Your frontend URL
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true
+}));
 
 // Connect to MongoDB
 connectDB()

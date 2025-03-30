@@ -19,11 +19,7 @@ export default function Dashboard() {
         setFullRooms(RoomsData.filter(room => room.occupants.length === room.capacity).length)
         setUnderMaintenance(RoomsData.filter(room => room.status === "maintenance").length)
         setTotalStudents(StudentsData.length)
-        setAwaitingApproval(StudentsData.filter(
-            (student) =>
-                (!student.room && student.preference) ||
-                (!student.room && student.payments.length)
-        ).length)
+        setAwaitingApproval(StudentsData.filter(student =>!student.verified).length)
         settotal_students_that_have_rooms(StudentsData.filter(
             (student) => student.verified
         ).length)

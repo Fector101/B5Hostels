@@ -4,9 +4,9 @@ const cors = require('cors')
 const cookieParser = require("cookie-parser");
 
 
-const authns =  require('./src/routes/authns')
-const studentRoutes =  require('./src/routes/students')
-const adminRoutes =  require('./src/routes/admin')
+const authns = require('./src/routes/authns')
+const studentRoutes = require('./src/routes/students')
+const adminRoutes = require('./src/routes/admin')
 const connectDB = require('./src/db')
 
 
@@ -19,15 +19,20 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 const CLIENT_URL = process.env.CLIENT_URL
-if (!CLIENT_URL){
+if (!CLIENT_URL) {
     throw new Error('Please add CLIENT_URL to env vars')
 }
-// app.use(cors({ origin: CLIENT_URL, credentials: true }))
-app.use(cors({
-    origin: "https://b5hostel.vercel.app",  // Your frontend URL
-    methods: "GET,POST,PUT,DELETE",
-    credentials: true
-}));
+
+app.use(cors({ 
+    origin: CLIENT_URL,
+    credentials: true,
+    methods: "GET,POST,PUT,DELETE"
+}))
+// app.use(cors({
+//     origin: "https://b5hostel.vercel.app",  // Your frontend URL
+//     methods: "GET,POST,PUT,DELETE",
+//     credentials: true
+// }));
 
 // Connect to MongoDB
 connectDB()

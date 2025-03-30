@@ -849,7 +849,7 @@ header.admin-header .signout-btn svg {
         width: 100%;
     }
 
-    header.admin-header button.signout-btn {
+    header.admin-header .signout-btn {
         height: 0;
         width: 0;
         overflow: hidden;

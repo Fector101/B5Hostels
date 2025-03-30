@@ -6,6 +6,7 @@
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
+    "@react-pdf/renderer": "^4.3.0",
     "@svgr/webpack": "^5.5.0",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
@@ -33,6 +34,7 @@
     "jest": "^27.4.3",
     "jest-resolve": "^27.4.2",
     "jest-watch-typeahead": "^1.0.0",
+    "jspdf": "^3.0.1",
     "lucide-react": "^0.453.0",
     "mini-css-extract-plugin": "^2.4.5",
     "mysql2": "^3.11.3",

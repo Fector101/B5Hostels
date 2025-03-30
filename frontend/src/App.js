@@ -21,7 +21,6 @@ import ChooseUserpage from "./pages/ChooseUserpage";
 
 function App() {
     const location = useLocation();
-
     return (
         <>
             {!["/", "/login", '/signup'].includes(location.pathname) && !location.pathname.startsWith('/admin') && <Header />}
@@ -33,8 +32,10 @@ function App() {
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/profile" element={<Profilepage />} />
                 <Route path="/choose-user" element={<ChooseUserpage />} />
+
                 <Route path="/room" element={<RoomDetailsPage />} />
                 <Route path="/rooms" element={<Roomspage />} />
+
                 <Route path="/admin/*" element={<AdminRoutes />} />
                 <Route path="*" element={<NotFoundpage redirect_path="/" timeout_secs={5 * 1000} />} />
             </Routes>

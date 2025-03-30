@@ -21,7 +21,7 @@ router.get("/dashboard", verifyTokenAdmin, async (req, res) => {
     const total_students_that_have_rooms = all_students.filter(
         (student) => student.room
     ).length;
-    
+
     const total_rooms = all_rooms.length;
     const available_rooms = all_rooms.filter(
         (room) => room.occupants < room.capacity
@@ -56,7 +56,7 @@ router.get("/dashboard", verifyTokenAdmin, async (req, res) => {
     return res.status(201).json(data);
 });
 
-router.get("/all-data", verifyTokenAdmin,async (req, res) => {
+router.get("/all-data", verifyTokenAdmin, async (req, res) => {
     all_students = (await doDataBaseThing(() => Student.find()));
     all_rooms = (await doDataBaseThing(() => Room.find()));
     // const rooms = await doDataBaseThing(() => Room.find());
@@ -65,7 +65,7 @@ router.get("/all-data", verifyTokenAdmin,async (req, res) => {
         students: all_students,
         rooms: all_rooms,
         msg: 'Successfully Fetched Data'
-        
+
     }
     return res.status(201).json(data);
 });
@@ -79,6 +79,7 @@ router.get("/rooms", async (req, res) => {
 function randomImg() {
     return "img" + Math.floor(Math.random() * 15) + ".jpg";
 }
+
 
 router.post("/assign-room", async (req, res) => {
     const { matric_no, room_number } = req.body;
@@ -115,7 +116,7 @@ router.post("/assign-room", async (req, res) => {
 router.post("/add-room", async (req, res) => {
     const { room_number, block, floor, status, capacity, amenities
         // ,gender
-     } = req.body;
+    } = req.body;
     // console.log({ room_number, block, floor, status, capacity, amenities,gender })
     // return res.status(400).json({ msg: "-Network Error, Try Refreshing Page" });
     const floorNumber = Number(floor);
@@ -130,7 +131,7 @@ router.post("/add-room", async (req, res) => {
             .status(400)
             .json({ exists: true, msg: "Room Already Added" });
     }
-    
+
     room = new Room({
         room_number,
         block,
@@ -154,14 +155,15 @@ router.post("/add-room", async (req, res) => {
         return res.status(200).json({ msg: "Room Successfully Added" });
     }
 });
-router.post("/reject-student-room", async (req, res) => {
-    const { matric_no } = req.body;
-    const user = await doDataBaseThing(() => Student.findOne({ matric_no }));
 
+router.post("/verify-student", async (req, res) => {
+    const { matric_no } = req.body;
+
+    const user = await doDataBaseThing(() => Student.findOne({ matric_no }));
     if (user === "db_error") {
         return res
             .status(400)
-            .json({ msg: "-Network Error, Try Refreshing Page" });
+            .json({ msg: "-An Error, Please Try Again" });
     } else if (!user) {
         return res
             .status(400)
@@ -169,16 +171,43 @@ router.post("/reject-student-room", async (req, res) => {
     }
     try {
         await doDataBaseThing(() => {
-            user.preference = ''
+            user.verified = true
             user.save();
         });
-        return res.status(200).json({ msg: "Rejected Student Room Successfully" });
+        return res.status(200).json({ url:'/receipt',msg: "Successfully Verified Student" });
     } catch (err) {
         console.log(err)
         return res
             .status(400)
-            .json({ msg: "-Network Error, Try Refreshing Page" });
+            .json({ msg: "-An Error, Please Try Again" });
     }
-
 })
+
+// router.post("/reject-student-room", async (req, res) => {
+// const { matric_no } = req.body;
+// const user = await doDataBaseThing(() => Student.findOne({ matric_no }));
+
+// if (user === "db_error") {
+//     return res
+//         .status(400)
+//         .json({ msg: "-Network Error, Try Refreshing Page" });
+// } else if (!user) {
+//     return res
+//         .status(400)
+//         .json({ exists: true, msg: "Student doesn't Exist" });
+// }
+//     try {
+//         await doDataBaseThing(() => {
+//             user.preference = ''
+//             user.save();
+//         });
+//         return res.status(200).json({ msg: "Rejected Student Room Successfully" });
+//     } catch (err) {
+//         console.log(err)
+//         return res
+//             .status(400)
+//             .json({ msg: "-Network Error, Try Refreshing Page" });
+//     }
+
+// })
 module.exports = router;

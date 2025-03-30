@@ -8,40 +8,8 @@ import { useNavigate } from "react-router-dom";
 export default function Profilepage() {
     const [current_tab, setCurrentTab] = useState(() => 'room')
     const navigate = useNavigate()
-
     const { userData } = useContext(UserContext);
-    // console.log(userData)
-    // useEffect(() => {
-        //     async function getData() {
-        //         const cachedUser = localStorage.getItem("userData");
-        //         if (cachedUser) {
-        //             setUserData(JSON.parse(cachedUser)); // Use cached data
-        //             return;
-        //         }
-        //         console.log(userData,!Object.keys(userData).length)
-        //         try {
-        //             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/profile`, {
-        //                 method: "GET",
-        //                 credentials: "include",
-        //                 headers: { "Content-Type": "application/json" },
-        //             });
-        //             const data = await response.json();
-        //             if (response.ok) {
-        //                 setUserData(data.data);
-        //                 console.log(data.data);
-        //                 localStorage.setItem("userData", JSON.stringify(data.data)); // Cache it
-        //             } else {
-        //                 toast("Login Session Expired", { type: "warning" });
-        //             }
-        //         } catch (error) {
-        //             console.error("Network error:", error);
-        //         }
-        //     }
-        // if (Object.keys(userData).length) {
-            // toast("Successfully Fetched User Data", { type: "success" });
-            //  getData();
-    //     }
-    // }, [userData]);
+  
     useEffect(() => {
         const timeout_secs=15
         const timeout = setTimeout(()=>{

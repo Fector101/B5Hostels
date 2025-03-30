@@ -67,14 +67,15 @@ router.get("/profile", verifyToken, async (req, res) => {
     const data = {
         page_title: "dashboard",
         name: user.name,
-        initials: getInitials(user.name),
         matric_no: user.matric_no,
         email: user.email,
         level: user.level,
         preference: user.preference,
+        verified: user.verified,
         date_booked: userInfo.days_left || 0,
+        initials: getInitials(user.name),
         days_passed: daysPassed(user.payments[0]?.date),
-        total_paid: total ,
+        total_paid: total,
         
         room: user.room,
         floor: room?.floor,
@@ -131,33 +132,39 @@ router.get("/rooms", verifyToken, async (req, res) => {
 });
 
 router.post("/make-payment", verifyToken, async (req, res) => {
-    const { room_no } = req.body;
-    const userInfo = req.user;
-    const matric_no = userInfo.matric_no
+    const { room_number,matric_no } = req.body;
+    console.log(matric_no, 'to --> room:', room_number)
 
-    let room = await doDataBaseThing(() => Room.findOne({ room_number:room_no }));
+
+    let room = await doDataBaseThing(() => Room.findOne({ room_number }));
+
     if(room.occupants && room.occupants.length >= room.capacity){
         return res.status(400).json({ msg: "Payment Declined Room Full" });
-
     }
+
     const user = await doDataBaseThing(() => Student.findOne({ matric_no }))
 
     // todo cheeck date of payment
-    if (user.preference) return res.status(400).json({ msg: "Already Made Payment" });
+    if (user && user.payments.length) return res.status(400).json({ msg: "Already Made Payment" });
     const result = await doDataBaseThing(() => {
         // so student can pay without room yet
-        user.preference = room_no || '';
+        // maybe not from site
+        if(room_number){
+            user.preference =  room_number
+        }
         user.payments.push({ amount: 12000 });
         user.save()
     })
-    // if (user) {
-    //     ; // Save the changes
-    //   }
-    // adding preference
 
-    // console.log('found user ', result)
-    console.log(matric_no, 'to --> room:', room_no)
-    return res.status(200).json({ msg: "Payment Successful" });
+    
+    if (result === "db_error") {
+        return res
+            .status(400)
+            .json({ msg: "-An Error, Please Try Again" });
+    } else{
+        return res.status(200).json({ msg: "Payment Successful" });
+
+    }
 
 })
 

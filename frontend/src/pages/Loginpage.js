@@ -12,7 +12,7 @@ export default function Loginpage() {
     const navigate = useNavigate()
     const { fetchRoomsData, fetchUserData } = useContext(UserContext);
 
-    const usefiller = process.env.NODE_ENV === 'dev'
+    const usefiller = process.env.NODE_ENV === 'development'
     const [matric_no, setMatricNo] = useState(usefiller ? 'FT23CMP00001' : "");
     const [password, setPassword] = useState(usefiller ? '1' : "");
 
@@ -39,18 +39,16 @@ export default function Loginpage() {
             if (response.ok) {
                 console.log("User created:", data);
                 toast(data.msg || 'Login successful!', { type: 'success' });
+                navigate(data.url);
                 await fetchRoomsData()
                 await fetchUserData()
-                navigate(data.url);
-                // Redirect or update UI
             } else {
                 console.error("Login error:", data);
                 toast(data.msg || 'Check your inputs.', { type: 'warning' });
             }
         } catch (error) {
-            console.error("Network error:", error);
+            console.error("Catch Login failed error:", error);
             toast('Something went wrong! ' + error, { type: 'error' });
-            // alert("Network error. Please try again.");
         }
     };
 

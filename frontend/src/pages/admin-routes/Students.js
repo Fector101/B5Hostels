@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../components/js/UserContext";
+import { toast } from "react-toastify";
 
 function PopupRoomCard({
     amenities,
@@ -68,10 +69,45 @@ function StudentCard({ name, matric_no, email, preference, level, room, verified
     // let state = 'all-students pending-verification-account verified-account paid'
     // pending verified paid
     // not verfing payment but student account
+    let [verified__,setVerified__] = useState(()=>verified)
+
+    useEffect(() => {
+        setVerified__(verified)
+    }, [verified]);
+
+    async function verifyStudent(matric_no) {
+        try {
+            const student_data = {matric_no};
+
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/verify-student`, {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(student_data),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log("Successful Student Verification:", data);
+                setVerified__(true)
+                toast(data.msg || 'Verified successful!', { type: 'success' });
+            } else {
+                console.error("Verification error:", data);
+                toast(data.msg || 'Check your inputs.', { type: 'warning' });
+            }
+        } catch (error) {
+            console.error("Caught Verification error:", error);
+            toast('Something went wrong! ' + error, { type: 'error' });
+        }
+    };
+
     function Btns({ verified, room, payments_length }) {
         if (!verified) {
             return <>
-                <button className="primary-btn verify-btn">Verify</button>
+                <button onClick={()=>verifyStudent(matric_no)} className="primary-btn verify-btn">Verify</button>
                 <button className="red-color reject-room-btn"> Reject </button>
             </>
         } else if (!room && payments_length > 0) {
@@ -88,7 +124,7 @@ function StudentCard({ name, matric_no, email, preference, level, room, verified
     return (
         <div
             data-level={level}
-            className={"student-card" + (verified? ' verified': ' pending') + (payments.length > 0?' paid':'')}
+            className={"student-card" + (verified__ ? ' verified' : ' pending') + (payments.length > 0 ? ' paid' : '')}
         >
             <div className="card-header">
                 <div className="student-id-box">
@@ -107,7 +143,7 @@ function StudentCard({ name, matric_no, email, preference, level, room, verified
             <div className="info">
                 <div className="row">
                     <p className="dim-text">Status:</p>
-                    <p>{verified ? "Verified" : "Pending"}</p>
+                    <p>{verified__ ? "Verified" : "Pending"}</p>
                 </div>
                 <div className="row">
                     <p className="dim-text">Room:</p>
@@ -120,7 +156,7 @@ function StudentCard({ name, matric_no, email, preference, level, room, verified
                 </div>
             </div>
             <div className="btns-box">
-                <Btns verified={verified} room={room} payments_length={payments?.length}/>
+                <Btns verified={verified__} room={room} payments_length={payments?.length} />
             </div>
         </div>
     );
@@ -145,7 +181,7 @@ export default function Students() {
         document.querySelector('.select-level').value = 'all'
         displayLevel('all')
     }
-    
+
     function displayLevel(level) {
         // level --> data-level='level'
         console.log(level)
@@ -165,10 +201,13 @@ export default function Students() {
         SetRooms(RoomsData);
         SetStudents(StudentsData);
     }, [RoomsData, StudentsData]);
-    // useEffect(() => {
 
+
+
+
+    // useEffect(() => {
     // }, []);
-        
+
 
     // console.log(students);
     return (
@@ -221,17 +260,17 @@ export default function Students() {
 
             <section className="main-content">
                 <div className="tabs">
-                    <button value="student-card" onClick={(e)=>showTab(e.target.value)} className="active student-card-tab-btn">
+                    <button value="student-card" onClick={(e) => showTab(e.target.value)} className="active student-card-tab-btn">
                         All Students
                     </button>
-                    <button className="pending-tab-btn" onClick={(e)=>showTab(e.target.value)} value="pending">Pending</button>
-                    <button className="verified-tab-btn" onClick={(e)=>showTab(e.target.value)} value="verified">Verified</button>
-                    <button className="paid-tab-btn" onClick={(e)=>showTab(e.target.value)} value="paid">Paid</button>
+                    <button className="pending-tab-btn" onClick={(e) => showTab(e.target.value)} value="pending">Pending</button>
+                    <button className="verified-tab-btn" onClick={(e) => showTab(e.target.value)} value="verified">Verified</button>
+                    <button className="paid-tab-btn" onClick={(e) => showTab(e.target.value)} value="paid">Paid</button>
                 </div>
 
                 <div className="filters">
                     {/* <input type="text" placeholder="Search students..." /> */}
-                    <select className="select-level" onChange={(e)=>displayLevel(e.target.value)}>
+                    <select className="select-level" onChange={(e) => displayLevel(e.target.value)}>
                         <option value="all">All Levels</option>
                         <option value="100">100</option>
                         <option value="200">200</option>

@@ -268,7 +268,7 @@
     width: 100%;
     position: fixed;
     top: 0;
-    background-color: rgba(114, 110, 110, 0.761);
+    background-color: rgba(75, 74, 74, 0.761);
     fill: rgb(98, 255, 98);
     z-index: 1;
     overflow: hidden;
@@ -285,11 +285,11 @@
 }
 
 .room-details-page .confirm-payement-modal .content-box {
-    box-shadow: -1px 1px 10px 1px rgb(214, 213, 213);
+    box-shadow: -1px 1px 10px 1px rgba(214, 213, 213, 0.466);
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #494848;
+    background: #292929;
     padding: 1rem;
     gap: 10px;
     border-radius: 20px;
@@ -306,7 +306,22 @@
     height: var(--size);
     width: var(--size);
 }
+.confirm-payement-modal button{
 
+    padding: 1rem;
+    margin-top: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.room-details-page .close-download-modal{
+    color: black;
+    background: white;
+}
+.room-details-page .download-receipt{
+    background: var(--primary-btn-bg);
+    color: white;
+}
 
 .room-details-page  input{
     border-radius: 10px;

@@ -84,9 +84,9 @@ export default function HostelReceiptDocument({ receipt }) {
 //       </PDFViewer> */}
 
 //             {/* Download Button */}
-//             <PDFDownloadLink document={<HostelReceiptDocument receipt={receiptData} />} fileName="hostel-receipt.pdf">
-//                 {({ loading }) => <button>{loading ? "Generating..." : "Download Receipt"}</button>}
-//             </PDFDownloadLink>
+            // <PDFDownloadLink document={<HostelReceiptDocument receipt={receiptData} />} fileName="hostel-receipt.pdf">
+            //     {({ loading }) => <button>{loading ? "Generating..." : "Download Receipt"}</button>}
+            // </PDFDownloadLink>
 //         </div>
 //     );
 // };

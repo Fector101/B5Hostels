@@ -112,7 +112,7 @@ router.post("/admin-login", async (req, res) => {
     try {
         const { password } = req.body;
         // const user = await Student.findOne({ matric_no });
-        const isMatch = password === process.env.admin_password || "admin";
+        const isMatch = password === (process.env.admin_password || "admin");
         if (!isMatch) return res.status(400).json({ msg: "Invalid password" });
         
         const data = { id: process.env.JWT_SECRET }

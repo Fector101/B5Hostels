@@ -2,21 +2,20 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../components/js/UserContext";
 import { toast } from "react-toastify";
 
-function PopupRoomCard({
-    amenities,
-    capacity,
-    block,
-    room_number,
-    status,
-    floor,
-    occupants,
-    i,
-}) {
+function PopupRoomCard({ selected_room,setSelectedRoom,amenities, capacity, block, room_number, status, floor, occupants, i }) {
+    function setCard(event){
+        const selected_card = event.target.closest('.student-card')
+        if(!selected_card) return
+        document.querySelector('div.student-card.active')?.classList.remove('active')
+        selected_card.classList.add('active')
+        const room_number = selected_card.querySelector('.room_number').innerText
+        setSelectedRoom(room_number)
+    }
     return (
-        <div
+        <div onClick={setCard}
             className={
                 "student-card room-selection-card free" +
-                (i === 0 ? "active" : "")
+                (room_number === selected_room ? " active" : "")
             }
         >
             <div className="card-header">
@@ -65,11 +64,12 @@ function PopupRoomCard({
         </div>
     );
 }
-function StudentCard({ name, matric_no, email, preference, level, room, verified, payments }) {
+function StudentCard({ name, matric_no, email, preference, level, room, verified, payments, setMatricNo, setStudentName, setChoicesModal }) {
     // let state = 'all-students pending-verification-account verified-account paid'
     // pending verified paid
     // not verfing payment but student account
-    let [verified__,setVerified__] = useState(()=>verified)
+    let [verified__, setVerified__] = useState(() => verified)
+    const { setStudents, StudentsData } = useContext(UserContext);
 
     useEffect(() => {
         setVerified__(verified)
@@ -77,7 +77,7 @@ function StudentCard({ name, matric_no, email, preference, level, room, verified
 
     async function verifyStudent(matric_no) {
         try {
-            const student_data = {matric_no};
+            const student_data = { matric_no };
 
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/verify-student`, {
                 method: "POST",
@@ -92,6 +92,16 @@ function StudentCard({ name, matric_no, email, preference, level, room, verified
 
             if (response.ok) {
                 console.log("Successful Student Verification:", data);
+                let found_student_data;
+                const student_index = StudentsData.findIndex(student => {
+                    if (student.matric_no === matric_no) {
+                        found_student_data = student
+                        found_student_data.verified = true
+                        return true
+                    } else { return false }
+                })
+                StudentsData[student_index] = found_student_data
+                setStudents(StudentsData)
                 setVerified__(true)
                 toast(data.msg || 'Verified successful!', { type: 'success' });
             } else {
@@ -107,12 +117,12 @@ function StudentCard({ name, matric_no, email, preference, level, room, verified
     function Btns({ verified, room, payments_length }) {
         if (!verified) {
             return <>
-                <button onClick={()=>verifyStudent(matric_no)} className="primary-btn verify-btn">Verify</button>
+                <button onClick={() => verifyStudent(matric_no)} className="primary-btn verify-btn">Verify</button>
                 <button className="red-color reject-room-btn"> Reject </button>
             </>
         } else if (!room && payments_length > 0) {
             return <>
-                <button className="assign-btn">Assign Room</button>
+                <button onClick={() => { setStudentName(name); setMatricNo(matric_no); setChoicesModal(true) }} className="assign-btn">Assign Room</button>
                 <button className="random-room-btn">Random Room</button>
             </>
         } else if (room) {
@@ -164,7 +174,12 @@ function StudentCard({ name, matric_no, email, preference, level, room, verified
 export default function Students() {
     const [rooms, SetRooms] = useState([]);
     const [students, SetStudents] = useState([]);
+    const [choices_modal, setChoicesModal] = useState(false);
+    const [matric_no, setMatricNo] = useState('');
+    const [student_name, setStudentName] = useState('');
+    const [selected_room, setSelectedRoom] = useState('');
     const { RoomsData, StudentsData } = useContext(UserContext);
+    const [available_rooms, setAvailableRooms] = useState([]);
 
     function showTab(tab) {
         // tab = 'pending' or 'verified' or 'paid' or ('student-card' <--- for all)
@@ -198,12 +213,44 @@ export default function Students() {
         })
     }
     useEffect(() => {
+        setAvailableRooms(RoomsData.filter(room => room.occupants.length < room.capacity))
+        setSelectedRoom(available_rooms?.[0]?.room_number)
         SetRooms(RoomsData);
         SetStudents(StudentsData);
     }, [RoomsData, StudentsData]);
 
+    async function assignRoom() {
+        try {
+            // console.log(selected_room,matric_no)
+            // return
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/assign-room`, {
+                method: "POST",
+                credentials: "include",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ matric_no, room_number:selected_room })
+            });
+            const result = await response.json();
 
-
+            if (response.ok) {
+                setChoicesModal(false)
+                toast(result.msg||'Added Successfully', { type: "success" });
+                let found_student_data;
+                const student_index = StudentsData.findIndex(student => {
+                    if (student.matric_no === matric_no) {
+                        found_student_data = student
+                        found_student_data.room = selected_room
+                        return true
+                    } else { return false }
+                })
+                StudentsData[student_index] = found_student_data
+            } else {
+                toast(result.msg || "-Network Error, Please Try Again", { type: "warning" });
+            }
+        } catch (error) {
+            console.log(error)
+            toast(`-Network Error, Try again later.`, { type: "error" });
+        }
+    }
 
     // useEffect(() => {
     // }, []);
@@ -219,40 +266,43 @@ export default function Students() {
             >
                 <div id="spinner" className="spinner"></div>
             </div>
-            <div className="flex cover display-none choices">
-                <div className="allocation-box">
-                    <button className="close-btn">X</button>
-                    <h1>Room Allocation</h1>
-                    <p className="header-caption dim-text">
-                        Assign a room to <span className="--name">Evelyn</span>{" "}
-                        <span className="--matric_no">(FT23CMP0007)</span>
-                    </p>
-                    <p>Available Rooms (6)</p>
-                    <div className="rooms-box">
-                        {rooms?.map((room, i) => (
-                            <PopupRoomCard
-                                amenities={room.amenities}
-                                capacity={room.capacity}
-                                block={room.block}
-                                room_number={room.room_number}
-                                status={room.status}
-                                floor={room.floor}
-                                occupants={room.occupants}
-                                key={i}
-                                i={i}
-                            />
-                        ))}
-                    </div>
+            {choices_modal &&
+                <div className="flex modal choices">
+                    <div className="allocation-box">
+                        <button className="close-btn" onClick={() => setChoicesModal(false)}>X</button>
+                        <h1>Room Allocation</h1>
+                        <p className="header-caption dim-text">
+                            Assign a room to <span className="--name">{student_name}</span>{" "}
+                            <span className="--matric_no">({matric_no})</span>
+                        </p>
+                        <p>Available Rooms ({available_rooms.length})</p>
+                        <div className="rooms-box">
+                            {available_rooms?.map((room, i) => (
+                                <PopupRoomCard
+                                    amenities={room.amenities}
+                                    capacity={room.capacity}
+                                    block={room.block}
+                                    room_number={room.room_number}
+                                    status={room.status}
+                                    floor={room.floor}
+                                    occupants={room.occupants}
+                                    key={i}
+                                    i={i}
+                                    selected_room={selected_room}
+                                    setSelectedRoom={setSelectedRoom}
+                                />
+                            ))}
+                        </div>
 
-                    <div className="allocation-btns-box">
-                        <button id="accept-room" className="ok">
-                            Assign Room
-                        </button>
-                        <button>Cancel</button>
+                        <div className="allocation-btns-box">
+                            <button onClick={assignRoom} id="accept-room" className="ok">
+                                Assign Room
+                            </button>
+                            <button onClick={() => setChoicesModal(false)}>Cancel</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-
+            }
             <div className="welcome-box">
                 <h2>Student Management</h2>
                 <p>Verify, reject, and assign rooms to students</p>
@@ -291,6 +341,9 @@ export default function Students() {
                             preference={student.preference}
                             level={student.level}
                             room={student.room}
+                            setChoicesModal={setChoicesModal}
+                            setMatricNo={setMatricNo}
+                            setStudentName={setStudentName}
                         />
                     ))}
                 </div>

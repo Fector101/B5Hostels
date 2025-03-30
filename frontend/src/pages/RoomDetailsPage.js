@@ -1,23 +1,30 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import "../components/css/roomdetailspage.css"; // Make sure to create this file and import it
-import { Building, CreditCard, Users, X } from "lucide-react";
+import { Building, Check, CreditCard, Users, X } from "lucide-react";
 // import img from './img6.jpg'
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { UserContext } from '../components/js/UserContext';
 import { toast } from "react-toastify";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import HostelReceiptDocument from "./Receipt";
+const formatDate = (date) => {
+    return date.toLocaleDateString('en-GB').split('/').join('-'); // Formats as DD-MM-YYYY
+};
 
-function PaymentModal({ setModal, room_number, matric_no }) {
+function PaymentModal({ setModal, showDownloadPDf, room_number, matric_no }) {
     const [card_number, setCardNumber] = useState("1234 5678 91112")
     const [expiry_date, setExpiryDate] = useState("2024-03-30")
     const [cvv, setCvv] = useState("007")
     const [card_name, setCardName] = useState("Dan")
-    const navigate = useNavigate()
+    const currentDate = new Date();
+    const nextYearDate = new Date();
+    nextYearDate.setFullYear(currentDate.getFullYear() + 1);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
 
-            const user_data = { matric_no ,room_number}
+            const user_data = { matric_no, room_number }
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/make-payment`, {
                 method: "POST",
                 credentials: "include",
@@ -32,7 +39,8 @@ function PaymentModal({ setModal, room_number, matric_no }) {
             if (response.ok) {
                 console.log("User payment successful:", data);
                 toast(data.msg || 'payment successful!', { type: 'success' });
-                // navigate(data.url);
+                setModal(false)
+                showDownloadPDf(true)
             } else {
                 console.error("payment error:", data);
                 toast(data.msg || 'Check your inputs.', { type: 'warning' });
@@ -57,11 +65,11 @@ function PaymentModal({ setModal, room_number, matric_no }) {
                     <ol className="vaild-date">
                         <li>
                             <p>CHECK-IN</p>
-                            <p>12-01-2025</p>
+                            <p>{formatDate(currentDate)}</p>
                         </li>
                         <li>
                             <p>CHECK-OUT</p>
-                            <p>15-01-2026</p>
+                            <p>{formatDate(nextYearDate)}</p>
                         </li>
                     </ol>
 
@@ -126,7 +134,7 @@ function PaymentModal({ setModal, room_number, matric_no }) {
                         id="card-number-input" required />
 
                     <div className="row">
-                        <button className="cancel-btn" type="submit">Cancel</button>
+                        <button onClick={() => setModal(false)} className="cancel-btn" type="submit">Cancel</button>
                         <button className="pay primary-btn" type="submit">Pay ₦ 12,000</button>
                     </div>
                 </form>
@@ -141,16 +149,42 @@ export default function RoomPreview() {
     const requested_room = searchParams.get('id');
 
     const [modal, setModal] = useState(false);
+    const [download_PDf_modal, showDownloadPDf] = useState(false);
     const { RoomsData, userData } = useContext(UserContext);
 
     let roomData = { ...RoomsData?.find(({ room_number }) => room_number === requested_room) }
     // console.log(roomData);
+    const currentDate = new Date();
+    const nextYearDate = new Date();
+    nextYearDate.setFullYear(currentDate.getFullYear() + 1);
 
+    const receiptData = {
+        checkIn: formatDate(currentDate), checkOut: formatDate(nextYearDate), fees: [
+            { name: "Hostel Fee", amount: "6,000" },
+            { name: "Room Charges", amount: "3,000" },
+            { name: "Maintenance Fee", amount: "3,000" }
+        ],
+        total: "12,000"
+    }
 
     return (
         <div className="page room-details-page">
+            {download_PDf_modal &&
+                <div className='confirm-payement-modal modal'>
+                    <div className="content-box">
+                        <Check />
+                        <p>Payment Confirmed</p>
+                    </div>
+                    {/* <button className='download-receipt'>Download Receipt</button> */}
+                    <PDFDownloadLink document={<HostelReceiptDocument receipt={receiptData} />} fileName="hostel-receipt.pdf">
+                        {({ loading }) => <button className='download-receipt'>{loading ? "Generating..." : "Download Receipt"}</button>}
+                    </PDFDownloadLink>
+                    <button onClick={() => showDownloadPDf(false)} className='close-download-modal'>Close</button>
+
+                </div>
+            }
             {modal &&
-                <PaymentModal matric_no={userData.matric_no} room_number={roomData.room_number} setModal={setModal} />
+                <PaymentModal showDownloadPDf={showDownloadPDf} matric_no={userData.matric_no} room_number={roomData.room_number} setModal={setModal} />
 
             }
 

@@ -7,10 +7,14 @@
     flex-direction: column;
 }
 
-/* body {
-    display: flex;
-    flex-direction: column;
-} */
+.confirm-payement-modal svg{
+    --size:130px;
+    background: #93df9b19;
+    border-radius: 60%;
+    padding: 1rem;
+    height: var(--size);
+    width: var(--size);
+}
 
 .page.adminpage .dim-text {
     color: #666;
@@ -618,7 +622,8 @@ header.admin-header>button:last-child svg {
 }
 
 .room-selection-card.active button.select-btn {
-    background-color: var(--primary-btn-bg);
+    background-color: var(--primary-btn-bg) !important;
+    border-color: var(--primary-btn-bg) !important;
     color: white;
 }
 

@@ -83,49 +83,55 @@ function randomImg() {
 
 router.post("/assign-room", async (req, res) => {
     const { matric_no, room_number } = req.body;
+    console.log(matric_no, room_number)
     const user = await doDataBaseThing(() => Student.findOne({ matric_no }));
 
     if (user === "db_error") {
         return res
             .status(400)
-            .json({ msg: "-Network Error, Try Refreshing Page" });
+            .json({ msg: "-An Error Occured, Please Try Again" });
     } else if (!user) {
         return res
             .status(400)
-            .json({ exists: true, msg: "Student doesn't Exist" });
+            .json({ msg: "Student doesn't Exist" });
     }
     let room = await doDataBaseThing(() => Room.findOne({ room_number }));
     if (room.occupants.find(each => each.matric_no === matric_no)) {
         return res
             .status(400)
-            .json({ exists: true, msg: "Student Already in Room" });
+            .json({ msg: "Student Already in Room" });
     }
+    try{
+        await doDataBaseThing(() => {
+            room.occupants.push({ matric_no });
+            room.save();
+        });
+    
+        await doDataBaseThing(() => {
+            user.room = room_number;
+            user.save();
+        });
 
-    await doDataBaseThing(() => {
-        room.occupants.push({ matric_no });
-        room.save();
-    });
-
-    await doDataBaseThing(() => {
-        user.room = room_number;
-        user.save();
-    });
-    console.log('ME ', user)
-    return res.status(200).json({ msg: "Student Successfully Added to Room" });
+        return res.status(200).json({ msg: "Student Successfully Added to Room" });
+    }catch(error){
+        console.log('Error Assigning Room: ',error)
+        return res.status(400).json({ msg: "-An Error Occured, Please Try Again" });
+    }
+    // console.log('ME ', user)
 });
 router.post("/add-room", async (req, res) => {
     const { room_number, block, floor, status, capacity, amenities
         // ,gender
     } = req.body;
     // console.log({ room_number, block, floor, status, capacity, amenities,gender })
-    // return res.status(400).json({ msg: "-Network Error, Try Refreshing Page" });
+    // return res.status(400).json({ msg: "-An Error Occured, Please Try Again" });
     const floorNumber = Number(floor);
     let room = await doDataBaseThing(() => Room.findOne({ room_number }));
 
     if (room === "db_error") {
         return res
             .status(400)
-            .json({ msg: "-Network Error, Try Refreshing Page" });
+            .json({ msg: "-An Error Occured, Please Try Again" });
     } else if (room) {
         return res
             .status(400)
@@ -179,7 +185,7 @@ router.post("/verify-student", async (req, res) => {
         console.log(err)
         return res
             .status(400)
-            .json({ msg: "-An Error, Please Try Again" });
+            .json({ msg: "-An Error Occured, Please Try Again" });
     }
 })
 
@@ -190,7 +196,7 @@ router.post("/verify-student", async (req, res) => {
 // if (user === "db_error") {
 //     return res
 //         .status(400)
-//         .json({ msg: "-Network Error, Try Refreshing Page" });
+//         .json({ msg: "-An Error Occured, Please Try Again" });
 // } else if (!user) {
 //     return res
 //         .status(400)
@@ -206,7 +212,7 @@ router.post("/verify-student", async (req, res) => {
 //         console.log(err)
 //         return res
 //             .status(400)
-//             .json({ msg: "-Network Error, Try Refreshing Page" });
+//             .json({ msg: "-An Error Occured, Please Try Again" });
 //     }
 
 // })

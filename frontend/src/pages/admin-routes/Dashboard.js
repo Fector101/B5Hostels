@@ -22,10 +22,10 @@ export default function Dashboard() {
         setAwaitingApproval(StudentsData.filter(
             (student) =>
                 (!student.room && student.preference) ||
-                (!student.room && student.payments)
+                (!student.room && student.payments.length)
         ).length)
         settotal_students_that_have_rooms(StudentsData.filter(
-            (student) => student.room
+            (student) => student.verified
         ).length)
     }, [RoomsData,StudentsData])
     return (

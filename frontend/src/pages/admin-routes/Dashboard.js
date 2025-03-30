@@ -108,8 +108,8 @@ export default function Dashboard() {
                     <div className="card-item">
                         <span className="icon">🏠</span>
                         <div>
-                            <strong>Verification Students</strong>
-                            <p>{awaiting_approval} students with assigned rooms</p>
+                            <strong>Verified Students</strong>
+                            <p>{awaiting_approval} students need assigned rooms</p>
                         </div>
                         <Link to='/admin/students' className="view-btn">View All</Link>
                     </div>

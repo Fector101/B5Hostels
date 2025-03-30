@@ -1,9 +1,8 @@
 import { useContext, useState } from "react";
-import { Lock, Bed, GraduationCap, Building, User } from "lucide-react";
-
+import { Lock, Building, User } from "lucide-react";
 import '../../components/css/login-signuppage.css'
 import GoToTop from "../../components/js/GoToTop";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NotSignedIn from "../../components/ui/header/NotSignedIn";
 import { toast } from 'react-toastify';
 import { UserContext } from '../../components/js/UserContext';

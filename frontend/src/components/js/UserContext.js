@@ -27,12 +27,12 @@ export const UserProvider = ({ children }) => {
 
             } else {
                 console.log(' Bad Request user profile data...')
-                setUser({});
+                // setUser({});
             }
         } catch (error) {
             console.log(error, ' Error Getting user profile data...')
             console.error("Network error:", error);
-            setUser({});
+            // setUser({});
         }
     };
 
@@ -52,12 +52,12 @@ export const UserProvider = ({ children }) => {
 
             } else {
                 console.log(' Bad Request Rooms data...')
-                setRooms([]);
+                // setRooms([]);
             }
         } catch (error) {
             console.log(error, ' Error Getting user profile data...')
             console.error("Network error:", error);
-            setRooms([]);
+            // setRooms([]);
         }
     };
 
@@ -71,6 +71,7 @@ export const UserProvider = ({ children }) => {
 
             const data = await response.json();
             if (response.ok) {
+                console.log(data.rooms)
                 setRooms(data.rooms);  // Save user data globally
                 setStudents(data.students);  // Save user data globally
                 console.log('Successfully Fetched Rooms data...')
@@ -95,7 +96,7 @@ export const UserProvider = ({ children }) => {
     }, []);
 
     return (
-        <UserContext.Provider value={{ userData, RoomsData,StudentsData, fetchAdminData,fetchRoomsData, fetchUserData }}>
+        <UserContext.Provider value={{ userData, RoomsData,StudentsData, setRooms,fetchAdminData,fetchRoomsData, fetchUserData }}>
             {children}
         </UserContext.Provider>
     );

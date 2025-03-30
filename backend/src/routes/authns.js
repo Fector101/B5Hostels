@@ -121,6 +121,7 @@ router.post("/admin-login", async (req, res) => {
         // Set token in HTTP-only cookie
         res.cookie("adminInfo", token, {
             httpOnly: true,
+            sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
             secure: process.env.NODE_ENV === "production",
             maxAge: 3600000,
         }); // 1 hour

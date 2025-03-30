@@ -811,6 +811,7 @@ header.admin-header>button:last-child svg {
 
     header.admin-header {
         padding: 1rem;
+        padding-bottom: 0;
         flex-direction: column;
     }
 
@@ -869,6 +870,7 @@ header.admin-header>button:last-child svg {
     height: 35px !important;
     width: 100px !important;
     border: 1px solid grey !important;
+    margin-bottom: 1rem;
     /* overflow: hidden !important; */
     /* border: none !important; */
 }

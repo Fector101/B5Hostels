@@ -133,8 +133,10 @@ header.admin-header nav a svg {
     margin: 0 5px;
 }
 
-header.admin-header>button:last-child {
-    /* margin-left: auto; */
+header.admin-header .signout-btn{
+    font-size: 14px;
+    text-decoration: none;
+    color:black;
     width: 100px;
     display: flex;
     align-items: center;
@@ -145,7 +147,7 @@ header.admin-header>button:last-child {
     border-radius: 10px;
 }
 
-header.admin-header>button:last-child svg {
+header.admin-header .signout-btn svg {
     --size: 20px;
     margin-right: 5px;
     height: var(--size);

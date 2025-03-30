@@ -3,7 +3,7 @@ import GoToTop from "../components/js/GoToTop";
 import '../components/css/roomspage.css';
 import { Building, Users } from "lucide-react";
 import { UserContext } from '../components/js/UserContext';
-import { useContext } from "react";
+import { useContext, useEffect,useState } from "react";
 
 function RoomCard({ status, img, room_number, block, capacity, floor, occupants }) {
     const navigate = useNavigate()
@@ -52,7 +52,12 @@ function RoomCard({ status, img, room_number, block, capacity, floor, occupants 
 
 export default function Roomspage() {
     const { RoomsData } = useContext(UserContext);
+    const [available_rooms, setAvailableRooms] = useState([]);
+
     // console.log('RoomsData ', RoomsData)
+    useEffect(() => {
+        setAvailableRooms(RoomsData.filter(room => room.occupants.length < room.capacity))
+    }, [RoomsData])
     return (
         <div className="rooms-page page">
             {RoomsData.length === 0 &&
@@ -69,9 +74,7 @@ export default function Roomspage() {
             </section>
 
             <section className="rooms-box">
-                {RoomsData.map(room => (
-                    <RoomCard key={room.room_number} {...room} />
-                ))}
+                {available_rooms.length ? available_rooms.map(room => ( <RoomCard key={room.room_number} {...room} /> )) : <p>No Available Rooms</p>}
             </section>
 
             <GoToTop />

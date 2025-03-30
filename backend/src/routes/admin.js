@@ -102,8 +102,14 @@ router.post("/assign-room", async (req, res) => {
             .json({ msg: "Student Already in Room" });
     }
     try{
+        if (room.occupants.length === room.capacity){
+            return res.status(400).json({ msg: "Operation Failed, Full Room" });
+        }
+        room.occupants.push({ matric_no });
+        if (room.occupants.length === room.capacity){
+            room.status = 'full'
+        }
         await doDataBaseThing(() => {
-            room.occupants.push({ matric_no });
             room.save();
         });
     
@@ -146,7 +152,7 @@ router.post("/add-room", async (req, res) => {
         amenities,
         // gender,
         floor: floorNumber,
-        title: room_number,
+        // title: room_number,
         img: randomImg(),
     });
     // console.log('This is room --> ', room)

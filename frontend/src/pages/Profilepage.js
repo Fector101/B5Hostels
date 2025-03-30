@@ -94,12 +94,12 @@ export default function Profilepage() {
 
                                         <div className="occupants-box">
                                             <div className="occupant">
-                                                <h3 className="caption">Capacity</h3>
-                                                <p> {userData.floor} Students</p>
-                                            </div>
-                                            <div className="occupant">
                                                 <h3 className="caption">Current Occupants</h3>
                                                 <p>{userData.room_mates?.length} Students</p>
+                                            </div>
+                                            <div className="occupant">
+                                                <h3 className="caption">Capacity</h3>
+                                                <p> {userData.capacity} Students</p>
                                             </div>
                                         </div>
 

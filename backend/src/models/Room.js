@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 // const Student = require("./Student");
 
 const RoomSchema = new mongoose.Schema({
-    title: { type: String, unique: true },
+    // title: { type: String, unique: true },
 
     img: { type: String}, // Image URL or filename
     room_number: { type: String, required: true, unique: true },

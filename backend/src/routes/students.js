@@ -78,6 +78,7 @@ router.get("/profile", verifyToken, async (req, res) => {
         total_paid: total,
         
         room: user.room,
+        capacity: room.capacity,
         floor: room?.floor,
         block: room?.block,
         room_mates,

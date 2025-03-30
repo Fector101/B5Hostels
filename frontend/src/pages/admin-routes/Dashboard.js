@@ -15,8 +15,8 @@ export default function Dashboard() {
     
     useEffect(() => {
         setTotalRooms(RoomsData.length)
-        setAvailableRooms(RoomsData.filter(room => room.occupants < room.capacity).length)
-        setFullRooms(RoomsData.filter(room => room.occupants === room.capacity).length)
+        setAvailableRooms(RoomsData.filter(room => room.occupants.length < room.capacity).length)
+        setFullRooms(RoomsData.filter(room => room.occupants.length === room.capacity).length)
         setUnderMaintenance(RoomsData.filter(room => room.status === "maintenance").length)
         setTotalStudents(StudentsData.length)
         setAwaitingApproval(StudentsData.filter(

@@ -125,6 +125,7 @@ router.post("/assign-room", async (req, res) => {
     }
     // console.log('ME ', user)
 });
+
 router.post("/add-room", async (req, res) => {
     const { room_number, block, floor, status, capacity, amenities
         // ,gender
@@ -155,7 +156,7 @@ router.post("/add-room", async (req, res) => {
         // title: room_number,
         img: randomImg(),
     });
-    // console.log('This is room --> ', room)
+    console.log('This is room --> ', room)
     const result = await doDataBaseThing(() => room.save());
 
     if (result === "db_error") {

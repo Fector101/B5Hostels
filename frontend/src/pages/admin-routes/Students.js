@@ -2,10 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../components/js/UserContext";
 import { toast } from "react-toastify";
 
-function PopupRoomCard({ selected_room,setSelectedRoom,amenities, capacity, block, room_number, status, floor, occupants, i }) {
-    function setCard(event){
+function PopupRoomCard({ selected_room, setSelectedRoom, amenities, capacity, block, room_number, status, floor, occupants, i }) {
+    function setCard(event) {
         const selected_card = event.target.closest('.student-card')
-        if(!selected_card) return
+        if (!selected_card) return
         document.querySelector('div.student-card.active')?.classList.remove('active')
         selected_card.classList.add('active')
         const room_number = selected_card.querySelector('.room_number').innerText
@@ -64,7 +64,7 @@ function PopupRoomCard({ selected_room,setSelectedRoom,amenities, capacity, bloc
         </div>
     );
 }
-function StudentCard({ name, matric_no, email, preference, level, room, verified, payments, setMatricNo, setStudentName, setChoicesModal }) {
+function StudentCard({ name, matric_no, email, preference, level, room, verified, payments, setMatricNo, setStudentName, assignRoom, setChoicesModal }) {
     // let state = 'all-students pending-verification-account verified-account paid'
     // pending verified paid
     // not verfing payment but student account
@@ -118,12 +118,12 @@ function StudentCard({ name, matric_no, email, preference, level, room, verified
         if (!verified) {
             return <>
                 <button onClick={() => verifyStudent(matric_no)} className="primary-btn verify-btn">Verify</button>
-                <button className="red-color reject-room-btn"> Reject </button>
+                {/* <button className="red-color reject-room-btn"> Reject </button> */}
             </>
         } else if (!room && payments_length > 0) {
             return <>
                 <button onClick={() => { setStudentName(name); setMatricNo(matric_no); setChoicesModal(true) }} className="assign-btn">Assign Room</button>
-                <button className="random-room-btn">Random Room</button>
+                <button onClick={() => { assignRoom(matric_no) }} className="random-room-btn">Random Room</button>
             </>
         } else if (room) {
             return <button disabled className="assigned-room-btn"> Room Assigned </button>
@@ -172,13 +172,14 @@ function StudentCard({ name, matric_no, email, preference, level, room, verified
     );
 }
 export default function Students() {
+    const { RoomsData, StudentsData, setStudents } = useContext(UserContext);
+
     const [rooms, SetRooms] = useState([]);
     const [students, SetStudents] = useState([]);
     const [choices_modal, setChoicesModal] = useState(false);
     const [matric_no, setMatricNo] = useState('');
     const [student_name, setStudentName] = useState('');
     const [selected_room, setSelectedRoom] = useState('');
-    const { RoomsData, StudentsData } = useContext(UserContext);
     const [available_rooms, setAvailableRooms] = useState([]);
 
     function showTab(tab) {
@@ -213,36 +214,57 @@ export default function Students() {
         })
     }
     useEffect(() => {
-        setAvailableRooms(RoomsData.filter(room => room.occupants.length < room.capacity))
-        setSelectedRoom(available_rooms?.[0]?.room_number)
+        const av_rooms = RoomsData.filter(room => room.occupants.length < room.capacity)
+        setAvailableRooms(av_rooms)
+        setSelectedRoom(av_rooms?.[0]?.room_number)
         SetRooms(RoomsData);
         SetStudents(StudentsData);
     }, [RoomsData, StudentsData]);
 
-    async function assignRoom() {
+    async function assignRoom(filler_matric_no = '') {
         try {
-            // console.log(selected_room,matric_no)
+            // console.log(filler_matric_no,filler_room_no)
+            const matric_no1 = matric_no || filler_matric_no
+            const room_number = selected_room
+
+
+
+            // let found_student_data;
+            // const student_index = StudentsData.findIndex(student => {
+            //     if (student.matric_no === matric_no1) {
+            //         found_student_data = student
+            //         found_student_data.room = room_number
+            //         console.log(found_student_data)
+            //         return true
+            //     } else { return false }
+            // })
+            // StudentsData[student_index] = found_student_data
+            // setStudents(StudentsData)
+            // console.log(room_number,matric_no1)
             // return
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/assign-room`, {
                 method: "POST",
                 credentials: "include",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ matric_no, room_number:selected_room })
+                body: JSON.stringify({ matric_no: matric_no1, room_number })
             });
             const result = await response.json();
 
             if (response.ok) {
-                setChoicesModal(false)
-                toast(result.msg||'Added Successfully', { type: "success" });
                 let found_student_data;
                 const student_index = StudentsData.findIndex(student => {
-                    if (student.matric_no === matric_no) {
+                    if (student.matric_no === matric_no1) {
                         found_student_data = student
-                        found_student_data.room = selected_room
+                        found_student_data.room = room_number
+                        console.log(found_student_data)
                         return true
                     } else { return false }
                 })
                 StudentsData[student_index] = found_student_data
+                setStudents(StudentsData)
+                toast(result.msg || 'Added Successfully', { type: "success" });
+                if(filler_matric_no)setChoicesModal(false)
+
             } else {
                 toast(result.msg || "-Network Error, Please Try Again", { type: "warning" });
             }
@@ -344,6 +366,7 @@ export default function Students() {
                             setChoicesModal={setChoicesModal}
                             setMatricNo={setMatricNo}
                             setStudentName={setStudentName}
+                            assignRoom={assignRoom}
                         />
                     ))}
                 </div>

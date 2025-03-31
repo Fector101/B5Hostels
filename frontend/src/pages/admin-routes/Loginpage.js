@@ -13,7 +13,7 @@ export default function Loginpage() {
 
     const usefiller = process.env.NODE_ENV === 'development'
     const [matric_no, setMatricNo] = useState(usefiller ? 'FT23CMP00001' : "");
-    const [password, setPassword] = useState(usefiller ? '1' : "");
+    const [password, setPassword] = useState(usefiller ? 'admin' : "");
 
     const handleSubmit = async (e) => {
         e.preventDefault();

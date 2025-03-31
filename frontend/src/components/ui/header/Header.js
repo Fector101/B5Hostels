@@ -54,7 +54,7 @@ export default function Header({ userName }) {
                     <section className={'nav ' + flex_dir_state}>
                         <Link to='/rooms' > <House /> Rooms </Link>
                         <Link to='/profile'> <User /> Profile </Link>
-                        <Link > <Bell />
+                        <Link to='/notify' > <Bell />
                             <p className='notification-txt'>Notifications</p>
                         </Link>
                     </section>

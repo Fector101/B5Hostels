@@ -18,6 +18,7 @@ import SignupPage from "./pages/Signuppage";
 import Profilepage from "./pages/Profilepage";
 import RoomDetailsPage from "./pages/RoomDetailsPage";
 import ChooseUserpage from "./pages/ChooseUserpage";
+import NotifyPage from "./pages/NotifyPage";
 
 function App() {
     const location = useLocation();
@@ -28,13 +29,15 @@ function App() {
 
             <Routes>
                 <Route path="/" element={<Landingpage />} />
-                <Route path="/login" element={<Loginpage />} />
-                <Route path="/signup" element={<SignupPage />} />
-                <Route path="/profile" element={<Profilepage />} />
                 <Route path="/choose-user" element={<ChooseUserpage />} />
 
+                <Route path="/login" element={<Loginpage />} />
+                <Route path="/signup" element={<SignupPage />} />
+
+                <Route path="/profile" element={<Profilepage />} />
                 <Route path="/room" element={<RoomDetailsPage />} />
                 <Route path="/rooms" element={<Roomspage />} />
+                <Route path="/notify" element={<NotifyPage />} />
 
                 <Route path="/admin/*" element={<AdminRoutes />} />
                 <Route path="*" element={<NotFoundpage redirect_path="/" timeout_secs={5 * 1000} />} />

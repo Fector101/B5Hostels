@@ -95,7 +95,7 @@ export default function Profilepage() {
                                         <div className="occupants-box">
                                             <div className="occupant">
                                                 <h3 className="caption">Current Occupants</h3>
-                                                <p>{userData.room_mates?.length} Students</p>
+                                                <p>{userData.room_mates?.length} Student{userData.room_mates?.length>1?'s':''}</p>
                                             </div>
                                             <div className="occupant">
                                                 <h3 className="caption">Capacity</h3>

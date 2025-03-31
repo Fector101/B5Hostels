@@ -20,9 +20,11 @@ export default function SignupPage() {
     const [fullname, setFullName] = useState(usefiller ? "Fabian Joseph" : '');
     const [level, setLevel] = useState(usefiller ? 100 : "");
     const [gender, setGender] = useState(usefiller ? 'Male' : "");
+    const [signing_in, setSigningIn] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSigningIn(true)
 
         const formData = {
             name: fullname,
@@ -46,17 +48,20 @@ export default function SignupPage() {
             const data = await response.json();
 
             if (response.ok) {
+                setSigningIn(false)
                 console.log("User created:", data);
                 toast(data.msg || 'Signup successful!', { type: 'success' });
-                await fetchRoomsData()
-                await fetchUserData()
                 navigate(data.url);
+                await fetchUserData()
+                await fetchRoomsData()
                 // Redirect or update UI
             } else {
+                setSigningIn(false)
                 console.error("Signup error:", data);
                 toast(data.msg || 'Check your inputs.', { type: 'warning' });
             }
         } catch (error) {
+            setSigningIn(false)
             console.error("Network error:", error);
             toast('Something went wrong! ' + error, { type: 'error' });
             // alert("Network error. Please try again.");
@@ -65,6 +70,12 @@ export default function SignupPage() {
 
     return (
         <div className="form-page page">
+            {signing_in &&
+                <div className='modal signing-in-spinner-case'>
+                    <div id="spinner" className="spinner"></div>
+                </div>
+
+            }
             <NotSignedIn />
             <div className="form-box">
                 <h2>Create Your Account</h2>

@@ -11,7 +11,9 @@
     padding-bottom: 10px;
     gap: 10px;
 }
-
+.form-page .signing-in-spinner-case{
+    display: block;
+}
 .form-box {
     margin: auto;
     background: #fdf4fd;

@@ -15,9 +15,11 @@ export default function Loginpage() {
     const usefiller = process.env.NODE_ENV === 'development'
     const [matric_no, setMatricNo] = useState(usefiller ? 'FT23CMP00001' : "");
     const [password, setPassword] = useState(usefiller ? '1' : "");
+    const [signing_in, setSigningIn] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSigningIn(true)
         try {
 
             const formData = {
@@ -37,23 +39,33 @@ export default function Loginpage() {
             const data = await response.json();
 
             if (response.ok) {
+                setSigningIn(false)
                 console.log("User created:", data);
                 toast(data.msg || 'Login successful!', { type: 'success' });
                 navigate(data.url);
-                await fetchRoomsData()
                 await fetchUserData()
+                await fetchRoomsData()
             } else {
+                setSigningIn(false)
                 console.error("Login error:", data);
                 toast(data.msg || 'Check your inputs.', { type: 'warning' });
             }
         } catch (error) {
+            setSigningIn(false)
             console.error("Catch Login failed error:", error);
             toast('Something went wrong! ' + error, { type: 'error' });
         }
+
     };
 
     return (
         <div className="form-page page">
+            {signing_in &&
+                <div className='modal signing-in-spinner-case'>
+                    <div id="spinner" className="spinner"></div>
+                </div>
+
+            }
             <NotSignedIn />
             <div className="form-box">
                 <div className="icon-circle">

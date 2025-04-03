@@ -26,9 +26,9 @@ export default function Footer(){
             <Link className="heading" to='/' >B5 Homes</Link>
             <div className="row">
 
-            <Link to='/'>About Us</Link>
-            <Link to='/'>Privacy</Link>
-            <Link to='/'>Contact Us</Link>
+            {/* <Link to='/'>About Us</Link>
+            <Link to='/'>Privacy</Link> */}
+            <Link to=''>Contact Us</Link>
             </div>
             <p className="caption">© 2025 B5 Homes. All rights reserved</p>
         </footer>

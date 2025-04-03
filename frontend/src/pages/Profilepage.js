@@ -1,27 +1,15 @@
 import { User, Home, Building, CheckCircle, Info } from "lucide-react"
 import '../components/css/profilepage.css'
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from '../components/js/UserContext';
-import { useNavigate } from "react-router-dom";
+import GoToTop from "../components/js/GoToTop";
+// import { useNavigate } from "react-router-dom";
+// import { toast } from "react-toastify";
 
 // const { user, setUser } = useContext(null);
 export default function Profilepage() {
     const [current_tab, setCurrentTab] = useState(() => 'room')
-    const navigate = useNavigate()
     const { userData } = useContext(UserContext);
-  
-    useEffect(() => {
-        const timeout_secs=15
-        const timeout = setTimeout(()=>{
-            navigate('/login')
-        },1000 * timeout_secs)
-        if(Object.keys(userData).length){
-            clearTimeout(timeout)
-        }
-        return () => {clearTimeout(timeout)}
-
-    }, [userData]);
-
 
     return (
         <div className="profile-page page">
@@ -37,7 +25,7 @@ export default function Profilepage() {
                     <p className="caption"> View your account details</p>
                 </div>
             </section>
-
+            
             <section className="main-content">
 
                 <section className="student-details-box">
@@ -56,8 +44,8 @@ export default function Profilepage() {
 
                     <hr />
 
-                    <h4 className="status-txt">Account Status</h4>
-                    <p className="status-txt"> {userData.verified ? "Your account has been verified. You are eligible for a room." : "Your account is pending verification. Please check back later."}</p>
+                    <h4 className="status-txt">{userData.room?"Room":"Account"} Status</h4>
+                    <p className="status-txt"> {userData.verified ? userData.room?userData.days_passed+'/360':"Your account has been verified. You are eligible for a room." : "Your account is pending verification. Please check back later."}</p>
                 </section>
 
 
@@ -95,7 +83,7 @@ export default function Profilepage() {
                                         <div className="occupants-box">
                                             <div className="occupant">
                                                 <h3 className="caption">Current Occupants</h3>
-                                                <p>{userData.room_mates?.length} Student{userData.room_mates?.length>1?'s':''}</p>
+                                                <p>{userData.room_mates?.length} Student{userData.room_mates?.length > 1 ? 's' : ''}</p>
                                             </div>
                                             <div className="occupant">
                                                 <h3 className="caption">Capacity</h3>
@@ -106,7 +94,6 @@ export default function Profilepage() {
                                         <div className="amenities-box">
                                             <h3>Amenities</h3>
                                             <div>
-
                                                 <p>Wifi</p>
                                                 <p>Desk</p>
                                                 <p>Wardrobe</p>
@@ -156,6 +143,7 @@ export default function Profilepage() {
                 </section>
 
             </section>
+            <GoToTop/>
         </div>
     )
 }

@@ -3,7 +3,8 @@ import GoToTop from "../components/js/GoToTop";
 import '../components/css/roomspage.css';
 import { Building, Users } from "lucide-react";
 import { UserContext } from '../components/js/UserContext';
-import { useContext, useEffect,useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 function RoomCard({ status, img, room_number, block, capacity, floor, occupants }) {
     const navigate = useNavigate()
@@ -51,21 +52,36 @@ function RoomCard({ status, img, room_number, block, capacity, floor, occupants 
 }
 
 export default function Roomspage() {
-    const { RoomsData } = useContext(UserContext);
+    const {CheckLoggedIn, isLoggedIn, RoomsData } = useContext(UserContext);
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [available_rooms, setAvailableRooms] = useState([]);
+    const navigate = useNavigate()
 
     // console.log('RoomsData ', RoomsData)
     useEffect(() => {
         setAvailableRooms(RoomsData.filter(room => room.occupants.length < room.capacity))
     }, [RoomsData])
+
+    // useEffect(() => {
+    //     if (!isLoggedIn) {
+
+    //         CheckLoggedIn().then(res => {
+    //             console.log(res)
+    //             if (!res) {
+    //                 toast('Login Session Expired', { type: 'warning' });
+    //                 navigate('/login')
+    //             }
+    //         })
+    //     }
+    // }, [isLoggedIn]);
+
     return (
         <div className="rooms-page page">
-            {RoomsData.length === 0 &&
+            {/* {RoomsData.length === 0 &&
                 <div className='modal'>
                     <div id="spinner" className="spinner"></div>
                 </div>
-
-            }
+            } */}
             <section className="heading">
                 <div>
                     <h1>Browse Rooms</h1>
@@ -74,7 +90,7 @@ export default function Roomspage() {
             </section>
 
             <section className="rooms-box">
-                {available_rooms.length ? available_rooms.map(room => ( <RoomCard key={room.room_number} {...room} /> )) : <p>No Available Rooms</p>}
+                {available_rooms.length ? available_rooms.map(room => (<RoomCard key={room.room_number} {...room} />)) : <p>No Available Rooms</p>}
             </section>
 
             <GoToTop />

@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Student = require("../models/Student");
-const { doDataBaseThing } = require("../helper/basic");
+const { doDataBaseThing, verifyToken } = require("../helper/basic");
 
 const router = express.Router();
 
@@ -66,8 +66,8 @@ router.post("/login", async (req, res) => {
         const { matric_no, password } = req.body;
         let user = await doDataBaseThing(() => Student.findOne({ matric_no }));
         // const user = await Student.findOne({ matric_no });
-        if (user === 'db_error'){return res.status(400).json({ msg: 'Something went wrong! -dbe' })}
-        else if(!user){return res.status(400).json({ msg: 'Student doesn\'t exist' });}
+        if (user === 'db_error') { return res.status(400).json({ msg: 'Something went wrong! -dbe' }) }
+        else if (!user) { return res.status(400).json({ msg: 'Student doesn\'t exist' }); }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ msg: "Invalid password" });
@@ -112,17 +112,17 @@ router.post("/admin-login", async (req, res) => {
         // const user = await Student.findOne({ matric_no });
         const isMatch = password === (process.env.admin_password || "admin");
         if (!isMatch) return res.status(400).json({ msg: "Invalid password" });
-        
+
         const data = { id: process.env.JWT_SECRET }
-        const token = jwt.sign( data, process.env.JWT_SECRET, { expiresIn: "1h" } );
+        const token = jwt.sign(data, process.env.JWT_SECRET, { expiresIn: "24h" });
 
         // Set token in HTTP-only cookie
         res.cookie("adminInfo", token, {
             httpOnly: true,
             sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
             secure: process.env.NODE_ENV === "production",
-            maxAge: 3600000,
-        }); // 1 hour
+            maxAge: 3600000 * 24,
+        });
 
         return res.status(201).json({ url: "/admin/dashboard" });
     } catch (err) {
@@ -131,4 +131,16 @@ router.post("/admin-login", async (req, res) => {
     }
 });
 
+
+router.get('/isloggedin', verifyToken, (req, res) => {
+    const token = req.cookies.userInfo;
+    if (!token) return res.status(401).json({ msg: "Unauthorized" });
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        return res.status(200).json({ matric_no: decoded.matric_no });
+    } catch (error) {
+        return res.status(401).json({ msg: "Something went wrong! -Authne" });
+    }
+});
 module.exports = router;

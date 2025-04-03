@@ -1,4 +1,3 @@
-import { Analytics } from '@vercel/analytics/next';
 import { Route, Routes, useLocation } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 
@@ -44,7 +43,6 @@ function App() {
                 <Route path="*" element={<NotFoundpage redirect_path="/" timeout_secs={5 * 1000} />} />
             </Routes>
             <Footer />
-<Analytics />
         </>
     );
 }

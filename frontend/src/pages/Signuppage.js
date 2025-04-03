@@ -13,7 +13,6 @@ export default function SignupPage() {
     const { fetchRoomsData, fetchUserData } = useContext(UserContext);
 
     const usefiller = process.env.NODE_ENV === 'development'
-    console.log(usefiller,process.env.NODE_ENV)
     const [email, setEmail] = useState(usefiller ? "f@gmail.com" : '');
     const [matric_no, setMatricNo] = useState(usefiller ? "FT23CMP00001" : '');
     const [password, setPassword] = useState(usefiller ? "1" : '');

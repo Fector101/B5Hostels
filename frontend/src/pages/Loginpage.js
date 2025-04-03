@@ -40,7 +40,7 @@ export default function Loginpage() {
 
             if (response.ok) {
                 setSigningIn(false)
-                console.log("User created:", data);
+                console.log("User loggedIn:", data);
                 toast(data.msg || 'Login successful!', { type: 'success' });
                 navigate(data.url);
                 await fetchUserData()
@@ -53,7 +53,7 @@ export default function Loginpage() {
         } catch (error) {
             setSigningIn(false)
             console.error("Catch Login failed error:", error);
-            toast('Something went wrong! ' + error, { type: 'error' });
+            toast('Something went wrong -' + error, { type: 'error' });
         }
 
     };

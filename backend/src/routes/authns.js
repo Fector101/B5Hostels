@@ -5,21 +5,18 @@ const Student = require("../models/Student");
 const { doDataBaseThing } = require("../helper/basic");
 
 const router = express.Router();
-// const CLIENT_URL = process.env.CLIENT_URL;
 
 router.post("/signup", async (req, res) => {
     try {
         const { name, email, matric_no, password, gender, level } = req.body;
         // console.log(name, email, matric_no, password, gender, level);
         let user = await doDataBaseThing(() => Student.findOne({ matric_no }));
-        // let user = await Student.findOne({ matric_no });
         if (user)
             return res
                 .status(400)
                 .json({ exists: true, msg: "Matric Number Already Register" });
 
         user = await doDataBaseThing(() => Student.findOne({ email }));
-        // user = await Student.findOne({ email });
         if (user)
             return res
                 .status(400)
@@ -48,10 +45,10 @@ router.post("/signup", async (req, res) => {
         });
         res.cookie("userInfo", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production", // 🔥 Only secure in production
-            sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // 🔥 Use Lax for localhost
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
             maxAge: 3600000,
-        }); // 1 hour
+        });
 
         return res.status(200).json({
             redirect: true,
@@ -60,7 +57,7 @@ router.post("/signup", async (req, res) => {
         });
     } catch (err) {
         console.log("signup error: ", err);
-        res.status(500).json({ error: "Server error" });
+        res.status(500).json({ msg: 'Something went wrong! -se' });
     }
 });
 
@@ -69,8 +66,8 @@ router.post("/login", async (req, res) => {
         const { matric_no, password } = req.body;
         let user = await doDataBaseThing(() => Student.findOne({ matric_no }));
         // const user = await Student.findOne({ matric_no });
-        if (!user)
-            return res.status(400).json({ msg: "Student doesn't exist" });
+        if (user === 'db_error'){return res.status(400).json({ msg: 'Something went wrong! -dbe' })}
+        else if(!user){return res.status(400).json({ msg: 'Student doesn\'t exist' });}
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ msg: "Invalid password" });
@@ -88,7 +85,8 @@ router.post("/login", async (req, res) => {
             secure: process.env.NODE_ENV === "production",
             sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
             maxAge: 3600000,
-        }); // 1 hour
+        });
+
         return res.status(200).json({
             redirect: true,
             url: "/profile",
@@ -96,7 +94,7 @@ router.post("/login", async (req, res) => {
         });
     } catch (err) {
         console.log("login error: ", err);
-        res.status(500).json({ msg: "Server error" });
+        res.status(500).json({ msg: 'Something went wrong! -se' });
     }
 });
 
@@ -126,10 +124,10 @@ router.post("/admin-login", async (req, res) => {
             maxAge: 3600000,
         }); // 1 hour
 
-        res.status(201).json({ url: "/admin/dashboard" });
+        return res.status(201).json({ url: "/admin/dashboard" });
     } catch (err) {
-        console.log("login error: ", err);
-        res.status(500).json({ msg: "Server error" });
+        console.log('admin login error: ', err)
+        res.status(500).json({ msg: 'Something went wrong! -se' });
     }
 });
 

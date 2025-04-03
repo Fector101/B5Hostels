@@ -45,7 +45,7 @@ export default function Profilepage() {
                     <hr />
 
                     <h4 className="status-txt">{userData.room?"Room":"Account"} Status</h4>
-                    <p className="status-txt"> {userData.verified ? userData.room?userData.days_passed+'/360':"Your account has been verified. You are eligible for a room." : "Your account is pending verification. Please check back later."}</p>
+                    <p className="status-txt"> {userData.verified ? userData.room?userData.days_passed+' of 360 days':"Your account has been verified. You are eligible for a room." : "Your account is pending verification. Please check back later."}</p>
                 </section>
 
 

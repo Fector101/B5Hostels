@@ -31,7 +31,7 @@ export default function Header({ userName }) {
     useEffect(() => {
         function handleResize() {
             setFlexDirState('fd-row')
-            console.log(document.querySelector('header.header'))
+            // console.log(document.querySelector('header.header'))
             document.querySelector('header.header')?.classList.remove('fd-column')
             setNavState(window.innerWidth > 500);
         }

@@ -10,7 +10,8 @@ const authns = require('./src/routes/authns')
 const studentRoutes = require('./src/routes/students')
 const adminRoutes = require('./src/routes/admin')
 const connectDB = require('./src/db');
-const { verifyToken, generateUniqueFileName } = require('./src/helper/basic');
+const { verifyToken, generateUniqueFileName, doDataBaseThing } = require('./src/helper/basic');
+const Student = require('./src/models/Student');
 
 
 const app = express();
@@ -77,34 +78,84 @@ cloudinary.config({
 const storage = multer.memoryStorage(); // Store file in memory before uploading
 const upload = multer({ storage });
 
-// Upload Route
-app.post("/upload",verifyToken, upload.single("pdf"), async (req, res) => {
-// app.post("/upload", verifyToken, async (req, res) => {
-    console.log(req.file, 'req.file');
-    const unique_file_name = generateUniqueFileName('req.file.originalname.pdf', req.user.matric_no)
+app.post("/upload-profile-pic", verifyToken, upload.single("image"), async (req, res) => {
     // console.log(req.file, 'req.file');
-    if (!req.file) {
-        return res.status(400).json({ msg: "No file uploaded" });
-    }
 
     try {
-        // const uploadStream = 
+        const unique_file_name = generateUniqueFileName(req.file.originalname, req.user.matric_no);
+
+        if (!req.file) {
+            return res.status(400).json({ msg: "No file uploaded" });
+        }
+
         await cloudinary.uploader.upload_stream(
-            { resource_type: "raw", folder: "pdfs",public_id: unique_file_name,format: "pdf" },
-            (error, result) => {
+            {
+                resource_type: "image",
+                folder: "images",
+                public_id: unique_file_name,
+            },
+            async (error, result) => {
                 if (error) {
+                    console.log('Error uploading image:', error);
                     return res.status(500).json({ msg: error.message });
                 }
-                // console.log(result, 'result');
-                res.json({ msg: 'File Uploaded SuccessFully' });
+
+                await doDataBaseThing(() =>
+                    Student.findOneAndUpdate(
+                        { matric_no: req.user.matric_no },
+                        { $set: { profile_pic: result.secure_url } },
+                        { new: true }
+                    ))
+
+                return res.json({ msg: "Image uploaded successfully", url: result.secure_url });
             }
         ).end(req.file.buffer);
-        // uploadStream
     } catch (error) {
-        console.log('Server Error File Upload',error);
-        res.status(500).json({ msg: "Failed to upload file -se" });
+        console.log('Server Error Image File Upload', error);
+        res.status(500).json({ msg: "Failed to upload file" });
     }
 });
+
+
+// app.post("/upload", verifyToken, upload.single("pdf"), async (req, res) => {
+//     console.log(req.file, 'req.file');
+//     const unique_file_name = generateUniqueFileName('req.file.originalname.pdf', req.user.matric_no)
+//     if (!req.file) {
+//         return res.status(400).json({ msg: "No file uploaded" });
+//     }
+
+//     try {
+//         const student = await doDataBaseThing(()=> Student.findOne({ matric_no: req.user.matric_no }))
+
+//         if (!student) {
+//             return res.status(404).json({ msg: "Failed to Find Student" });
+//         }
+//         else if (student !=='db_error' && student.pdfs.length >= 5) {
+//             return res.status(400).json({ msg: "You can only upload up to 5 PDFs." });
+//         }
+//         // const uploadStream = 
+//         await cloudinary.uploader.upload_stream(
+//             { resource_type: "raw", folder: "pdfs", public_id: unique_file_name, format: "pdf" },
+//             async (error, result) => {
+//                 if (error) {
+//                     return res.status(500).json({ msg: error.message });
+//                 }
+
+//                 await doDataBaseThing(() => Student.findOneAndUpdate(
+//                     { matric_no: req.user.matric_no },
+//                     { $push: { pdfs: { name: req.file.originalname, url: result.secure_url } } },
+//                     { new: true }
+//                 ))
+//                 // console.log(result, 'result');
+//                 res.json({ msg: 'File Uploaded SuccessFully' });
+//             }
+//         ).end(req.file.buffer);
+//         // uploadStream
+//     } catch (error) {
+//         console.log('Server Error File Upload', error);
+//         res.status(500).json({ msg: "Failed to upload file -se" });
+//     }
+// });
 
 
 // Routes

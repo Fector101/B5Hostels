@@ -6,6 +6,10 @@ const UploadPDF = () => {
     const [pdfUrl, setPdfUrl] = useState("");
 
     const handleFileChange = (event) => {
+        if (event.target.files[0].size > 5 * 1024 * 1024) {
+            toast('File size exceeds 3MB - too large', { type: 'warning' });
+            return
+        }
         setFile(event.target.files[0]);
     };
 
@@ -38,7 +42,8 @@ const UploadPDF = () => {
             }
 
         } catch (error) {
-            toast('Something went wrong -' + error, { type: 'error' });
+            // toast('Something went wrong -' + error, { type: 'error' });
+            toast('....', { type: 'error' });
             console.error("Error uploading file:", error);
         }
     };

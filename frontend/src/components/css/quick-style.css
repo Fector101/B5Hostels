@@ -30,10 +30,12 @@ body section.display-none {
 .display-flex {
     display: flex;
 }
-.flex-wrap{
+
+.flex-wrap {
     display: flex;
     flex-wrap: wrap;
 }
+
 .flex {
     display: flex;
 }
@@ -91,6 +93,21 @@ body section.display-none {
 
 .algin-items-cen {
     align-items: center;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.algin-items-cen {
+    align-items: center;
+}
+
+.justify-content-end {
+    justify-content: end;
+}
+.justify-content-cen {
+    justify-content: center;
 }
 
 .width100per {

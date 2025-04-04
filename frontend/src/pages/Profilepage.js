@@ -1,19 +1,82 @@
-import { User, Home, Building, CheckCircle, Info } from "lucide-react"
+import { User, Home, Building, CheckCircle, Info, ImagePlus } from "lucide-react"
 import '../components/css/profilepage.css'
 import { useContext, useState } from "react";
 import { UserContext } from '../components/js/UserContext';
 import GoToTop from "../components/js/GoToTop";
 import UploadPDF from "../components/ui/UploadPDF";
+import { toast } from "react-toastify";
 // import { useNavigate } from "react-router-dom";
 // import { toast } from "react-toastify";
 
 // const { user, setUser } = useContext(null);
 export default function Profilepage() {
     const [current_tab, setCurrentTab] = useState(() => 'room')
-    const { userData } = useContext(UserContext);
+    const { userData,setUser } = useContext(UserContext);
+    const [file, setFile] = useState(null);
+    const [imgUrl, setImgUrl] = useState(userData.profile_pic);
 
+    const handleFileChange = (event) => {
+        console.log(event.target.files[0])
+        setFile(() => {
+            if (event.target.files[0].size > 3 * 1024 * 1024) {
+                toast('File size exceeds 3MB - too large', { type: 'warning' });
+                return
+            }
+            return event.target.files[0]
+        });
+    };
+
+    async function sendProfilePic() {
+        const formData = new FormData();
+        formData.append('image', file);
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/upload-profile-pic`, {
+            method: 'POST',
+            body: formData,
+            credentials: "include",
+
+        });
+        console.log('Response:', response);
+        const data = await response.json();
+        if (response.ok) {
+            setImgUrl(data.url);
+            setUser((prev) => {return { ...prev, profile_pic: data.url }} )
+            toast.success(data.msg||'Profile picture updated successfully');
+        } else {
+            toast.error(data.msg||'Failed to update profile picture');
+        }
+
+    }
+    const queryInput = () => {
+        const input = document.querySelector('.profile-input');
+        if (input) {
+            input.click();
+        }
+    }
+    // const handleFileChange = (event) => {
+    //     setFile(event.target.files[0]);
+    //     console.log(event.target.files[0])
+    //     if (event.target.files[0].type !== 'application/pdf') {
+    //         toast('Please upload a PDF file', { type: 'warning' });
+    //         return
+    //     }
+    //     sendProfilePic()
+    // };
     return (
         <div className="profile-page page">
+            {file &&
+                <div className="confirm-pic-modal modal">
+                    <div className="confirm-box">
+                        <p>Are you sure you want to upload this?</p>
+                        <div className="btns flex justify-content-end">
+                            <button className="btn cancel" onClick={() => setFile(null)}>Cancel</button>
+                            <button className="btn ok" onClick={() => {
+                                sendProfilePic()
+                                setFile(null)
+                            }}>Upload</button>
+                        </div>
+                    </div>
+                </div>
+            }
             {Object.keys(userData).length === 0 &&
                 <div className='modal'>
                     <div id="spinner" className="spinner"></div>
@@ -26,12 +89,15 @@ export default function Profilepage() {
                     <p className="caption"> View your account details</p>
                 </div>
             </section>
-            
+
             <section className="main-content">
 
                 <section className="student-details-box">
-                    <div className="profile-img">
-                        <p>{userData.initials}</p>
+                    
+                    <div className={"profile-img"+(imgUrl?'':' no-img')} title="Update Profile Picture (<3MB)" onClick={queryInput}>
+                        <input hidden className="profile-input" type="file" accept="image/*" onChange={handleFileChange} />
+                        {/* <p>{userData.initials}</p> */}
+                        {imgUrl ? <img src={imgUrl} alt="profile-pic"/> :<ImagePlus />}
                     </div>
                     <h3 className="name">{userData.name}</h3>
                     <p className="caption matric-no">{userData.matric_no}</p>
@@ -45,8 +111,8 @@ export default function Profilepage() {
 
                     <hr />
 
-                    <h4 className="status-txt">{userData.room?"Room":"Account"} Status</h4>
-                    <p className="status-txt"> {userData.verified ? userData.room?userData.days_passed+' of 360 days':"Your account has been verified. You are eligible for a room." : "Your account is pending verification. Please check back later."}</p>
+                    <h4 className="status-txt">{userData.room ? "Room" : "Account"} Status</h4>
+                    <p className="status-txt"> {userData.verified ? userData.room ? userData.days_passed + ' of 360 days' : "Your account has been verified. You are eligible for a room." : "Your account is pending verification. Please check back later."}</p>
                 </section>
 
 
@@ -112,7 +178,7 @@ export default function Profilepage() {
                                         <p className="caption">
                                             {userData.verified ? "You've been verified, but no room has been assigned to you yet." : "You need to be verified before a room can be assigned to you."}
                                         </p>
-                                        {!userData.verified ? <UploadPDF/>:<></>}
+                                        {!userData.verified ? <UploadPDF /> : <></>}
                                     </div>
                                 }
                             </div>
@@ -145,7 +211,7 @@ export default function Profilepage() {
                 </section>
 
             </section>
-            <GoToTop/>
+            <GoToTop />
         </div>
     )
 }

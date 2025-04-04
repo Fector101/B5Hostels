@@ -2,10 +2,18 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Student = require("../models/Student");
-const { doDataBaseThing, verifyToken } = require("../helper/basic");
+const { doDataBaseThing, verifyToken, verifyTokenAdmin } = require("../helper/basic");
 
 const router = express.Router();
 
+function GENERATE_COOKIE_CONFIG(hrs = 1) {
+    return {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+        maxAge: 3600000 * hrs
+    }
+}
 router.post("/signup", async (req, res) => {
     try {
         const { name, email, matric_no, password, gender, level } = req.body;
@@ -39,16 +47,11 @@ router.post("/signup", async (req, res) => {
             });
         }
 
-        const data = { matric_no };
+        const data = { matric_no, role: "student" };
         const token = jwt.sign(data, process.env.JWT_SECRET, {
             expiresIn: "4h",
         });
-        res.cookie("userInfo", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-            maxAge: 3600000 *4,
-        });
+        res.cookie("userInfo", token, GENERATE_COOKIE_CONFIG(4));
 
         return res.status(200).json({
             redirect: true,
@@ -73,19 +76,13 @@ router.post("/login", async (req, res) => {
         if (!isMatch) return res.status(400).json({ msg: "Invalid password" });
 
         const data = {
-            matric_no: user.matric_no,
+            matric_no: user.matric_no
         };
         const token = jwt.sign(data, process.env.JWT_SECRET, {
             expiresIn: "4h",
         });
 
-        // Set token in HTTP-only cookie
-        res.cookie("userInfo", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-            maxAge: 3600000 *4,
-        });
+        res.cookie("userInfo", token, GENERATE_COOKIE_CONFIG(4));
 
         return res.status(200).json({
             redirect: true,
@@ -106,6 +103,14 @@ router.post("/logout", (req, res) => {
     res.redirect("/login");
 });
 
+router.post("/logout-admin", (req, res) => {
+    res.clearCookie("adminInfo", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+    });
+    res.redirect("/login");
+});
+
 router.post("/admin-login", async (req, res) => {
     try {
         const { password } = req.body;
@@ -113,16 +118,9 @@ router.post("/admin-login", async (req, res) => {
         const isMatch = password === (process.env.admin_password || "admin");
         if (!isMatch) return res.status(400).json({ msg: "Invalid password" });
 
-        const data = { id: process.env.JWT_SECRET }
+        const data = { id: process.env.JWT_SECRET, role: "admin" }
         const token = jwt.sign(data, process.env.JWT_SECRET, { expiresIn: "24h" });
-
-        // Set token in HTTP-only cookie
-        res.cookie("adminInfo", token, {
-            httpOnly: true,
-            sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-            secure: process.env.NODE_ENV === "production",
-            maxAge: 3600000 * 24,
-        });
+        res.cookie("adminInfo", token, GENERATE_COOKIE_CONFIG(24));
 
         return res.status(201).json({ url: "/admin/dashboard" });
     } catch (err) {
@@ -132,8 +130,20 @@ router.post("/admin-login", async (req, res) => {
 });
 
 
-router.get('/isloggedin', verifyToken, (req, res) => {
+router.get('/student-logged', verifyToken, (req, res) => {
     const token = req.cookies.userInfo;
+    if (!token) return res.status(401).json({ msg: "Unauthorized" });
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        return res.status(200).json({ matric_no: decoded.matric_no });
+    } catch (error) {
+        return res.status(401).json({ msg: "Something went wrong! -Authne" });
+    }
+});
+
+router.get('/admin-logged', verifyTokenAdmin, (req, res) => {
+    const token = req.cookies.adminInfo;
     if (!token) return res.status(401).json({ msg: "Unauthorized" });
 
     try {

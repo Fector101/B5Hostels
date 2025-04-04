@@ -10,7 +10,7 @@ import { UserContext } from '../components/js/UserContext';
 
 export default function SignupPage() {
     const navigate = useNavigate()
-    const { fetchRoomsData, fetchUserData } = useContext(UserContext);
+    const { setIsLoggedIn, fetchUserData } = useContext(UserContext);
 
     const usefiller = process.env.NODE_ENV === 'development'
     const [email, setEmail] = useState(usefiller ? "f@gmail.com" : '');
@@ -48,12 +48,11 @@ export default function SignupPage() {
 
             if (response.ok) {
                 setSigningIn(false)
+                setIsLoggedIn(true)
                 console.log("User created:", data);
                 toast(data.msg || 'Signup successful!', { type: 'success' });
                 navigate(data.url);
                 await fetchUserData()
-                await fetchRoomsData()
-                // Redirect or update UI
             } else {
                 setSigningIn(false)
                 console.error("Signup error:", data);

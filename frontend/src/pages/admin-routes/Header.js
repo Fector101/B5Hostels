@@ -1,9 +1,10 @@
 import { Building, Home, LogOut, Users } from "lucide-react";
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation,useNavigate } from "react-router-dom";
 
 export default function Header() {
     const location = useLocation();
+    const navigate = useNavigate()
     const [nav_state, setNavState] = useState(false)
 
     useEffect(() => {
@@ -12,8 +13,8 @@ export default function Header() {
             const signoutBtn = document.querySelector('.signout-btn')
             const navEle = document.querySelector('header nav')
             // if (window.innerWidth > 800) {
-                navEle.classList.remove('show-nav-phone')
-                signoutBtn.classList.remove('show-signout-btn')
+            navEle.classList.remove('show-nav-phone')
+            signoutBtn.classList.remove('show-signout-btn')
             // } 
         }
         window.addEventListener("resize", handleResize);
@@ -25,10 +26,24 @@ export default function Header() {
 
     function toggleNav() {
         const signoutBtn = document.querySelector('.signout-btn')
-        const navEle = document.querySelector('header nav')        
+        const navEle = document.querySelector('header nav')
         navEle.classList.toggle('show-nav-phone')
         signoutBtn.classList.toggle('show-signout-btn')
         setNavState(old => !old)
+    }
+    async function logOut() {
+        try {
+            await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/authn/logout-admin`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            navigate('/admin/login')
+        } catch (error) {
+            console.log('Werid Logout error: ', error)
+        }
     }
     return (
         <header className="admin-header">
@@ -59,10 +74,10 @@ export default function Header() {
                     <Building />
                     Rooms</Link>
             </nav>
-            <Link to='/admin/login' className="signout-btn">
+            <button onClick={logOut} className="signout-btn">
                 <LogOut />
                 <p>Sign Out</p>
-            </Link>
+            </button>
         </header>
 
     )

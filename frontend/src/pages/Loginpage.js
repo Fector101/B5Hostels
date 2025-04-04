@@ -10,7 +10,7 @@ import { UserContext } from '../components/js/UserContext';
 
 export default function Loginpage() {
     const navigate = useNavigate()
-    const { fetchRoomsData, fetchUserData } = useContext(UserContext);
+    const { setIsLoggedIn, fetchUserData } = useContext(UserContext);
 
     const usefiller = process.env.NODE_ENV === 'development'
     const [matric_no, setMatricNo] = useState(usefiller ? 'FT23CMP00001' : "");
@@ -44,7 +44,8 @@ export default function Loginpage() {
                 toast(data.msg || 'Login successful!', { type: 'success' });
                 navigate(data.url);
                 await fetchUserData()
-                await fetchRoomsData()
+                setIsLoggedIn(true)
+                // await fetchRoomsData()
             } else {
                 setSigningIn(false)
                 console.error("Login error:", data);

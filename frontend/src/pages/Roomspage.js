@@ -54,12 +54,13 @@ function RoomCard({ status, img, room_number, block, capacity, floor, occupants 
 export default function Roomspage() {
     const {CheckLoggedIn, isLoggedIn, RoomsData } = useContext(UserContext);
     // const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [available_rooms, setAvailableRooms] = useState([]);
+    const [available_rooms, setAvailableRooms] = useState(()=>[]);
     const navigate = useNavigate()
 
-    // console.log('RoomsData ', RoomsData)
     useEffect(() => {
-        setAvailableRooms(RoomsData.filter(room => room.occupants.length < room.capacity))
+        // console.log('RoomsData ', RoomsData)
+        // console.log('Available Rooms ', RoomsData?.filter(room => room.occupants.length < room.capacity))
+        setAvailableRooms(RoomsData?.filter(room => room.occupants.length < room.capacity) || [])
     }, [RoomsData])
 
     // useEffect(() => {

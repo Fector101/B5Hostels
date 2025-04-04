@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const { verifyToken, doDataBaseThing, daysPassed, delay } = require("../helper/basic");
 const Room = require("../models/Room"); // Import the Room model
 const Student = require("../models/Student");
+const { io } = require('../../server');
 
 const router = express.Router();
 router.use(cookieParser());
@@ -114,25 +115,24 @@ router.get("/room/:room_number", async (req, res) => {
         });
     }
 });
-// router.get('/home',verifyToken, (req, res) => {
-//     const userInfo = req.user
-//     console.log(userInfo,5678)
 
-//     res.render('lists', {  page_title:'home',name: userInfo.name, room: userInfo.room || 'None', date_booked: userInfo.date_booked || 'not booked' });
+// router.get("/rooms", verifyToken, async (req, res) => {
+//     await delay(1000*2)
+
+//     try {
+//         const rooms = await Room.find();
+//         return res.status(200).json({ data:rooms });
+//     } catch (error) {
+//         console.error("Error fetching rooms:", error);
+//         res.status(500).send("Server Error");
+//     }
 // });
 
-router.get("/rooms", verifyToken, async (req, res) => {
-    await delay(1000*2)
-
-    try {
-        const rooms = await Room.find();
-        return res.status(200).json({ data:rooms });
-    } catch (error) {
-        console.error("Error fetching rooms:", error);
-        res.status(500).send("Server Error");
-    }
-});
-
+async function broadcastRoomsUpdates() {
+    const rooms = await doDataBaseThing(() => Room.find())
+    console.log('Querying DB For Rooms ----')
+    io.emit('roomsUpdate', rooms);
+}
 router.post("/make-payment", verifyToken, async (req, res) => {
     const { room_number,matric_no } = req.body;
     console.log(matric_no, 'to --> room:', room_number)
@@ -148,12 +148,12 @@ router.post("/make-payment", verifyToken, async (req, res) => {
 
     // todo cheeck date of payment
     if (user && user.payments.length) return res.status(400).json({ msg: "Already Made Payment" });
+    // so student can pay without room yet
+    // maybe not from site
+    if(room_number){
+        user.preference =  room_number
+    }
     const result = await doDataBaseThing(() => {
-        // so student can pay without room yet
-        // maybe not from site
-        if(room_number){
-            user.preference =  room_number
-        }
         user.payments.push({ amount: 12000 });
         user.save()
     })
@@ -164,6 +164,7 @@ router.post("/make-payment", verifyToken, async (req, res) => {
             .status(400)
             .json({ msg: "-An Error, Please Try Again" });
     } else{
+        // await broadcastRoomsUpdates() No need for this because room will only be updated when student is assigned
         return res.status(200).json({ msg: "Payment Successful" });
 
     }

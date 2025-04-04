@@ -1,7 +1,8 @@
 const express = require("express");
-const { verifyTokenAdmin, doDataBaseThing } = require("../helper/basic");
+const { doDataBaseThing, verifyTokenAdmin } = require("../helper/basic");
 const Room = require("../models/Room");
 const Student = require("../models/Student");
+const { io } = require('../../server');
 
 const router = express.Router();
 
@@ -80,6 +81,14 @@ function randomImg() {
     return "img" + Math.floor(Math.random() * 15) + ".jpg";
 }
 
+async function broadcastRoomsUpdates() {
+    const rooms = await doDataBaseThing(() => Room.find())
+    console.log('Querying DB For Rooms ----')
+    if(rooms !== "db_error"){
+        io.emit('roomsUpdate', rooms);
+    }
+
+}
 
 router.post("/assign-room", async (req, res) => {
     const { matric_no, room_number } = req.body;
@@ -101,26 +110,26 @@ router.post("/assign-room", async (req, res) => {
             .status(400)
             .json({ msg: "Student Already in Room" });
     }
-    try{
-        if (room.occupants.length === room.capacity){
+    try {
+        if (room.occupants.length === room.capacity) {
             return res.status(400).json({ msg: "Operation Failed, Full Room" });
         }
         room.occupants.push({ matric_no });
-        if (room.occupants.length === room.capacity){
+        if (room.occupants.length === room.capacity) {
             room.status = 'full'
         }
         await doDataBaseThing(() => {
             room.save();
         });
-    
+
         await doDataBaseThing(() => {
             user.room = room_number;
             user.save();
         });
-
+        await broadcastRoomsUpdates()
         return res.status(200).json({ msg: "Student Successfully Added to Room" });
-    }catch(error){
-        console.log('Error Assigning Room: ',error)
+    } catch (error) {
+        console.log('Error Assigning Room: ', error)
         return res.status(400).json({ msg: "-An Error Occured, Please Try Again" });
     }
     // console.log('ME ', user)
@@ -164,6 +173,7 @@ router.post("/add-room", async (req, res) => {
             .status(400)
             .json({ msg: "An error occurred while saving the Room, Check Inputs" });
     } else {
+        await broadcastRoomsUpdates();
         console.log("added room");
         return res.status(200).json({ msg: "Room Successfully Added" });
     }
@@ -187,7 +197,7 @@ router.post("/verify-student", async (req, res) => {
             user.verified = true
             user.save();
         });
-        return res.status(200).json({ url:'/receipt',msg: "Successfully Verified Student" });
+        return res.status(200).json({ url: '/receipt', msg: "Successfully Verified Student" });
     } catch (err) {
         console.log(err)
         return res

@@ -45,7 +45,7 @@ function delay(ms) {
 }
 function generateUniqueFileName(originalName, matric_no){
     try{
-        const format = originalName.split(".").at(-1); // Get the file extension
+        // const format = originalName.split(".").at(-1); // Get the file extension
         const userId = matric_no.replace(/\s/g, "_"); // Replace spaces with underscores
         const uniqueId = crypto.randomBytes(8).toString("hex"); // Generate random string
         return `${userId}_${uniqueId}`;

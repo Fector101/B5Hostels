@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-
-const UploadPDF = () => {
+import './uploadpdf.css';
+const UploadPDF = ({total_uploaded_docs}) => {
     const [file, setFile] = useState(null);
-    const [pdfUrl, setPdfUrl] = useState("");
 
     const handleFileChange = (event) => {
         if (event.target.files[0].size > 5 * 1024 * 1024) {
-            toast('File size exceeds 3MB - too large', { type: 'warning' });
+            toast('File size exceeds 5MB - too large', { type: 'warning' });
             return
         }
         setFile(event.target.files[0]);
@@ -15,7 +14,7 @@ const UploadPDF = () => {
 
     const handleUpload = async () => {
         if (!file) {
-            alert("Please select a PDF file to upload.");
+            toast('Please select a PDF file to upload.', { type: 'warning' });
             return;
         }
 
@@ -33,7 +32,6 @@ const UploadPDF = () => {
             const data = await response.json();
 
             if (response.ok) {
-                setPdfUrl(data.url);
                 console.log("Upload Successful:", data);
                 toast(data.msg || 'Upload successful!', { type: 'success' });
             } else {
@@ -49,17 +47,11 @@ const UploadPDF = () => {
     };
 
     return (
-        <div>
+        <div className="upload-pdf-container">
+            <h3>Upload Your Document for Verification</h3>
             <input type="file" accept="application/pdf" onChange={handleFileChange} />
-            <button onClick={handleUpload}>Upload PDF</button>
-            {pdfUrl && (
-                <div>
-                    <p>Uploaded PDF:</p>
-                    <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
-                        View PDF
-                    </a>
-                </div>
-            )}
+            <button className="primary-btn" onClick={handleUpload}>Upload PDF</button>
+            <p className='caption'> You’ve uploaded {total_uploaded_docs} of 4 allowed documents.</p>
         </div>
     );
 };

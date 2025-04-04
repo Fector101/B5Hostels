@@ -3,6 +3,7 @@ import '../components/css/profilepage.css'
 import { useContext, useState } from "react";
 import { UserContext } from '../components/js/UserContext';
 import GoToTop from "../components/js/GoToTop";
+import UploadPDF from "../components/ui/UploadPDF";
 // import { useNavigate } from "react-router-dom";
 // import { toast } from "react-toastify";
 
@@ -111,6 +112,7 @@ export default function Profilepage() {
                                         <p className="caption">
                                             {userData.verified ? "You've been verified, but no room has been assigned to you yet." : "You need to be verified before a room can be assigned to you."}
                                         </p>
+                                        {!userData.verified ? <UploadPDF/>:<></>}
                                     </div>
                                 }
                             </div>

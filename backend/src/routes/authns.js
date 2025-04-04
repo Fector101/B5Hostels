@@ -41,13 +41,13 @@ router.post("/signup", async (req, res) => {
 
         const data = { matric_no };
         const token = jwt.sign(data, process.env.JWT_SECRET, {
-            expiresIn: "1h",
+            expiresIn: "4h",
         });
         res.cookie("userInfo", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-            maxAge: 3600000,
+            maxAge: 3600000 *4,
         });
 
         return res.status(200).json({
@@ -76,7 +76,7 @@ router.post("/login", async (req, res) => {
             matric_no: user.matric_no,
         };
         const token = jwt.sign(data, process.env.JWT_SECRET, {
-            expiresIn: "1h",
+            expiresIn: "4h",
         });
 
         // Set token in HTTP-only cookie
@@ -84,7 +84,7 @@ router.post("/login", async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-            maxAge: 3600000,
+            maxAge: 3600000 *4,
         });
 
         return res.status(200).json({

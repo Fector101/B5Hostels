@@ -1,26 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import GoToTop from "../components/js/GoToTop";
-import '../components/css/roomspage.css';
+import { useContext, useEffect, useState } from "react";
 import { Building, Users } from "lucide-react";
 import { UserContext } from '../components/js/UserContext';
-import { useContext, useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import GoToTop from "../components/js/GoToTop";
+import '../components/css/roomspage.css';
 
 function RoomCard({ status, img, room_number, block, capacity, floor, occupants }) {
     const navigate = useNavigate()
     const goToRoom = () => {
         navigate(`/room?id=${room_number}`);
     };
-    // useEffect(() => {
-    //     const timeout_secs = 5
-    //     const timeout = setTimeout(() => {
-    //         navigate('/login')
-    //     }, 1000 * timeout_secs)
-    //     return () => { clearTimeout(timeout); }
-
-    // }, []);
     return (
-        // {
         status ?
 
             <div className="room-card">
@@ -46,16 +36,13 @@ function RoomCard({ status, img, room_number, block, capacity, floor, occupants 
                 </div>
             </div >
             : <></>
-        // }
 
     );
 }
 
 export default function Roomspage() {
-    const {CheckLoggedIn, isLoggedIn, RoomsData } = useContext(UserContext);
-    // const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const { RoomsData } = useContext(UserContext);
     const [available_rooms, setAvailableRooms] = useState(()=>[]);
-    const navigate = useNavigate()
 
     useEffect(() => {
         // console.log('RoomsData ', RoomsData)
@@ -63,26 +50,8 @@ export default function Roomspage() {
         setAvailableRooms(RoomsData?.filter(room => room.occupants.length < room.capacity) || [])
     }, [RoomsData])
 
-    // useEffect(() => {
-    //     if (!isLoggedIn) {
-
-    //         CheckLoggedIn().then(res => {
-    //             console.log(res)
-    //             if (!res) {
-    //                 toast('Login Session Expired', { type: 'warning' });
-    //                 navigate('/login')
-    //             }
-    //         })
-    //     }
-    // }, [isLoggedIn]);
-
     return (
         <div className="rooms-page page">
-            {/* {RoomsData.length === 0 &&
-                <div className='modal'>
-                    <div id="spinner" className="spinner"></div>
-                </div>
-            } */}
             <section className="heading">
                 <div>
                     <h1>Browse Rooms</h1>

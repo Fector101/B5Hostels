@@ -128,7 +128,6 @@ export default function SignupPage() {
                         />
                     </div>
 
-                    {/* New row with Level and Gender selects */}
                     <div className="select-group">
                         <div className="select-item">
                             <label>Level</label>

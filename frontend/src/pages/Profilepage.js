@@ -1,14 +1,11 @@
-import { User, Home, Building, CheckCircle, Info, ImagePlus } from "lucide-react"
-import '../components/css/profilepage.css'
 import { useContext, useState } from "react";
-import { UserContext } from '../components/js/UserContext';
+import { User, Home, Building, CheckCircle, Info, ImagePlus } from "lucide-react"
+import { toast } from "react-toastify";
 import GoToTop from "../components/js/GoToTop";
 import UploadPDF from "../components/ui/UploadPDF";
-import { toast } from "react-toastify";
-// import { useNavigate } from "react-router-dom";
-// import { toast } from "react-toastify";
+import { UserContext } from '../components/js/UserContext';
+import '../components/css/profilepage.css'
 
-// const { user, setUser } = useContext(null);
 export default function Profilepage() {
     const [current_tab, setCurrentTab] = useState(() => 'room')
     const { userData,setUser } = useContext(UserContext);
@@ -52,15 +49,6 @@ export default function Profilepage() {
             input.click();
         }
     }
-    // const handleFileChange = (event) => {
-    //     setFile(event.target.files[0]);
-    //     console.log(event.target.files[0])
-    //     if (event.target.files[0].type !== 'application/pdf') {
-    //         toast('Please upload a PDF file', { type: 'warning' });
-    //         return
-    //     }
-    //     sendProfilePic()
-    // };
     return (
         <div className="profile-page page">
             {file &&

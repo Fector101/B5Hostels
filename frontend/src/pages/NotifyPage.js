@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { UserContext } from '../components/js/UserContext';
 import '../components/css/notifypage.css'
 export default function NotifyPage() {

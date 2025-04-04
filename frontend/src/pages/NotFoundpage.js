@@ -14,7 +14,6 @@ export default function NotFoundpage({redirect_path,timeout_secs}){
     useEffect(function(){
         setSecondsRemaining(timeout_secs)
         const timeout = setTimeout(()=>{
-            // navigate(-1) // To Go to last page.
             navigate(redirect_path,{state: 'Page not found'})
         },1000 * timeout_secs)
         const interval = setInterval(()=>{
@@ -37,8 +36,5 @@ export default function NotFoundpage({redirect_path,timeout_secs}){
             <p className="secs-txt">{seconds_remaining} {seconds_remaining>1?'seconds':'second'}</p>
             <p> {url_extension} does not exist</p>
         </div>
-
-        // To Redirect
-        // <Navigate to="/hostel"/>
     )
 }

@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
-import "../components/css/roomdetailspage.css"; // Make sure to create this file and import it
 import { Building, Check, CreditCard, Users, X } from "lucide-react";
-// import img from './img6.jpg'
 import { useSearchParams } from "react-router-dom";
-import { UserContext } from '../components/js/UserContext';
-import { toast } from "react-toastify";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import { toast } from "react-toastify";
+import { UserContext } from '../components/js/UserContext';
+import "../components/css/roomdetailspage.css";
 import HostelReceiptDocument from "./Receipt";
+
 const formatDate = (date) => {
     return date.toLocaleDateString('en-GB').split('/').join('-'); // Formats as DD-MM-YYYY
 };

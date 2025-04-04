@@ -40,12 +40,11 @@ export default function Loginpage() {
 
             if (response.ok) {
                 setSigningIn(false)
+                setIsLoggedIn(true)
                 console.log("User loggedIn:", data);
                 toast(data.msg || 'Login successful!', { type: 'success' });
                 navigate(data.url);
                 await fetchUserData()
-                setIsLoggedIn(true)
-                // await fetchRoomsData()
             } else {
                 setSigningIn(false)
                 console.error("Login error:", data);

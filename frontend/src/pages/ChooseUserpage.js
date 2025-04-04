@@ -15,8 +15,5 @@ export default function ChooseUserpage(){
                 User
             </Link>
         </div>
-
-        // To Redirect
-        // <Navigate to="/hostel"/>
     )
 }

@@ -64,7 +64,7 @@ router.get("/profile", verifyToken, async (req, res) => {
         // console.log(room)
         room_mates = room.occupants.map(each => each.name || each.matric_no)
     }
-    console.log(user,'------')
+    // console.log(user,'------')
     const data = {
         page_title: "dashboard",
         name: user.name,
@@ -74,11 +74,11 @@ router.get("/profile", verifyToken, async (req, res) => {
         preference: user.preference,
         verified: user.verified,
         profile_pic: user.profile_pic,
+        pdfs_length: user.pdfs.length,
         date_booked: userInfo.days_left || 0,
         initials: getInitials(user.name),
         days_passed: daysPassed(user.payments[0]?.date),
         total_paid: total,
-        
         room: user.room,
         capacity: room?.capacity,
         floor: room?.floor,

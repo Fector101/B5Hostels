@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { User, Home, Building, CheckCircle, Info, ImagePlus } from "lucide-react"
 import { toast } from "react-toastify";
 import GoToTop from "../components/js/GoToTop";
-import UploadPDF from "../components/ui/UploadPDF";
+import UploadPDF from "../components/ui/uploadPDF/UploadPDF";
 import { UserContext } from '../components/js/UserContext';
 import '../components/css/profilepage.css'
 import { useNavigate } from "react-router-dom";
@@ -16,6 +16,7 @@ export default function Profilepage() {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
+    const fileInputRef = useRef(null);
 
     useEffect(() => {
         setImgUrl(userData.profile_pic)
@@ -36,6 +37,7 @@ export default function Profilepage() {
         try {
             const formData = new FormData();
             formData.append('image', file);
+
 
             const response = await axios.post(
                 `${process.env.REACT_APP_BACKEND_URL}/upload-profile-pic`,
@@ -62,11 +64,15 @@ export default function Profilepage() {
             const msg = error.response?.data?.msg || 'Failed to upload image';
             toast.error(msg);
         } finally {
-            setFile(null);
+            console.log('finally called', file)
+            clearFileInputValue();
             setLoading(false);
         }
     }
-
+    function clearFileInputValue() {
+        setFile(null);
+        if (fileInputRef.current) fileInputRef.current.value = '';
+    }
     async function logOut() {
         try {
             await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/authn/logout`, {
@@ -96,16 +102,13 @@ export default function Profilepage() {
                 </div>
             }
 
-            {file &&
+            {(file && !loading)  &&
                 <div className="confirm-pic-modal modal">
                     <div className="confirm-box">
                         <p>Are you sure you want to upload this?</p>
                         <div className="btns flex justify-content-end">
-                            <button className="btn cancel" onClick={() => setFile(null)}>Cancel</button>
-                            <button className="btn ok" onClick={() => {
-                                sendProfilePic()
-                                setFile(null)
-                            }}>Upload</button>
+                            <button className="btn cancel" onClick={clearFileInputValue}>Cancel</button>
+                            <button className="btn ok" onClick={sendProfilePic}>Upload</button>
                         </div>
                     </div>
                 </div>
@@ -128,7 +131,7 @@ export default function Profilepage() {
                 <section className="student-details-box">
 
                     <div className={"profile-img" + (imgUrl ? '' : ' no-img')} title="Update Profile Picture (<3MB)" onClick={queryInput}>
-                        <input hidden className="profile-input" type="file" accept="image/*" onChange={handleFileChange} />
+                        <input hidden ref={fileInputRef} className="profile-input" type="file" accept="image/*" onChange={handleFileChange} />
                         {/* <p>{userData.initials}</p> */}
                         {imgUrl ? <img src={imgUrl} alt="profile-pic" /> : <ImagePlus />}
                     </div>
@@ -211,7 +214,7 @@ export default function Profilepage() {
                                         <p className="caption">
                                             {userData.verified ? "You've been verified, but no room has been assigned to you yet." : "You need to be verified before a room can be assigned to you."}
                                         </p>
-                                        {!userData.verified ? <UploadPDF /> : <></>}
+                                        {!userData.verified ? userData.pdfs_length < 4 ? <UploadPDF total_uploaded_docs={userData.pdfs_length} /> : <p style={{ fontSize: '14px', fontWeight: 500, marginTop: '5px' }}>You have uploaded maximum amount of documents</p> : <></>}
                                     </div>
                                 }
                             </div>

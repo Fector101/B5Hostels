@@ -154,12 +154,10 @@ const upload = multer({ storage });
 
 app.post("/upload-profile-pic", verifyToken, upload.single("image"), async (req, res) => {
     // console.log(req.file, 'req.file');
-
     try {
         const unique_file_name = generateUniqueFileName(req.file.originalname, req.user.matric_no);
-
         if (!req.file) {
-            return res.status(400).json({ msg: "No file uploaded" });
+            return res.status(400).json({ msg: "Server didn't Recieve File." });
         }
 
         await cloudinary.uploader.upload_stream(

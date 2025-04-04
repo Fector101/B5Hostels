@@ -1,19 +1,34 @@
 .profile-page.page {
     padding: 20px;
 }
-.profile-page .modal{
+
+.profile-page .modal {
     z-index: 1;
     display: block;
 }
-.profile-page .confirm-pic-modal{
+
+.profile-page .modal.uploading-modal {
+    display: flex;
+    flex-direction: column;
+    background-color: #242729eb;
+    color: wheat;
+}
+.profile-page .modal.uploading-modal .spinner {
+    position: static;
+    margin-left: 50px;
+}
+
+.profile-page .confirm-pic-modal {
     display: flex;
 }
-.profile-page.page .confirm-box{
+
+.profile-page.page .confirm-box {
     background-color: #f9ecee;
     padding: 20px;
     border-radius: 10px;
 }
-.profile-page.page .confirm-box button{
+
+.profile-page.page .confirm-box button {
     margin-top: 20px;
     margin-right: 20px;
     color: white;
@@ -21,19 +36,24 @@
     border-radius: 5px;
     border: none;
 }
-.profile-page.page .confirm-box button.ok{
+
+.profile-page.page .confirm-box button.ok {
     background-color: #4caf50;
 }
-.profile-page.page .confirm-box button.cancel{
+
+.profile-page.page .confirm-box button.cancel {
     background-color: #f44336;
 }
-.profile-page.page .confirm-box button:hover{
+
+.profile-page.page .confirm-box button:hover {
     background-color: #3e8e41;
     cursor: pointer;
 }
-.profile-page.page .confirm-box button.cancel:hover{
+
+.profile-page.page .confirm-box button.cancel:hover {
     background-color: #d32f2f;
 }
+
 .profile-page.page section {
     margin-bottom: 30px;
 }
@@ -79,19 +99,25 @@
     position: relative;
     cursor: pointer;
 }
+
 .profile-page .student-details-box .profile-img:has(svg):hover {
     background-color: rgba(73, 37, 100, 0.553);
 }
-.profile-page .student-details-box .profile-img img{
-    border-radius: inherit; width: 100%; height: 100%;
+
+.profile-page .student-details-box .profile-img img {
+    border-radius: inherit;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
-.profile-page .student-details-box .profile-img svg{
+
+.profile-page .student-details-box .profile-img svg {
     --size: 50px;
     width: var(--size);
     height: var(--size);
     color: white;
 }
+
 .profile-page .student-details-box .profile-img.no-img::before {
     content: "";
     position: absolute;
@@ -101,6 +127,7 @@
     background-color: rgba(76, 76, 76, 0.377);
     border-radius: 50%;
 }
+
 .profile-page .student-details-box .profile-img::after {
     content: "";
     position: absolute;
@@ -247,7 +274,7 @@
     --size: 42px;
     width: var(--size);
     height: var(--size);
-    background-color:#f2b2ff;
+    background-color: #f2b2ff;
     color: #6f0a9dbd;
     padding: 6px;
     border-radius: 8px;
@@ -315,6 +342,7 @@
     width: var(--size);
     height: var(--size);
 }
+
 /* No room box */
 .profile-page .sub-box {
     text-align: center;
@@ -324,41 +352,47 @@
     gap: 5px;
     align-items: center;
 }
-.profile-page .sub-box .svg-box{
+
+.profile-page .sub-box .svg-box {
     --size: 70px;
     width: var(--size);
     height: var(--size);
     padding: 5px;
     display: flex;
     border-radius: 60%;
-    background-color:#a383a93d;
+    background-color: #a383a93d;
 }
-.profile-page .sub-box svg{
+
+.profile-page .sub-box svg {
     --size: 30px;
     width: var(--size);
     height: var(--size);
     color: #5c3a6cbd;
     margin: auto;
 }
-.profile-page .sub-box p.heading{
+
+.profile-page .sub-box p.heading {
     font-size: 17px;
 }
-.profile-page .sub-box p.caption{
+
+.profile-page .sub-box p.caption {
     font-size: 14px;
 }
 
 /* Second tab */
 
-.profile-page .preference-tab{
+.profile-page .preference-tab {
     margin: auto;
     margin-top: 20px;
     width: 100%;
 }
-.profile-page .preference-tab .sub-box{
+
+.profile-page .preference-tab .sub-box {
     align-items: flex-start;
     text-align: left;
 }
-.profile-page .room-status{
+
+.profile-page .room-status {
     padding: 10px;
     display: flex;
     align-items: center;
@@ -366,17 +400,34 @@
     gap: 10px;
     font-size: 14px;
     border-radius: 10px;
-    
+
 }
-.profile-page .assigned-txt{
+
+.profile-page .assigned-txt {
     color: rgb(79, 0, 128);
     background-color: rgb(220, 176, 248);
 }
-.profile-page .unassigned-txt{
+
+.profile-page .unassigned-txt {
     color: rgb(128, 124, 0);
     background-color: rgb(248, 224, 176);
 }
 
+.profile-page.page .logout-btn {
+    width: 80px;
+    height: 35px;
+    border-radius: 10px;
+    background-color: transparent;
+    border: 1px solid grey;
+    margin-left: auto;
+    margin-top: 15px;
+    color: #2d2c2c;
+}
+
+.profile-page.page .logout-btn:hover {
+    background-color: #23232345;
+    cursor: pointer;
+}
 
 /*
 @media screen and (max-width:500px) {

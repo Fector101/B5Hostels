@@ -1,21 +1,29 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { User, Home, Building, CheckCircle, Info, ImagePlus } from "lucide-react"
 import { toast } from "react-toastify";
 import GoToTop from "../components/js/GoToTop";
 import UploadPDF from "../components/ui/UploadPDF";
 import { UserContext } from '../components/js/UserContext';
 import '../components/css/profilepage.css'
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 export default function Profilepage() {
     const [current_tab, setCurrentTab] = useState(() => 'room')
-    const { userData,setUser } = useContext(UserContext);
+    const { userData, setUser } = useContext(UserContext);
     const [file, setFile] = useState(null);
-    const [imgUrl, setImgUrl] = useState(userData.profile_pic);
+    const [imgUrl, setImgUrl] = useState(null);
+    const navigate = useNavigate()
+    const [loading, setLoading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
 
+    useEffect(() => {
+        setImgUrl(userData.profile_pic)
+    }, [userData?.profile_pic])
     const handleFileChange = (event) => {
         console.log(event.target.files[0])
         setFile(() => {
-            if (event.target.files[0].size > 3 * 1024 * 1024) {
+            if (event.target.files[0].size > 30 * 1024 * 1024) {
                 toast('File size exceeds 3MB - too large', { type: 'warning' });
                 return
             }
@@ -24,24 +32,54 @@ export default function Profilepage() {
     };
 
     async function sendProfilePic() {
-        const formData = new FormData();
-        formData.append('image', file);
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/upload-profile-pic`, {
-            method: 'POST',
-            body: formData,
-            credentials: "include",
+        setLoading(true);
+        try {
+            const formData = new FormData();
+            formData.append('image', file);
 
-        });
-        console.log('Response:', response);
-        const data = await response.json();
-        if (response.ok) {
+            const response = await axios.post(
+                `${process.env.REACT_APP_BACKEND_URL}/upload-profile-pic`,
+                formData,
+                {
+                    withCredentials: true,
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                    onUploadProgress: (progressEvent) => {
+                        const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                        console.log(`Upload progress: ${percent}%`);
+                        setUploadProgress(percent)
+                    },
+                }
+            );
+
+            const data = response.data;
             setImgUrl(data.url);
-            setUser((prev) => {return { ...prev, profile_pic: data.url }} )
-            toast.success(data.msg||'Profile picture updated successfully');
-        } else {
-            toast.error(data.msg||'Failed to update profile picture');
+            setUser((prev) => ({ ...prev, profile_pic: data.url }));
+            toast.success(data.msg || 'Profile picture updated successfully');
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            const msg = error.response?.data?.msg || 'Failed to upload image';
+            toast.error(msg);
+        } finally {
+            setFile(null);
+            setLoading(false);
         }
+    }
 
+    async function logOut() {
+        try {
+            await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/authn/logout`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            navigate('/login')
+        } catch (error) {
+            console.log('Werid Logout error: ', error)
+        }
     }
     const queryInput = () => {
         const input = document.querySelector('.profile-input');
@@ -51,6 +89,13 @@ export default function Profilepage() {
     }
     return (
         <div className="profile-page page">
+            {loading &&
+                <div className="modal uploading-modal">
+                    <div className="spinner"></div>
+                    <p className="">Uploading Photo ... {uploadProgress ? uploadProgress - 1 : uploadProgress}%</p>
+                </div>
+            }
+
             {file &&
                 <div className="confirm-pic-modal modal">
                     <div className="confirm-box">
@@ -81,11 +126,11 @@ export default function Profilepage() {
             <section className="main-content">
 
                 <section className="student-details-box">
-                    
-                    <div className={"profile-img"+(imgUrl?'':' no-img')} title="Update Profile Picture (<3MB)" onClick={queryInput}>
+
+                    <div className={"profile-img" + (imgUrl ? '' : ' no-img')} title="Update Profile Picture (<3MB)" onClick={queryInput}>
                         <input hidden className="profile-input" type="file" accept="image/*" onChange={handleFileChange} />
                         {/* <p>{userData.initials}</p> */}
-                        {imgUrl ? <img src={imgUrl} alt="profile-pic"/> :<ImagePlus />}
+                        {imgUrl ? <img src={imgUrl} alt="profile-pic" /> : <ImagePlus />}
                     </div>
                     <h3 className="name">{userData.name}</h3>
                     <p className="caption matric-no">{userData.matric_no}</p>
@@ -195,7 +240,7 @@ export default function Profilepage() {
 
                             </div>
                     }
-
+                    <button className="logout-btn" onClick={logOut}>Logout</button>
                 </section>
 
             </section>

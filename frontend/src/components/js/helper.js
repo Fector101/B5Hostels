@@ -1,4 +1,3 @@
-import { genreIds } from "./api_data"
 
 /**
  *  Changes String first letter to Captial Case
@@ -70,9 +69,6 @@ export function parseDecimalSide(decimal_number) {
 	else { return 0 }
 }
 
-function getGenreName(id) {
-	return genreIds[id]
-}
 
 
 
@@ -121,12 +117,15 @@ async function enableScroll() {
 }
 
 
+function getInitials(name) {
+    if (!name) return "";
+    const parts = name.trim().split(/\s+/);
+    const firstInitial = parts[0]?.[0] || "";
+    const lastInitial = parts[1]?.[0] || "";
+    return (firstInitial + lastInitial).toUpperCase();
+}
 
 
 
 
-
-
-
-
-export { isTouchDevice, returnClass, randInt, toHHMMSS, toTitleCase, getGenreName,disableScroll,enableScroll }
+export { isTouchDevice, returnClass, randInt, toHHMMSS, toTitleCase,disableScroll,enableScroll,getInitials }

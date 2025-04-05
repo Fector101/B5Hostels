@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../components/js/UserContext";
 import { toast } from "react-toastify";
+import { getInitials } from "../../components/js/helper";
 
 function PopupRoomCard({ selected_room, setSelectedRoom, amenities, capacity, block, room_number, status, floor, occupants, i }) {
     function setCard(event) {
@@ -64,7 +65,7 @@ function PopupRoomCard({ selected_room, setSelectedRoom, amenities, capacity, bl
         </div>
     );
 }
-function StudentCard({ name, matric_no, email, preference, level, room, verified, payments, setMatricNo, setStudentName, assignRoom, setChoicesModal }) {
+function StudentCard({ name, profile_pic,matric_no, email, preference, level, room, verified, payments, setMatricNo, setStudentName, assignRoom, setChoicesModal }) {
     // let state = 'all-students pending-verification-account verified-account paid'
     // pending verified paid
     // not verfing payment but student account
@@ -144,7 +145,10 @@ function StudentCard({ name, matric_no, email, preference, level, room, verified
                 <span className="badge level">{level} LVL</span>
             </div>
             <div className="name-box">
-                <div className="avatar">ES</div>
+                <div className="avatar">
+                    {profile_pic ? <img src={profile_pic} alt="profile" /> :
+                        <p>{getInitials(name)}</p>}
+                </div>
                 <div>
                     <h3 className="name">{name}</h3>
                     <p className="email">{email}</p>
@@ -263,7 +267,7 @@ export default function Students() {
                 StudentsData[student_index] = found_student_data
                 setStudents(StudentsData)
                 toast(result.msg || 'Added Successfully', { type: "success" });
-                if(filler_matric_no)setChoicesModal(false)
+                if (filler_matric_no) setChoicesModal(false)
 
             } else {
                 toast(result.msg || "-Network Error, Please Try Again", { type: "warning" });
@@ -363,6 +367,7 @@ export default function Students() {
                             preference={student.preference}
                             level={student.level}
                             room={student.room}
+                            profile_pic={student.profile_pic}
                             setChoicesModal={setChoicesModal}
                             setMatricNo={setMatricNo}
                             setStudentName={setStudentName}

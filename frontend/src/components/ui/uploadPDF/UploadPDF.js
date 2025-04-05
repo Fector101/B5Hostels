@@ -1,9 +1,14 @@
-import { useState, useRef } from "react";
+import { useContext,useState, useRef } from "react";
 import { toast } from "react-toastify";
 import axios from "axios"; // Importing axios
+import { UserContext } from '../../js/UserContext';
+
 import './uploadpdf.css';
 
+
 const UploadPDF = ({ total_uploaded_docs }) => {
+        const { setUser } = useContext(UserContext);
+    
     const [file, setFile] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -58,6 +63,11 @@ const UploadPDF = ({ total_uploaded_docs }) => {
             );
 
             if (response.status === 200) {
+                setUser(old => ({
+                    ...old,
+                    pdfs_length: old.pdfs_length + 1,
+                }));
+                // console.log("Upload response: ", response.data);
                 toast(response.data.msg || "Upload successful!", { type: "success" });
             } else {
                 toast(response.data.msg || "Upload failed.", { type: "warning" });

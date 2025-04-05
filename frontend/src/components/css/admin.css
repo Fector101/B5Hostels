@@ -528,6 +528,7 @@ header.admin-header .signout-btn svg {
 }
 
 .page.adminpage .student-card .btns-box button {
+    cursor: pointer;
     width: 100px;
     flex: 1;
     height: 35px;
@@ -777,7 +778,14 @@ header.admin-header .signout-btn svg {
 }
 
 
-
+.view-info-btn {
+    background-color: hsl(115.75deg 2.9% 80.69%) !important;
+    color: black;
+}
+.view-info-btn:hover{
+    background-color: hsl(115.75deg 2.9% 70.69%) !important;
+    color: black;
+}
 .red-color {
     background-color: hsl(0 80% 60%) !important;
     border-color: #F89C9C !important;

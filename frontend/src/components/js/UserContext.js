@@ -108,7 +108,7 @@ export const UserProvider = ({ children }) => {
         });
 
         socket.on("roomsUpdate", (data) => {
-            console.log(data, 'on rooms update')
+            // console.log(data, 'on rooms update')
             if (data?.rooms) {
                 setRooms(data.rooms);
                 setRoomsDataSummary({ ...data.roomsDataSummary });
@@ -147,7 +147,7 @@ export const UserProvider = ({ children }) => {
         }
         else if (!isLoggedIn && !["/", "/login", '/signup'].includes(location.pathname)) {
             CheckLoggedIn('student-logged').then(res => {
-                console.log(res)
+                // console.log(res)
                 if (!res) {
                     toast('Login Session Expired', { type: 'warning' });
                     navigate('/login')

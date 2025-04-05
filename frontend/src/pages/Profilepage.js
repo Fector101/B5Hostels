@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 export default function Profilepage() {
-    const [current_tab, setCurrentTab] = useState(() => 'room')
     const { userData, setUser } = useContext(UserContext);
+    const [current_tab, setCurrentTab] = useState(() => 'room')
     const [file, setFile] = useState(null);
     const [imgUrl, setImgUrl] = useState(null);
     const navigate = useNavigate()
@@ -18,7 +18,12 @@ export default function Profilepage() {
     const [uploadProgress, setUploadProgress] = useState(0);
     const fileInputRef = useRef(null);
 
+    // useEffect(() => {
+    //     console.log('userData', userData)
+    // }, [userData])
+
     useEffect(() => {
+        // console.log('userData', userData)
         setImgUrl(userData.profile_pic)
     }, [userData?.profile_pic])
     const handleFileChange = (event) => {

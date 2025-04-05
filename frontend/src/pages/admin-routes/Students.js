@@ -118,7 +118,7 @@ function StudentCard({ name, matric_no, email, preference, level, room, verified
         if (!verified) {
             return <>
                 <button onClick={() => verifyStudent(matric_no)} className="primary-btn verify-btn">Verify</button>
-                {/* <button className="red-color reject-room-btn"> Reject </button> */}
+                <button className="view-info-btn"> View Docs </button>
             </>
         } else if (!room && payments_length > 0) {
             return <>

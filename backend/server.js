@@ -9,7 +9,7 @@ const socketIo = require("socket.io");
 const jwt = require('jsonwebtoken')
 
 const connectDB = require('./src/db');
-const { verifyToken, generateUniqueFileName, doDataBaseThing, adminDataFormattedForRooms, delay } = require('./src/helper/basic');
+const { verifyToken, generateUniqueFileName, doDataBaseThing, adminDataFormattedForRooms} = require('./src/helper/basic');
 const Student = require('./src/models/Student');
 const Room = require('./src/models/Room');
 
@@ -23,6 +23,15 @@ const server = http.createServer(app)
 const connectedUsers = new Map(); // Store connected users
 
 
+console.log('CLIENT_URL ---> ', CLIENT_URL)
+
+const io = socketIo(server, {
+    cors: {
+        origin: CLIENT_URL,
+        credentials: true
+    }
+});
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -34,12 +43,7 @@ app.use(cors({
     methods: "GET,POST,PUT,DELETE"
 }))
 
-const io = socketIo(server, {
-    cors: {
-        origin: CLIENT_URL,
-        credentials: true
-    }
-});
+
 // Need to Export io to use in other files, Before Requiring the routes
 module.exports = { io, connectedUsers };
 

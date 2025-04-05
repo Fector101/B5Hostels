@@ -9,7 +9,7 @@ const socketIo = require("socket.io");
 const jwt = require('jsonwebtoken')
 
 const connectDB = require('./src/db');
-const { verifyToken, generateUniqueFileName, doDataBaseThing, adminDataFormattedForRooms } = require('./src/helper/basic');
+const { verifyToken, generateUniqueFileName, doDataBaseThing, adminDataFormattedForRooms, delay } = require('./src/helper/basic');
 const Student = require('./src/models/Student');
 const Room = require('./src/models/Room');
 
@@ -96,33 +96,18 @@ io.use((socket, next) => {
     }
 });
 
-// io.use((socket, next) => {
-//     const userId = socket.user.matric_no || socket.user.admin_id;
-//     if (connectedUsers.has(userId)) {
-//         console.log(`User ${userId} is already connected.`);
-//         return next(new Error('User already connected'));
-//     }
-//     connectedUsers.set(userId, socket.id);
-//     console.log(`User ${userId} connected with socket ID: ${socket.id}`);
-//     socket.on('disconnect', () => {
-//         connectedUsers.delete(userId);
-//         console.log(`User ${userId} disconnected.`);
-//     });
-//     next();
-// });
-
 io.on("connection", (socket) => {
     const user = socket.user
     if (user?.matric_no) {
         connectedUsers.set(user.matric_no, socket.id);
-        console.log(`User ${user.matric_no} connected with socket ID ${socket.id}`);
+        // console.log(`User ${user.matric_no} connected with socket ID ${socket.id}`);
     }
     Room.find().then(rooms => {
         socket.emit('roomsUpdate', { rooms, roomsDataSummary: { ...adminDataFormattedForRooms(rooms) } });
     });
 
     socket.on("disconnect", () => {
-        console.log("Client disconnected:", socket.id);
+        // console.log("Client disconnected:", user?.matric_no);
         if (user?.matric_no) {
             connectedUsers.delete(user.matric_no);
         }
@@ -210,8 +195,9 @@ app.post("/upload-profile-pic", verifyToken, upload.single("image"), async (req,
 
 
 app.post("/upload", verifyToken, upload.single("pdf"), async (req, res) => {
-    console.log(req.file, 'req.file');
+    // console.log(req.file, 'req.file');
     const unique_file_name = generateUniqueFileName('', req.user.matric_no)
+    // await delay(1000 * 5)
     if (!req.file) {
         return res.status(400).json({ msg: "Sever Didn't Recieve file to uploaded" });
     }

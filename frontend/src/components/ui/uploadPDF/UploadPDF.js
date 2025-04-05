@@ -1,20 +1,34 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { toast } from "react-toastify";
+import axios from "axios"; // Importing axios
 import './uploadpdf.css';
-const UploadPDF = ({total_uploaded_docs}) => {
+
+const UploadPDF = ({ total_uploaded_docs }) => {
     const [file, setFile] = useState(null);
+    const [isUploading, setIsUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const fileInputRef = useRef(null); // Create a reference to the file input
 
     const handleFileChange = (event) => {
-        if (event.target.files[0].size > 5 * 1024 * 1024) {
-            toast('File size exceeds 5MB - too large', { type: 'warning' });
-            return
+        const selectedFile = event.target.files[0];
+        if (!selectedFile) return;
+
+        if (selectedFile.type !== "application/pdf") {
+            toast("Only PDF files are allowed.", { type: "warning" });
+            return;
         }
-        setFile(event.target.files[0]);
+
+        if (selectedFile.size > 5 * 1024 * 1024) {
+            toast("File size exceeds 5MB - too large", { type: "warning" });
+            return;
+        }
+
+        setFile(selectedFile);
     };
 
     const handleUpload = async () => {
         if (!file) {
-            toast('Please select a PDF file to upload.', { type: 'warning' });
+            toast("Please select a PDF file to upload.", { type: "warning" });
             return;
         }
 
@@ -22,36 +36,79 @@ const UploadPDF = ({total_uploaded_docs}) => {
         formData.append("pdf", file);
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/upload`, {
-                method: "POST",
-                body: formData,
-                credentials: "include",
+            setIsUploading(true);
+            setUploadProgress(0); // Reset progress at the start of the upload
 
-            });
+            const response = await axios.post(
+                `${process.env.REACT_APP_BACKEND_URL}/upload`,
+                formData,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                    onUploadProgress: (progressEvent) => {
+                        // Update progress as the file uploads
+                        if (progressEvent.total) {
+                            const progress = Math.round(
+                                (progressEvent.loaded / progressEvent.total) * 100
+                            );
+                            setUploadProgress(progress);
+                        }
+                    },
+                    withCredentials: true, // Allow credentials (cookies) with CORS
+                }
+            );
 
-            const data = await response.json();
-
-            if (response.ok) {
-                console.log("Upload Successful:", data);
-                toast(data.msg || 'Upload successful!', { type: 'success' });
+            if (response.status === 200) {
+                toast(response.data.msg || "Upload successful!", { type: "success" });
             } else {
-                console.error("Upload error:", data);
-                toast(data.msg || 'Upload Timeout -e', { type: 'warning' });
+                toast(response.data.msg || "Upload failed.", { type: "warning" });
             }
-
         } catch (error) {
-            // toast('Something went wrong -' + error, { type: 'error' });
-            toast('....', { type: 'error' });
-            console.error("Error uploading file:", error);
+            console.error("Upload error response: ", error.response);
+            console.error("Upload error response data: ", error.response.data);
+            const msg = error.response?.data?.msg || "Something went wrong during upload.";
+            toast(msg, { type: "error" });
+        } finally {
+            setIsUploading(false);
+            setUploadProgress(0);
+            setFile(null);
+
+            // Clear the file input after the upload attempt
+            if (fileInputRef.current) {
+                fileInputRef.current.value = "";
+            }
         }
     };
 
     return (
         <div className="upload-pdf-container">
+            {isUploading && (
+                <div className="modal uploading-modal">
+                    <div className="spinner"></div>
+                    <p>Uploading PDF ... {uploadProgress ? uploadProgress - 1 : uploadProgress}% </p>
+                </div>
+            )}
+
             <h3>Upload Your Document for Verification</h3>
-            <input type="file" accept="application/pdf" onChange={handleFileChange} />
-            <button className="primary-btn" onClick={handleUpload}>Upload PDF</button>
-            <p className='caption'> You’ve uploaded {total_uploaded_docs} of 4 allowed documents.</p>
+
+            <input
+                ref={fileInputRef} // Attach ref to the file input
+                type="file"
+                accept="application/pdf"
+                onChange={handleFileChange}
+                disabled={isUploading}
+            />
+
+            <button
+                className="primary-btn"
+                onClick={handleUpload}
+                disabled={isUploading}
+            >
+                Upload PDF
+            </button>
+
+            <p className="caption">
+                You’ve uploaded {total_uploaded_docs} of 4 allowed documents.
+            </p>
         </div>
     );
 };

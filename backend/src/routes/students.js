@@ -8,34 +8,34 @@ const Student = require("../models/Student");
 const router = express.Router();
 router.use(cookieParser());
 
-async function getRoomWithStudents(roomId) {
-    const room = await Room.findById(roomId).populate("occupants").exec();
-    // console.log(room);
-}
+// async function getRoomWithStudents(roomId) {
+//     const room = await Room.findById(roomId).populate("occupants").exec();
+//     // console.log(room);
+// }
 
-async function assignStudentToRoom(matric_no, roomId) {
-    const student = await Student.findById(matric_no);
-    const room = await Room.findById(roomId);
+// async function assignStudentToRoom(matric_no, roomId) {
+//     const student = await Student.findById(matric_no);
+//     const room = await Room.findById(roomId);
 
-    if (!student || !room) {
-        // console.log("Student or Room not found");
-        return;
-    }
+//     if (!student || !room) {
+//         // console.log("Student or Room not found");
+//         return;
+//     }
 
-    // Add student to room
-    room.occupants.push(student._id);
-    room.occupied += 1;
-    await room.save();
+//     // Add student to room
+//     room.occupants.push(student._id);
+//     room.occupied += 1;
+//     await room.save();
 
-    // Assign room to student
-    student.room = room._id;
-    await student.save();
+//     // Assign room to student
+//     student.room = room._id;
+//     await student.save();
 
-    // console.log(`Assigned ${student.name} to room ${room.title}`);
-}
+//     // console.log(`Assigned ${student.name} to room ${room.title}`);
+// }
 router.get("/profile", verifyToken, async (req, res) => {
     const userInfo = req.user;
-    await delay(1000 * 2)
+    await delay(1000 * 1)
     console.log('done waiting........................')
     // const token = jwt.sign({ id: user._id, username: user.username, matric_no: user.matric_no }, process.env.JWT_SECRET, { expiresIn: '1h' });
     // res.cookie('userInfo', token

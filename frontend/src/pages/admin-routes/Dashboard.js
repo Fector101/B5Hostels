@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 
 
 export default function Dashboard() {
-    const { RoomsData, StudentsData } = useContext(UserContext);
+    const { roomsDataSummary, StudentsData } = useContext(UserContext);
     const [total_rooms, setTotalRooms] = useState(0);
     const [full_rooms, setFullRooms] = useState(0);
     const [available_rooms, setAvailableRooms] = useState(0);
@@ -14,16 +14,21 @@ export default function Dashboard() {
     const [total_students_that_have_rooms, settotal_students_that_have_rooms] = useState(0);
     
     useEffect(() => {
-        setTotalRooms(RoomsData.length)
-        setAvailableRooms(RoomsData.filter(room => room.occupants.length < room.capacity).length)
-        setFullRooms(RoomsData.filter(room => room.occupants.length === room.capacity).length)
-        setUnderMaintenance(RoomsData.filter(room => room.status === "maintenance").length)
+        // setTotalRooms(RoomsData.length)
+        // setAvailableRooms(RoomsData.filter(room => room.occupants.length < room.capacity).length)
+        // setFullRooms(RoomsData.filter(room => room.occupants.length === room.capacity).length)
+        // setUnderMaintenance(RoomsData.filter(room => room.status === "maintenance").length)
+        setTotalRooms(roomsDataSummary.total_rooms)
+        setAvailableRooms(roomsDataSummary.available_rooms)
+        setFullRooms(roomsDataSummary.full_rooms)
+        setUnderMaintenance(roomsDataSummary.under_maintenance)
+        
         setTotalStudents(StudentsData.length)
         setAwaitingApproval(StudentsData.filter(student =>!student.verified).length)
         settotal_students_that_have_rooms(StudentsData.filter(
             (student) => student.verified
         ).length)
-    }, [RoomsData,StudentsData])
+    }, [roomsDataSummary,StudentsData])
     return (
         <div className="page adminpage">
             <div className="welcome-box">

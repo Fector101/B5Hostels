@@ -10,6 +10,15 @@ export const UserProvider = ({ children }) => {
     const [userData, setUser] = useState({});
     const [RoomsData, setRooms] = useState([]);
     const [StudentsData, setStudents] = useState([]);
+    const [roomsDataSummary, setRoomsDataSummary] = useState({
+        under_maintenance: 0,
+        full_rooms: 0,
+        available_rooms: 0,
+        total_rooms: 0,
+        // total_students_that_have_rooms: 0,
+        // total_students: 0,
+        // awaiting_approval: 0,
+    });
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate()
     const location = useLocation();
@@ -39,7 +48,7 @@ export const UserProvider = ({ children }) => {
 
             const data = await response.json();
             if (response.ok) {
-                setUser(data.data);
+                setUser(data.data); // No need for old values, This is for when page refresh
                 setIsLoggedIn(true)
                 console.log('Successfully Fetched profile data...')
                 if (!silent) toast("Successfully Fetched User Data", { type: "success" })
@@ -68,19 +77,19 @@ export const UserProvider = ({ children }) => {
             const data = await response.json();
             if (response.ok) {
                 console.log(data.rooms)
-                setRooms(data.rooms);  // Save user data globally
+                // setRooms(data.rooms);  // Save user data globally
                 setStudents(data.students);  // Save user data globally
-                console.log('Successfully Fetched Rooms data...')
-                if (!silent) toast("Successfully Fetched Rooms Data", { type: "success" });
+                console.log('Successfully Fetched Students data...')
+                if (!silent) toast("Successfully Fetched Students Data", { type: "success" });
 
             } else {
-                console.log(' Bad Request Rooms data...')
-                setRooms([]);
+                console.log(' Bad Request Students data...')
+                // setStudents([]);
             }
         } catch (error) {
             console.log(error, ' Error Getting user profile data...')
             console.error("Network error:", error);
-            setRooms([]);
+            // setStudents([]);
         }
     };
 
@@ -88,10 +97,10 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         // console.log(isLoggedIn)
         // if(!isLoggedIn) return
-        const socket = io(process.env.REACT_APP_BACKEND_URL,{
-            reconnectionAttempts:5,
-            reconnectionDelay:1000*3,
-            withCredentials:true
+        const socket = io(process.env.REACT_APP_BACKEND_URL, {
+            reconnectionAttempts: 5,
+            reconnectionDelay: 1000 * 3,
+            withCredentials: true
         })
         socket.on("connect", () => {
             console.log("WebSocket Connected");
@@ -99,11 +108,19 @@ export const UserProvider = ({ children }) => {
         });
 
         socket.on("roomsUpdate", (data) => {
-            console.log(data,'on rooms update')
-            if(data){
-                setRooms(data);
+            console.log(data, 'on rooms update')
+            if (data?.rooms) {
+                setRooms(data.rooms);
+                setRoomsDataSummary({ ...data.roomsDataSummary });
             }
         });
+        socket.on('userDataUpdate', (data) => {
+            console.log('UserData received:', data);
+            // We need the old data incase we are not getting all the data and just updating some
+            setUser(old_data => ({ ...old_data, ...data })); 
+            // toast.success(data.msg);
+        });
+
 
         socket.on("disconnect", (reason) => {
             console.warn("WebSocket Disconnected:", reason);
@@ -119,7 +136,7 @@ export const UserProvider = ({ children }) => {
         fetchUserData(true);
         fetchAdminData(true);
         console.log(location.pathname.startsWith('/admin'))
-        if(location.pathname.startsWith('/admin')){
+        if (location.pathname.startsWith('/admin')) {
             CheckLoggedIn('admin-logged').then(res => {
                 console.log(res)
                 if (!res) {
@@ -146,6 +163,7 @@ export const UserProvider = ({ children }) => {
                 userData,
                 RoomsData,
                 StudentsData,
+                roomsDataSummary,
 
                 setUser,
                 setIsLoggedIn,

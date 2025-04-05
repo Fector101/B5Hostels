@@ -9,7 +9,7 @@ const socketIo = require("socket.io");
 const jwt = require('jsonwebtoken')
 
 const connectDB = require('./src/db');
-const { verifyToken, generateUniqueFileName, doDataBaseThing } = require('./src/helper/basic');
+const { verifyToken, generateUniqueFileName, doDataBaseThing, adminDataFormattedForRooms } = require('./src/helper/basic');
 const Student = require('./src/models/Student');
 const Room = require('./src/models/Room');
 
@@ -20,6 +20,7 @@ if (!CLIENT_URL) {
 
 const app = express();
 const server = http.createServer(app)
+const connectedUsers = new Map(); // Store connected users
 
 
 // Middleware
@@ -39,9 +40,8 @@ const io = socketIo(server, {
         credentials: true
     }
 });
-
 // Need to Export io to use in other files, Before Requiring the routes
-module.exports = {io};
+module.exports = { io, connectedUsers };
 
 // Routes need to be required after io is defined and exported
 const authns = require('./src/routes/authns')
@@ -73,9 +73,9 @@ io.use((socket, next) => {
 
         if (!token) {
             token = socket.handshake.headers.cookie
-            .split(';')
-            .find(c => c.trim().startsWith('adminInfo='))
-            ?.split('=')[1];
+                .split(';')
+                .find(c => c.trim().startsWith('adminInfo='))
+                ?.split('=')[1];
         }
         if (!token) {
             return next(new Error('No authentication token found'));
@@ -96,15 +96,36 @@ io.use((socket, next) => {
     }
 });
 
-io.on("connection", (socket) => {
-    console.log("Client connected:", socket.id);
+// io.use((socket, next) => {
+//     const userId = socket.user.matric_no || socket.user.admin_id;
+//     if (connectedUsers.has(userId)) {
+//         console.log(`User ${userId} is already connected.`);
+//         return next(new Error('User already connected'));
+//     }
+//     connectedUsers.set(userId, socket.id);
+//     console.log(`User ${userId} connected with socket ID: ${socket.id}`);
+//     socket.on('disconnect', () => {
+//         connectedUsers.delete(userId);
+//         console.log(`User ${userId} disconnected.`);
+//     });
+//     next();
+// });
 
+io.on("connection", (socket) => {
+    const user = socket.user
+    if (user?.matric_no) {
+        connectedUsers.set(user.matric_no, socket.id);
+        console.log(`User ${user.matric_no} connected with socket ID ${socket.id}`);
+    }
     Room.find().then(rooms => {
-        socket.emit('roomsUpdate',rooms);
+        socket.emit('roomsUpdate', { rooms, roomsDataSummary: { ...adminDataFormattedForRooms(rooms) } });
     });
 
     socket.on("disconnect", () => {
         console.log("Client disconnected:", socket.id);
+        if (user?.matric_no) {
+            connectedUsers.delete(user.matric_no);
+        }
     });
 });
 
@@ -157,9 +178,8 @@ app.post("/upload-profile-pic", verifyToken, upload.single("image"), async (req,
     try {
         const unique_file_name = generateUniqueFileName(req.file.originalname, req.user.matric_no);
         if (!req.file) {
-            return res.status(400).json({ msg: "Server didn't Recieve File." });
+            return res.status(400).json({ msg: "Server Didn't Recieve File." });
         }
-
         await cloudinary.uploader.upload_stream(
             {
                 resource_type: "image",
@@ -189,45 +209,43 @@ app.post("/upload-profile-pic", verifyToken, upload.single("image"), async (req,
 });
 
 
-// app.post("/upload", verifyToken, upload.single("pdf"), async (req, res) => {
-//     console.log(req.file, 'req.file');
-//     const unique_file_name = generateUniqueFileName('req.file.originalname.pdf', req.user.matric_no)
-//     if (!req.file) {
-//         return res.status(400).json({ msg: "No file uploaded" });
-//     }
+app.post("/upload", verifyToken, upload.single("pdf"), async (req, res) => {
+    console.log(req.file, 'req.file');
+    const unique_file_name = generateUniqueFileName('', req.user.matric_no)
+    if (!req.file) {
+        return res.status(400).json({ msg: "Sever Didn't Recieve file to uploaded" });
+    }
 
-//     try {
-//         const student = await doDataBaseThing(()=> Student.findOne({ matric_no: req.user.matric_no }))
+    try {
+        const student = await doDataBaseThing(() => Student.findOne({ matric_no: req.user.matric_no }))
 
-//         if (!student) {
-//             return res.status(404).json({ msg: "Failed to Find Student" });
-//         }
-//         else if (student !=='db_error' && student.pdfs.length >= 5) {
-//             return res.status(400).json({ msg: "You can only upload up to 5 PDFs." });
-//         }
-//         // const uploadStream = 
-//         await cloudinary.uploader.upload_stream(
-//             { resource_type: "raw", folder: "pdfs", public_id: unique_file_name, format: "pdf" },
-//             async (error, result) => {
-//                 if (error) {
-//                     return res.status(500).json({ msg: error.message });
-//                 }
+        if (!student) {
+            return res.status(404).json({ msg: "Failed to Find Student" });
+        }
+        else if (student !== 'db_error' && student.pdfs.length > 4) {
+            return res.status(400).json({ msg: "You can only upload up to 4 PDFs." });
+        }
 
-//                 await doDataBaseThing(() => Student.findOneAndUpdate(
-//                     { matric_no: req.user.matric_no },
-//                     { $push: { pdfs: { name: req.file.originalname, url: result.secure_url } } },
-//                     { new: true }
-//                 ))
-//                 // console.log(result, 'result');
-//                 res.json({ msg: 'File Uploaded SuccessFully' });
-//             }
-//         ).end(req.file.buffer);
-//         // uploadStream
-//     } catch (error) {
-//         console.log('Server Error File Upload', error);
-//         res.status(500).json({ msg: "Failed to upload file -se" });
-//     }
-// });
+        await cloudinary.uploader.upload_stream(
+            { resource_type: "raw", folder: "pdfs", public_id: unique_file_name, format: "pdf" },
+            async (error, result) => {
+                if (error) {
+                    return res.status(500).json({ msg: error.message });
+                }
+
+                await doDataBaseThing(() => Student.findOneAndUpdate(
+                    { matric_no: req.user.matric_no },
+                    { $push: { pdfs: { name: req.file.originalname, url: result.secure_url } } },
+                    { new: true }
+                ))
+                res.json({ msg: 'File Uploaded SuccessFully' });
+            }
+        ).end(req.file.buffer);
+    } catch (error) {
+        console.log('Server Error File Upload', error);
+        res.status(500).json({ msg: "Failed to upload file -se" });
+    }
+});
 
 
 // Routes

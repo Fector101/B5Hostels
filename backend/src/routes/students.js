@@ -1,10 +1,9 @@
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const { verifyToken, doDataBaseThing, daysPassed, delay } = require("../helper/basic");
+const { verifyToken, doDataBaseThing, daysPassed, delay, getInitials, getStudentTotal } = require("../helper/basic");
 const Room = require("../models/Room"); // Import the Room model
 const Student = require("../models/Student");
-const { io } = require('../../server');
 
 const router = express.Router();
 router.use(cookieParser());
@@ -34,16 +33,9 @@ async function assignStudentToRoom(matric_no, roomId) {
 
     // console.log(`Assigned ${student.name} to room ${room.title}`);
 }
-function getInitials(name) {
-    if (!name) return "";
-    const parts = name.trim().split(/\s+/);
-    const firstInitial = parts[0]?.[0] || "";
-    const lastInitial = parts[1]?.[0] || "";
-    return (firstInitial + lastInitial).toUpperCase();
-}
 router.get("/profile", verifyToken, async (req, res) => {
     const userInfo = req.user;
-    await delay(1000*2)
+    await delay(1000 * 2)
     console.log('done waiting........................')
     // const token = jwt.sign({ id: user._id, username: user.username, matric_no: user.matric_no }, process.env.JWT_SECRET, { expiresIn: '1h' });
     // res.cookie('userInfo', token
@@ -51,22 +43,19 @@ router.get("/profile", verifyToken, async (req, res) => {
     // console.log(req)
     // console.log(userInfo)
     const user = await doDataBaseThing(() => Student.findOne({ matric_no: userInfo.matric_no }))
-    if(!user){
+    if (!user) {
         return res.status(401).json({ msg: "Student doesn't exist" });
     }
-    let total = user.payments.reduce((sum, payment) => sum + payment.amount, 0)
     
-    total = total > 0?'₦ '+ total:0
     let room_mates = []
     let room;
-    if (user.room){
-     room = await doDataBaseThing(() => Room.findOne({ room_number:user.room }));
+    if (user.room) {
+        room = await doDataBaseThing(() => Room.findOne({ room_number: user.room }));
         // console.log(room)
         room_mates = room.occupants.map(each => each.name || each.matric_no)
     }
     // console.log(user,'------')
     const data = {
-        page_title: "dashboard",
         name: user.name,
         matric_no: user.matric_no,
         email: user.email,
@@ -75,18 +64,23 @@ router.get("/profile", verifyToken, async (req, res) => {
         verified: user.verified,
         profile_pic: user.profile_pic,
         pdfs_length: user.pdfs.length,
-        date_booked: userInfo.days_left || 0,
+
         initials: getInitials(user.name),
         days_passed: daysPassed(user.payments[0]?.date),
-        total_paid: total,
+        total_paid: getStudentTotal(user.payments),
+
+        // date_booked: userInfo.days_left || 0, //Remove this if not needed :) Later
+
         room: user.room,
         capacity: room?.capacity,
         floor: room?.floor,
         block: room?.block,
         room_mates,
+
+        page_title: "dashboard",
         msg: "Login In Session"
     };
-    
+
     // console.log(data,'------')
     return res.status(200).json({ data });
 });
@@ -128,19 +122,14 @@ router.get("/room/:room_number", async (req, res) => {
 //     }
 // });
 
-async function broadcastRoomsUpdates() {
-    const rooms = await doDataBaseThing(() => Room.find())
-    console.log('Querying DB For Rooms ----')
-    io.emit('roomsUpdate', rooms);
-}
 router.post("/make-payment", verifyToken, async (req, res) => {
-    const { room_number,matric_no } = req.body;
+    const { room_number, matric_no } = req.body;
     console.log(matric_no, 'to --> room:', room_number)
 
 
     let room = await doDataBaseThing(() => Room.findOne({ room_number }));
 
-    if(room.occupants && room.occupants.length >= room.capacity){
+    if (room.occupants && room.occupants.length >= room.capacity) {
         return res.status(400).json({ msg: "Payment Declined Room Full" });
     }
 
@@ -150,20 +139,20 @@ router.post("/make-payment", verifyToken, async (req, res) => {
     if (user && user.payments.length) return res.status(400).json({ msg: "Already Made Payment" });
     // so student can pay without room yet
     // maybe not from site
-    if(room_number){
-        user.preference =  room_number
+    if (room_number) {
+        user.preference = room_number
     }
     const result = await doDataBaseThing(() => {
         user.payments.push({ amount: 12000 });
         user.save()
     })
 
-    
+
     if (result === "db_error") {
         return res
             .status(400)
             .json({ msg: "-An Error, Please Try Again" });
-    } else{
+    } else {
         // await broadcastRoomsUpdates() No need for this because room will only be updated when student is assigned
         return res.status(200).json({ msg: "Payment Successful" });
 

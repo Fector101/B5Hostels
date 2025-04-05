@@ -122,7 +122,7 @@ router.post("/admin-login", async (req, res) => {
         const token = jwt.sign(data, process.env.JWT_SECRET, { expiresIn: "24h" });
         res.cookie("adminInfo", token, GENERATE_COOKIE_CONFIG(24));
 
-        return res.status(201).json({ url: "/admin/dashboard" });
+        return res.status(201).json({ msg:"Admin Login Successful" });
     } catch (err) {
         console.log('admin login error: ', err)
         res.status(500).json({ msg: 'Something went wrong! -se' });

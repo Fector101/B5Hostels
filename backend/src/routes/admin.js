@@ -1,81 +1,10 @@
 const express = require("express");
-const { doDataBaseThing, verifyTokenAdmin } = require("../helper/basic");
+const { doDataBaseThing, verifyTokenAdmin, getInitials, daysPassed, getStudentTotal, adminDataFormattedForRooms } = require("../helper/basic");
 const Room = require("../models/Room");
 const Student = require("../models/Student");
-const { io } = require('../../server');
+const { io, connectedUsers } = require('../../server');
 
 const router = express.Router();
-
-let all_students;
-let all_rooms;
-
-router.get("/dashboard", verifyTokenAdmin, async (req, res) => {
-    all_students = (await doDataBaseThing(() => Student.find()));
-    all_rooms = (await doDataBaseThing(() => Room.find()));
-
-    const total_students = all_students && all_students.length;
-    const awaiting_approval = all_students.filter(
-        (student) =>
-            (!student.room && student.preference) ||
-            (!student.room && student.payments)
-    ).length;
-    const total_students_that_have_rooms = all_students.filter(
-        (student) => student.room
-    ).length;
-
-    const total_rooms = all_rooms.length;
-    const available_rooms = all_rooms.filter(
-        (room) => room.occupants < room.capacity
-    ).length;
-    const full_rooms = all_rooms.filter(
-        (room) => room.occupants === room.capacity
-    ).length;
-    const under_maintenance = all_rooms.filter(
-        (room) => room.status === "maintenance"
-    ).length;
-    // console.log({
-    //     page_title: "dashboard",
-    //     under_maintenance,
-    //     full_rooms,
-    //     available_rooms,
-    //     total_rooms,
-    //     total_students_that_have_rooms,
-    //     total_students,
-    //     awaiting_approval,
-    // })
-    const data = {
-        page_title: "dashboard",
-        under_maintenance,
-        full_rooms,
-        available_rooms,
-        total_rooms,
-        total_students_that_have_rooms,
-        total_students,
-        awaiting_approval,
-        msg: 'Successfully Fetched Data'
-    }
-    return res.status(201).json(data);
-});
-
-router.get("/all-data", verifyTokenAdmin, async (req, res) => {
-    all_students = (await doDataBaseThing(() => Student.find()));
-    all_rooms = (await doDataBaseThing(() => Room.find()));
-    // const rooms = await doDataBaseThing(() => Room.find());
-    // console.log(students)
-    const data = {
-        students: all_students,
-        rooms: all_rooms,
-        msg: 'Successfully Fetched Data'
-
-    }
-    return res.status(201).json(data);
-});
-
-router.get("/rooms", async (req, res) => {
-    all_rooms = (await doDataBaseThing(() => Room.find()));
-    // const rooms = await doDataBaseThing(() => Room.find());
-    res.render("admin-rooms", { page_title: "rooms", rooms: all_rooms });
-});
 
 function randomImg() {
     return "img" + Math.floor(Math.random() * 15) + ".jpg";
@@ -84,55 +13,25 @@ function randomImg() {
 async function broadcastRoomsUpdates() {
     const rooms = await doDataBaseThing(() => Room.find())
     console.log('Querying DB For Rooms ----')
-    if(rooms !== "db_error"){
-        io.emit('roomsUpdate', rooms);
+    if (rooms !== "db_error") {
+        io.emit('roomsUpdate', {
+            rooms,
+            roomsDataSummary: {...adminDataFormattedForRooms(rooms)}
+        });
     }
 
 }
+let all_students;
 
-router.post("/assign-room", async (req, res) => {
-    const { matric_no, room_number } = req.body;
-    console.log(matric_no, room_number)
-    const user = await doDataBaseThing(() => Student.findOne({ matric_no }));
 
-    if (user === "db_error") {
-        return res
-            .status(400)
-            .json({ msg: "-An Error Occured, Please Try Again" });
-    } else if (!user) {
-        return res
-            .status(400)
-            .json({ msg: "Student doesn't Exist" });
+router.get("/all-data", verifyTokenAdmin, async (req, res) => {
+    all_students = (await doDataBaseThing(() => Student.find()));
+    // console.log(students)
+    const data = {
+        students: all_students,
+        msg: 'Successfully Fetched Data'
     }
-    let room = await doDataBaseThing(() => Room.findOne({ room_number }));
-    if (room.occupants.find(each => each.matric_no === matric_no)) {
-        return res
-            .status(400)
-            .json({ msg: "Student Already in Room" });
-    }
-    try {
-        if (room.occupants.length === room.capacity) {
-            return res.status(400).json({ msg: "Operation Failed, Full Room" });
-        }
-        room.occupants.push({ matric_no });
-        if (room.occupants.length === room.capacity) {
-            room.status = 'full'
-        }
-        await doDataBaseThing(() => {
-            room.save();
-        });
-
-        await doDataBaseThing(() => {
-            user.room = room_number;
-            user.save();
-        });
-        await broadcastRoomsUpdates()
-        return res.status(200).json({ msg: "Student Successfully Added to Room" });
-    } catch (error) {
-        console.log('Error Assigning Room: ', error)
-        return res.status(400).json({ msg: "-An Error Occured, Please Try Again" });
-    }
-    // console.log('ME ', user)
+    return res.status(201).json(data);
 });
 
 router.post("/add-room", async (req, res) => {
@@ -179,6 +78,89 @@ router.post("/add-room", async (req, res) => {
     }
 });
 
+async function emitUserUpdate(user_data) {
+    const socketId = connectedUsers.get(user_data.matric_no);
+    console.log('Emitting User Update', user_data.matric_no, socketId)
+    if (socketId) {
+        const data = {
+            ...user_data
+        };
+        io.to(socketId).emit('userDataUpdate', data);
+    }
+}
+
+router.post("/assign-room", async (req, res) => {
+    const { matric_no, room_number } = req.body;
+    console.log(matric_no, room_number)
+    const user = await doDataBaseThing(() => Student.findOne({ matric_no }));
+
+    if (user === "db_error") {
+        return res
+            .status(400)
+            .json({ msg: "-An Error Occured, Please Try Again" });
+    } else if (!user) {
+        return res
+            .status(400)
+            .json({ msg: "Student doesn't Exist" });
+    }
+    let room = await doDataBaseThing(() => Room.findOne({ room_number }));
+    if (room.occupants.find(each => each.matric_no === matric_no)) {
+        return res
+            .status(400)
+            .json({ msg: "Student Already in Room" });
+    }
+    try {
+        if (room.occupants.length === room.capacity) {
+            return res.status(400).json({ msg: "Operation Failed, Full Room" });
+        }
+        room.occupants.push({ matric_no });
+        if (room.occupants.length === room.capacity) {
+            room.status = 'full'
+        }
+        await doDataBaseThing(() => {
+            room.save();
+        });
+
+        // const res__ =
+        await doDataBaseThing(() => {
+            user.room = room_number;
+            user.save();
+        });
+        const user_data = {
+            // name: user.name,
+            // matric_no: user.matric_no,
+            // email: user.email,
+            // level: user.level,
+            // preference: user.preference,
+            // verified: user.verified,
+            // profile_pic: user.profile_pic,
+            // pdfs_length: user.pdfs.length,
+
+            // initials: getInitials(user.name),
+            // days_passed: daysPassed(user.payments[0]?.date),
+            // total_paid: getStudentTotal(user.payments)
+
+        }
+
+        const user_room_data = {
+            room: room_number,
+            capacity: room.capacity,
+            floor: room.floor,
+            block: room.block,
+            room_mates: room.occupants.map(each => each.name || each.matric_no)
+        }
+        // ;) if (res__ !== "db_error") {
+        await emitUserUpdate({ ...user_data, ...user_room_data });
+        // console.log('Emitting User Update')
+        // }
+        await broadcastRoomsUpdates()
+        return res.status(200).json({ msg: "Student Successfully Added to Room" });
+    } catch (error) {
+        console.log('Error Assigning Room: ', error)
+        return res.status(400).json({ msg: "-An Error Occured, Please Try Again" });
+    }
+});
+
 router.post("/verify-student", async (req, res) => {
     const { matric_no } = req.body;
 
@@ -186,7 +168,7 @@ router.post("/verify-student", async (req, res) => {
     if (user === "db_error") {
         return res
             .status(400)
-            .json({ msg: "-An Error, Please Try Again" });
+            .json({ msg: "-An Error Occured, Please Try Again" });
     } else if (!user) {
         return res
             .status(400)
@@ -197,6 +179,24 @@ router.post("/verify-student", async (req, res) => {
             user.verified = true
             user.save();
         });
+
+        const user_data = {
+            // name: user.name,
+            // matric_no: user.matric_no,
+            // email: user.email,
+            // level: user.level,
+            // preference: user.preference,
+            verified: user.verified,
+            // profile_pic: user.profile_pic,
+            // pdfs_length: user.pdfs.length,
+
+            // initials: getInitials(user.name),
+            // days_passed: daysPassed(user.payments[0]?.date),
+            // total_paid: getStudentTotal(user.payments)
+
+        }
+        // ;) if (res__ !== "db_error") {
+        await emitUserUpdate({ ...user_data });
         return res.status(200).json({ url: '/receipt', msg: "Successfully Verified Student" });
     } catch (err) {
         console.log(err)

@@ -39,7 +39,7 @@ export default function Loginpage() {
                 console.log("User created:", data);
                 toast(data.msg || 'Login successful!', { type: 'success' });
                 await fetchAdminData()
-                navigate(data.url);
+                navigate('/admin/dashboard');
             } else {
                 console.error("Login error:", data);
                 toast(data.msg || 'Check your inputs.', { type: 'warning' });

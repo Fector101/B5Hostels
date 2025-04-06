@@ -24,9 +24,9 @@ export default function Dashboard() {
         setUnderMaintenance(roomsDataSummary.under_maintenance)
         
         setTotalStudents(StudentsData.length)
-        setAwaitingApproval(StudentsData.filter(student =>!student.verified).length)
+        setAwaitingApproval(StudentsData.filter(student => student.status === 'pending' ).length)
         settotal_students_that_have_rooms(StudentsData.filter(
-            (student) => student.verified
+            (student) => student.status === 'verified'
         ).length)
     }, [roomsDataSummary,StudentsData])
     return (

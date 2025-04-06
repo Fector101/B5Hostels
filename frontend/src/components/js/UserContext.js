@@ -19,6 +19,7 @@ export const UserProvider = ({ children }) => {
         // total_students: 0,
         // awaiting_approval: 0,
     });
+    const [ComplaintsContext, setComplaints] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate()
     const location = useLocation();
@@ -38,6 +39,7 @@ export const UserProvider = ({ children }) => {
             return false
         }
     }
+
     const fetchUserData = async (silent = false) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/profile`, {
@@ -63,7 +65,6 @@ export const UserProvider = ({ children }) => {
             // setUser({});
         }
     };
-
 
     const fetchAdminData = async (silent = false) => {
         try {
@@ -93,6 +94,27 @@ export const UserProvider = ({ children }) => {
         }
     };
 
+    const fetchComplaints = async (silent = false) => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/complaints`, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setComplaints(data.complaints);
+            } else {
+                !silent && toast(data.msg || "Failed to fetch complaints.", { type: "error" });
+            }
+        } catch (error) {
+            !silent && toast("Error fetching complaints: " + error.message, { type: "error" });
+        }
+    }
     // Fetch user data on mount
     useEffect(() => {
         // console.log(isLoggedIn)
@@ -117,7 +139,7 @@ export const UserProvider = ({ children }) => {
         socket.on('userDataUpdate', (data) => {
             console.log('UserData received:', data);
             // We need the old data incase we are not getting all the data and just updating some
-            setUser(old_data => ({ ...old_data, ...data })); 
+            setUser(old_data => ({ ...old_data, ...data }));
             // toast.success(data.msg);
         });
 
@@ -135,6 +157,8 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         fetchUserData(true);
         fetchAdminData(true);
+        fetchComplaints(true);
+
         console.log(location.pathname.startsWith('/admin'))
         if (location.pathname.startsWith('/admin')) {
             CheckLoggedIn('admin-logged').then(res => {
@@ -164,7 +188,8 @@ export const UserProvider = ({ children }) => {
                 RoomsData,
                 StudentsData,
                 roomsDataSummary,
-
+                ComplaintsContext,
+                
                 setUser,
                 setIsLoggedIn,
                 CheckLoggedIn,
@@ -176,4 +201,4 @@ export const UserProvider = ({ children }) => {
             {children}
         </UserContext.Provider>
     );
-};
+}

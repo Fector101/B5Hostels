@@ -1,0 +1,49 @@
+.complain-page .modal{
+    display: block;
+}
+.complain-page form {
+    align-self: center;
+    width: max-content;
+    height: max-content;
+    gap: 12px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.complain-page input,
+.complain-page textarea {
+    width: 300px;
+    /* padding: 12px; */
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    resize: none;
+    outline: none;
+    transition: border 0.2s ease;
+    text-indent: 10px;
+}
+
+.complain-page input {
+    height: 45px;
+}
+
+.complain-page textarea {
+    height: 200px;
+    padding: 10px;
+    padding-left: 0;
+}
+
+.complain-page input:focus,
+.complain-page textarea:focus {
+    border-color: #007bff;
+}
+
+.complain-page .primary-btn {
+    width: max-content;
+    margin-top: 16px;
+    padding: 12px 20px;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}

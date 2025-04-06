@@ -67,23 +67,28 @@ function PopupRoomCard({ selected_room, setSelectedRoom, amenities, capacity, bl
         </div>
     );
 }
-function StudentCard({ name,pdfs_length, profile_pic, matric_no, email, preference, level, room, verified, payments, setMatricNo, setStudentName, assignRoom, setChoicesModal }) {
+function StudentCard({ name, pdfs_length, profile_pic, matric_no, email, preference, level, room, status, payments, setMatricNo, setStudentName, assignRoom, setChoicesModal }) {
     // let state = 'all-students pending-verification-account verified-account paid'
     // pending verified paid
     // not verfing payment but student account
-    let [verified__, setVerified__] = useState(() => verified)
+    let [status__, setStatus__] = useState(() => status)
+    let [room__, setRoom__] = useState(() => room)
     const { setStudents, StudentsData } = useContext(UserContext);
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     useEffect(() => {
-        setVerified__(verified)
-    }, [verified]);
+        setStatus__(status)
+    }, [status]);
 
-    async function verifyStudent(matric_no) {
+    useEffect(() => {
+        setRoom__(room)
+    }, [room]);
+
+    async function updateStatus(matric_no, status) {
         try {
-            const student_data = { matric_no };
+            const student_data = { matric_no, status };
 
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/verify-student`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/update-student-status`, {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -100,13 +105,13 @@ function StudentCard({ name,pdfs_length, profile_pic, matric_no, email, preferen
                 const student_index = StudentsData.findIndex(student => {
                     if (student.matric_no === matric_no) {
                         found_student_data = student
-                        found_student_data.verified = true
+                        found_student_data.status = status
                         return true
                     } else { return false }
                 })
                 StudentsData[student_index] = found_student_data
                 setStudents(StudentsData)
-                setVerified__(true)
+                setStatus__(status)
                 toast(data.msg || 'Verified successful!', { type: 'success' });
             } else {
                 console.error("Verification error:", data);
@@ -118,15 +123,21 @@ function StudentCard({ name,pdfs_length, profile_pic, matric_no, email, preferen
         }
     };
 
-    function Btns({ verified, room, payments_length }) {
+    function Btns({ status, room, payments_length }) {
 
-        if (!verified) {
+        if (status === 'pending') {
+            // if (!verified) {
             return <>
-                <button onClick={() => verifyStudent(matric_no)} className="primary-btn verify-btn">Verify</button>
+                <button onClick={() => updateStatus(matric_no, 'verified')} className="primary-btn verify-btn">Verify</button>
                 {/* <button className="view-info-btn"> View Docs </button> */}
-                <button className="red-color reject-room-btn"> Reject </button>
+                <button onClick={() => updateStatus(matric_no, 'rejected')} className="red-color reject-room-btn"> Reject </button>
             </>
-        } else if (!room && payments_length > 0) {
+
+        }
+        // else if (status === 'rejected') {
+        //     return <button disabled className="assigned-room-btn"> Delet </button>
+        // }
+        else if (!room && payments_length > 0) {
             return <>
                 <button onClick={() => { setStudentName(name); setMatricNo(matric_no); setChoicesModal(true) }} className="assign-btn">Assign Room</button>
                 <button onClick={() => { assignRoom(matric_no) }} className="random-room-btn">Random Room</button>
@@ -140,7 +151,7 @@ function StudentCard({ name,pdfs_length, profile_pic, matric_no, email, preferen
     return (
         <div
             data-level={level}
-            className={"student-card" + (verified__ ? ' verified' : ' pending') + (payments.length > 0 ? ' paid' : '')}
+            className={"student-card " + status__ + (payments.length > 0 ? ' paid' : '')}
         >
             <div className="card-header">
                 <div className="student-id-box">
@@ -163,7 +174,7 @@ function StudentCard({ name,pdfs_length, profile_pic, matric_no, email, preferen
                 <div className="flex-spread">
                     <div className="row">
                         <p className="dim-text">Status:</p>
-                        <p>{verified__ ? "Verified" : "Pending"}</p>
+                        <p>{status__}</p>
                     </div>
                     <div className="row">
                         <p className="dim-text">Room:</p>
@@ -174,13 +185,13 @@ function StudentCard({ name,pdfs_length, profile_pic, matric_no, email, preferen
                         <p className="preference">{preference}</p>
                     </div>
                 </div>
-                <Link className="view-pdfs-btn" to={'/admin/student-docs?id='+matric_no}>
+                <Link className="view-pdfs-btn" to={'/admin/student-docs?id=' + matric_no}>
                     <p>{pdfs_length}</p>
                     <FileTextIcon />
                 </Link>
             </div>
             <div className="btns-box">
-                <Btns verified={verified__} room={room} payments_length={payments?.length} />
+                <Btns status={status__} room={room__} payments_length={payments?.length} />
             </div>
         </div>
     );
@@ -275,7 +286,7 @@ export default function Students() {
                     } else { return false }
                 })
                 StudentsData[student_index] = found_student_data
-                setStudents(StudentsData)
+                setStudents([...StudentsData])
                 toast(result.msg || 'Added Successfully', { type: "success" });
                 if (filler_matric_no) setChoicesModal(false)
 
@@ -369,7 +380,8 @@ export default function Students() {
                     {students.map((student, i) => (
                         <StudentCard
                             key={i}
-                            verified={student.verified}
+                            status={student.status}
+                            // verified={student.verified}
                             payments={student.payments}
                             name={student.name}
                             matric_no={student.matric_no}

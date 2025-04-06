@@ -1,0 +1,55 @@
+.admin-complaints-page {
+    padding: 20px;
+    /* font-family: Arial,  sans-serif; */
+}
+.admin-complaints-page h1{
+    margin-bottom: 10px;
+}
+.admin-complaints-page .refresh-btn{
+    --size: 40px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 10px;
+    margin-left: auto;
+    background-color: #94739763;
+}
+.admin-complaints-page .complaints-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.admin-complaints-page .complaint-card {
+    padding: 15px;
+    background-color: #e9b9d6;
+    /* border: 1px solid #ddd; */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-complaints-page .complaint-card h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+.admin-complaints-page .complaint-card p {
+    margin: 5px 0;
+}
+
+.admin-complaints-page .actions {
+    display: flex;
+    gap: 10px;
+}
+
+.admin-complaints-page .resolve-btn, .view-details-btn {
+    padding: 8px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.admin-complaints-page .resolve-btn {
+    background-color: #4caf50;
+    color: white;
+}

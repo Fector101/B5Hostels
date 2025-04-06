@@ -1,38 +1,14 @@
 const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
+// const path = require("path");
+// const cookieParser = require("cookie-parser");
 const { verifyToken, doDataBaseThing, daysPassed, delay, getInitials, getStudentTotal } = require("../helper/basic");
 const Room = require("../models/Room"); // Import the Room model
 const Student = require("../models/Student");
+const Complaint = require("../models/Complaint");
 
 const router = express.Router();
-router.use(cookieParser());
+// router.use(cookieParser());
 
-// async function getRoomWithStudents(roomId) {
-//     const room = await Room.findById(roomId).populate("occupants").exec();
-//     // console.log(room);
-// }
-
-// async function assignStudentToRoom(matric_no, roomId) {
-//     const student = await Student.findById(matric_no);
-//     const room = await Room.findById(roomId);
-
-//     if (!student || !room) {
-//         // console.log("Student or Room not found");
-//         return;
-//     }
-
-//     // Add student to room
-//     room.occupants.push(student._id);
-//     room.occupied += 1;
-//     await room.save();
-
-//     // Assign room to student
-//     student.room = room._id;
-//     await student.save();
-
-//     // console.log(`Assigned ${student.name} to room ${room.title}`);
-// }
 router.get("/profile", verifyToken, async (req, res) => {
     const userInfo = req.user;
     await delay(1000 * 1)
@@ -61,7 +37,7 @@ router.get("/profile", verifyToken, async (req, res) => {
         email: user.email,
         level: user.level,
         preference: user.preference,
-        verified: user.verified,
+        status: user.status,
         profile_pic: user.profile_pic,
         pdfs_length: user.pdfs.length,
 
@@ -85,42 +61,6 @@ router.get("/profile", verifyToken, async (req, res) => {
     return res.status(200).json({ data });
 });
 
-router.get("/room/:room_number", async (req, res) => {
-    const room_number = req.params.room_number;
-    // console.log(room_number, " room_number");
-    const roomData = await Room.findOne({ room_number });
-    // getRoomWithStudents(roomData._id)
-    if (roomData) {
-        res.render("room", {
-            img_path: roomData.img,
-            page_title: "dashboard",
-            room_number: roomData.room_number,
-            amenities: roomData.amenities,
-            occupants: roomData.occupants,
-        }); //, description: roomData.description });
-    } else {
-        res.status(404).render("room", {
-            room_number: "Not Found",
-            page_title: "dashboard",
-            amenities: "Not Found",
-            occupants: "Not Found",
-            img_path: 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png',
-            // description: "This room does not exist.",
-        });
-    }
-});
-
-// router.get("/rooms", verifyToken, async (req, res) => {
-//     await delay(1000*2)
-
-//     try {
-//         const rooms = await Room.find();
-//         return res.status(200).json({ data:rooms });
-//     } catch (error) {
-//         console.error("Error fetching rooms:", error);
-//         res.status(500).send("Server Error");
-//     }
-// });
 
 router.post("/make-payment", verifyToken, async (req, res) => {
     const { room_number, matric_no } = req.body;
@@ -159,6 +99,109 @@ router.post("/make-payment", verifyToken, async (req, res) => {
     }
 
 })
+
+
+// Complaint Submission Route
+router.post("/complain", verifyToken, async (req, res) => {
+    const { title, message } = req.body;
+    await delay(500)
+    const userInfo = req.user;
+
+    if (!title || !message) {
+        return res.status(400).json({ msg: "Title and Message are required" });
+    }
+
+    // Create the complaint in the database
+    try {
+        const complaint = await doDataBaseThing(() => new Complaint({
+            matric_no: userInfo.matric_no,
+            title,
+            message,
+            status: "Pending",  // Or whatever initial status you'd like
+            created_at: new Date()
+        }).save());
+
+        if (!complaint) {
+            return res.status(500).json({ msg: "Failed to submit complaint, please try again" });
+        }
+
+        return res.status(200).json({ msg: "Complaint submitted successfully" });
+    } catch (error) {
+        console.error("Complaint submission error:", error);
+        return res.status(500).json({ msg: "An error occurred while submitting your complaint" });
+    }
+});
+
+
+
+
+
+
+
+
+// async function getRoomWithStudents(roomId) {
+//     const room = await Room.findById(roomId).populate("occupants").exec();
+//     // console.log(room);
+// }
+
+// async function assignStudentToRoom(matric_no, roomId) {
+//     const student = await Student.findById(matric_no);
+//     const room = await Room.findById(roomId);
+
+//     if (!student || !room) {
+//         // console.log("Student or Room not found");
+//         return;
+//     }
+
+//     // Add student to room
+//     room.occupants.push(student._id);
+//     room.occupied += 1;
+//     await room.save();
+
+//     // Assign room to student
+//     student.room = room._id;
+//     await student.save();
+
+//     // console.log(`Assigned ${student.name} to room ${room.title}`);
+// }
+
+// router.get("/room/:room_number", async (req, res) => {
+//     const room_number = req.params.room_number;
+//     // console.log(room_number, " room_number");
+//     const roomData = await Room.findOne({ room_number });
+//     // getRoomWithStudents(roomData._id)
+//     if (roomData) {
+//         res.render("room", {
+//             img_path: roomData.img,
+//             page_title: "dashboard",
+//             room_number: roomData.room_number,
+//             amenities: roomData.amenities,
+//             occupants: roomData.occupants,
+//         }); //, description: roomData.description });
+//     } else {
+//         res.status(404).render("room", {
+//             room_number: "Not Found",
+//             page_title: "dashboard",
+//             amenities: "Not Found",
+//             occupants: "Not Found",
+//             img_path: 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png',
+//             // description: "This room does not exist.",
+//         });
+//     }
+// });
+
+// router.get("/rooms", verifyToken, async (req, res) => {
+//     await delay(1000*2)
+
+//     try {
+//         const rooms = await Room.find();
+//         return res.status(200).json({ data:rooms });
+//     } catch (error) {
+//         console.error("Error fetching rooms:", error);
+//         res.status(500).send("Server Error");
+//     }
+// });
+
 
 module.exports = router;
 

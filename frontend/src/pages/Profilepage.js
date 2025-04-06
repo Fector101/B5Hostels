@@ -107,7 +107,7 @@ export default function Profilepage() {
                 </div>
             }
 
-            {(file && !loading)  &&
+            {(file && !loading) &&
                 <div className="confirm-pic-modal modal">
                     <div className="confirm-box">
                         <p>Are you sure you want to upload this?</p>
@@ -153,7 +153,18 @@ export default function Profilepage() {
                     <hr />
 
                     <h4 className="status-txt">{userData.room ? "Room" : "Account"} Status</h4>
-                    <p className="status-txt"> {userData.verified ? userData.room ? userData.days_passed + ' of 360 days' : "Your account has been verified. You are eligible for a room." : "Your account is pending verification. Please check back later."}</p>
+                    <p className="status-txt"> {
+                        userData.status === 'verified' ?
+                            userData.room ?
+                                userData.days_passed + ' of 360 days'
+                                :
+                                "Your account has been verified. You are eligible for a room."
+                            :
+                            userData.status === 'rejected' ?
+                                "Your account has been Rejected"
+                                :
+                                "Your account is pending verification. Please check back later."
+                    }</p>
                 </section>
 
 
@@ -217,16 +228,23 @@ export default function Profilepage() {
                                         </div>
                                         <p className="heading">No Room Assigned Yet</p>
                                         <p className="caption">
-                                            {userData.verified ? "You've been verified, but no room has been assigned to you yet." : "You need to be verified before a room can be assigned to you."}
+                                            {userData.status === 'verified' ? "You've been verified, but no room has been assigned to you yet." : "You need to be verified before a room can be assigned to you."}
                                         </p>
-                                        {!userData.verified ? userData.pdfs_length < 4 ? <UploadPDF total_uploaded_docs={userData.pdfs_length} /> : <p style={{ fontSize: '14px', fontWeight: 500, marginTop: '5px' }}>You have uploaded maximum amount of documents</p> : <></>}
+                                        {
+                                            userData.status !== 'verified' ?
+                                                userData.pdfs_length < 4 ?
+                                                    <UploadPDF total_uploaded_docs={userData.pdfs_length} />
+                                                :
+                                                    <p style={{ fontSize: '14px', fontWeight: 500, marginTop: '5px' }}>You have uploaded maximum amount of documents</p>
+                                            : <></>
+                                        }
                                     </div>
                                 }
                             </div>
                             :
                             <div className="preference-tab">
 
-                                {userData.verified ?
+                                {userData.status === 'verified' ?
                                     userData.room ?
                                         <p className={userData.room ? "assigned-txt room-status" : 'unassigned-txt room-status'}>
                                             <Info />
@@ -248,7 +266,10 @@ export default function Profilepage() {
 
                             </div>
                     }
-                    <button className="logout-btn" onClick={logOut}>Logout</button>
+                    <div>
+                        <button className="logout-btn" onClick={logOut}>Logout</button>
+                        <button className="logout-btn" onClick={logOut}>Logout</button>
+                    </div>
                 </section>
 
             </section>

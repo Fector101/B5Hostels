@@ -24,12 +24,12 @@ export default function Footer(){
         <footer className="footer flex">
             {/* <img className="logo" src={logo_src} alt="logo" /> */}
             <Link className="heading" to='/' >B5 Homes</Link>
-            <div className="row">
+            {/* <div className="row">
 
-            {/* <Link to='/'>About Us</Link>
-            <Link to='/'>Privacy</Link> */}
+            <Link to='/'>About Us</Link>
+            <Link to='/'>Privacy</Link>
             <Link to=''>Contact Us</Link>
-            </div>
+            </div> */}
             <p className="caption">© 2025 B5 Homes. All rights reserved</p>
         </footer>
     )

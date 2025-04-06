@@ -20,6 +20,7 @@ import Profilepage from "./pages/Profilepage";
 import RoomDetailsPage from "./pages/RoomDetailsPage";
 import ChooseUserpage from "./pages/ChooseUserpage";
 import NotifyPage from "./pages/NotifyPage";
+import ComplainPage from './pages/IssuePage';
 
 function App() {
     const location = useLocation();
@@ -39,6 +40,7 @@ function App() {
                 <Route path="/room" element={<RoomDetailsPage />} />
                 <Route path="/rooms" element={<Roomspage />} />
                 <Route path="/notify" element={<NotifyPage />} />
+                <Route path="/complain" element={<ComplainPage />} />
 
                 <Route path="/admin/*" element={<AdminRoutes />} />
                 <Route path="*" element={<NotFoundpage redirect_path="/" timeout_secs={5 * 1000} />} />

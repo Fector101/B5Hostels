@@ -3,6 +3,7 @@ const { doDataBaseThing, verifyTokenAdmin, getInitials, daysPassed, getStudentTo
 const Room = require("../models/Room");
 const Student = require("../models/Student");
 const { io, connectedUsers } = require('../../server');
+const Complaint = require("../models/Complaint");
 
 const router = express.Router();
 
@@ -16,16 +17,15 @@ async function broadcastRoomsUpdates() {
     if (rooms !== "db_error") {
         io.emit('roomsUpdate', {
             rooms,
-            roomsDataSummary: {...adminDataFormattedForRooms(rooms)}
+            roomsDataSummary: { ...adminDataFormattedForRooms(rooms) }
         });
     }
 
 }
-let all_students;
 
 
 router.get("/all-data", verifyTokenAdmin, async (req, res) => {
-    all_students = (await doDataBaseThing(() => Student.find()));
+    const all_students = (await doDataBaseThing(() => Student.find()));
     // console.log(students)
     const data = {
         students: all_students,
@@ -34,7 +34,7 @@ router.get("/all-data", verifyTokenAdmin, async (req, res) => {
     return res.status(201).json(data);
 });
 
-router.post("/add-room", async (req, res) => {
+router.post("/add-room",verifyTokenAdmin, async (req, res) => {
     const { room_number, block, floor, status, capacity, amenities
         // ,gender
     } = req.body;
@@ -89,7 +89,7 @@ async function emitUserUpdate(user_data) {
     }
 }
 
-router.post("/assign-room", async (req, res) => {
+router.post("/assign-room",verifyTokenAdmin, async (req, res) => {
     const { matric_no, room_number } = req.body;
     console.log(matric_no, room_number)
     const user = await doDataBaseThing(() => Student.findOne({ matric_no }));
@@ -161,8 +161,12 @@ router.post("/assign-room", async (req, res) => {
     }
 });
 
-router.post("/verify-student", async (req, res) => {
-    const { matric_no } = req.body;
+router.post("/update-student-status",verifyTokenAdmin, async (req, res) => {
+    const { matric_no, status } = req.body;
+
+    if (!['verified', 'pending', 'rejected'].includes(status)) {
+        return res.status(400).json({ msg: 'Invalid status value' });
+    }
 
     const user = await doDataBaseThing(() => Student.findOne({ matric_no }));
     if (user === "db_error") {
@@ -176,61 +180,59 @@ router.post("/verify-student", async (req, res) => {
     }
     try {
         await doDataBaseThing(() => {
-            user.verified = true
+            user.status = status
             user.save();
         });
 
-        const user_data = {
-            // name: user.name,
-            // matric_no: user.matric_no,
-            // email: user.email,
-            // level: user.level,
-            // preference: user.preference,
-            verified: user.verified,
-            // profile_pic: user.profile_pic,
-            // pdfs_length: user.pdfs.length,
-
-            // initials: getInitials(user.name),
-            // days_passed: daysPassed(user.payments[0]?.date),
-            // total_paid: getStudentTotal(user.payments)
-
-        }
         // ;) if (res__ !== "db_error") {
+        const user_data = {status}
         await emitUserUpdate({ ...user_data });
-        return res.status(200).json({ url: '/receipt', msg: "Successfully Verified Student" });
+        return res.status(200).json({ msg: "Successfully Updated Student status" });
     } catch (err) {
         console.log(err)
         return res
             .status(400)
-            .json({ msg: "-An Error Occured, Please Try Again" });
+            .json({ msg: "-An Error Occured, Please Try Again -se" });
     }
 })
 
-// router.post("/reject-student-room", async (req, res) => {
-// const { matric_no } = req.body;
-// const user = await doDataBaseThing(() => Student.findOne({ matric_no }));
+router.get("/complaints", verifyTokenAdmin, async (req, res) => {
 
-// if (user === "db_error") {
-//     return res
-//         .status(400)
-//         .json({ msg: "-An Error Occured, Please Try Again" });
-// } else if (!user) {
-//     return res
-//         .status(400)
-//         .json({ exists: true, msg: "Student doesn't Exist" });
-// }
-//     try {
-//         await doDataBaseThing(() => {
-//             user.preference = ''
-//             user.save();
-//         });
-//         return res.status(200).json({ msg: "Rejected Student Room Successfully" });
-//     } catch (err) {
-//         console.log(err)
-//         return res
-//             .status(400)
-//             .json({ msg: "-An Error Occured, Please Try Again" });
-//     }
+    try {
+        const complaints = await Complaint.find();
+        return res.status(200).json({ complaints });
+    } catch (error) {
+        console.error("Error fetching complaints:", error);
+        return res.status(500).json({ msg: "Error fetching complaints" });
+    }
+});
 
-// })
+
+router.post("/complaints/:complaintId/resolve", verifyTokenAdmin, async (req, res) => {
+    
+    const { complaintId } = req.params;
+
+    try {
+        const complaint = await Complaint.findById(complaintId);
+
+        if (!complaint) {
+            return res.status(404).json({ msg: "Complaint not found" });
+        }
+
+        complaint.status = "Resolved";
+        complaint.resolved_at = new Date();
+        await complaint.save();
+
+        return res.status(200).json({ msg: "Complaint resolved successfully" });
+    } catch (error) {
+        console.error("Error resolving complaint:", error);
+        return res.status(500).json({ msg: "Error resolving complaint" });
+    }
+});
+
+
+
+
+
+
 module.exports = router;

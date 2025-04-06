@@ -6,6 +6,7 @@ import Students from "./admin-routes/Students";
 import Rooms from "./admin-routes/Rooms";
 import '../components/css/admin.css'
 import { EachStudentPage } from "./admin-routes/EachStudentPage";
+import AdminComplaintsPage from "./admin-routes/ComplainPage";
 
 export default function AdminRoutes({ text }) {
     const location = useLocation();
@@ -20,6 +21,7 @@ export default function AdminRoutes({ text }) {
                     <Route path="dashboard" element={<Dashboard/>} />
                     <Route path="login" element={<Loginpage/>} />
                     <Route path="student-docs" element={<EachStudentPage/>} />
+                    <Route path="complains" element={<AdminComplaintsPage/>} />
                 </Route>
             </Routes >
         </>

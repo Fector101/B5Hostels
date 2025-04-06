@@ -9,6 +9,8 @@ const studentSchema = new mongoose.Schema({
     gender: { type: String, required: true },
     level: { type: Number, required: true },
     verified: { type: Boolean, default: false, required: false },
+    status:  { type: String, enum: ["verified", "pending","rejected"], default: "pending" },
+
     rejected_room: { type: Boolean, required: false },
 
     room: { type: String, required: false },

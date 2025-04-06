@@ -12,10 +12,10 @@ export default function NotifyPage() {
                     <p>You've been Assigned to: Room {userData.room}.</p>
                 </div>
             }
-            {userData.verified &&
+            {userData?.status &&
                 <div className='my-notify'>
-                    <h1>Verified Registation</h1>
-                    <p>Your account has been verified.</p>
+                    <h1>{userData.status} Registation</h1>
+                    <p>Your account has been {userData.status}.</p>
                 </div>
             }
             {userData.total_paid ?

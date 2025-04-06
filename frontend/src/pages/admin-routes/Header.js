@@ -1,6 +1,6 @@
-import { Building, Home, LogOut, Users } from "lucide-react";
+import { Building, Home, LogOut, MessageCircleMore, Users } from "lucide-react";
 import { useState, useEffect } from "react";
-import { Link, useLocation,useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function Header() {
     const location = useLocation();
@@ -55,24 +55,22 @@ export default function Header() {
                 </button>
             </div>
             <nav>
-                <Link style={{ width: "110px" }}
-                    className={location.pathname.endsWith('dashboard') ? 'active' : ''}
-                    to="/admin/dashboard"
-                >
+                <Link style={{ width: "110px" }} className={location.pathname.endsWith('dashboard') ? 'active' : ''} to="/admin/dashboard" >
                     <Home />
-                    Dashboard</Link>
-                <Link
-                    className={location.pathname.endsWith('students') ? 'active' : ''}
-                    to="/admin/students"
-                >
+                    Dashboard
+                </Link>
+                <Link className={location.pathname.endsWith('students') ? 'active' : ''} to="/admin/students" >
                     <Users />
-                    Students</Link>
-                <Link
-                    className={location.pathname.endsWith('rooms') ? 'active' : ''}
-                    to="/admin/rooms"
-                >
+                    Students
+                </Link>
+                <Link className={location.pathname.endsWith('rooms') ? 'active' : ''} to="/admin/rooms" >
                     <Building />
-                    Rooms</Link>
+                    Rooms
+                </Link>
+                <Link style={{width: '120px'}} className={location.pathname.endsWith('complains') ? 'active' : ''} to="/admin/complains" >
+                    <MessageCircleMore/>
+                    Complaints
+                </Link>
             </nav>
             <button onClick={logOut} className="signout-btn">
                 <LogOut />

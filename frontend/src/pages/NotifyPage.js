@@ -14,8 +14,10 @@ export default function NotifyPage() {
             }
             {userData?.status &&
                 <div className='my-notify'>
-                    <h1>{userData.status} Registation</h1>
-                    <p>Your account has been {userData.status}.</p>
+                    <h1>{['pending','rejected'].includes(userData.status) ? userData.status + ' Verification' : 'Verified Account'}</h1>
+                    <p>{
+                    userData.status === 'pending'?'Your account verification is pending'
+                    :`Your account has been ${userData.status}.`}</p>
                 </div>
             }
             {userData.total_paid ?

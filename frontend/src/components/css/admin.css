@@ -445,6 +445,38 @@ header.admin-header .signout-btn svg {
     overflow: hidden;
 }
 
+.page.adminpage .student-card .view-pdfs-btn {
+    cursor: pointer;
+    margin-top: auto;
+    --size: 45px;
+    width: var(--size);
+    height: var(--size);
+    background-color: rgb(218 204 235);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+}
+.page.adminpage .student-card .view-pdfs-btn p{
+    position: absolute;
+    bottom: 70%;
+    left: 70%;
+    background-color: plum;
+    padding: 3px;
+    border-radius: 5px;
+    color: #000;
+}
+
+.page.adminpage .student-card .view-pdfs-btn:hover {
+    background-color: rgb(195, 166, 230);
+}
+
+.page.adminpage .student-card .view-pdfs-btn svg {
+    fill: #b288db;
+}
+
 .page.adminpage .student-card.display-none {
     display: none;
 }
@@ -520,9 +552,6 @@ header.admin-header .signout-btn svg {
     font-size: 14px;
 }
 
-.page.adminpage .student-card .row {
-    display: flex;
-}
 
 .page.adminpage .student-card .row p {
     width: 50%;
@@ -817,8 +846,144 @@ header.admin-header .signout-btn svg {
 }
 
 
+/* Each Student Page */
+.EachStudentPage {
+    padding: 20px;
+}
 
+.EachStudentPage section {
+    padding: 1.2rem;
+    border: 1px solid #959292;
+    border-radius: 10px;
+    min-width: 200px;
+    min-height: 300px;
+}
 
+.EachStudentPage .avatar {
+    --size: 100px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background: #007bff;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.EachStudentPage .caption {
+    color: #666;
+    font-size: 14px;
+}
+
+.EachStudentPage .btn-to-student-page-btn {
+    border: 1px solid #959292;
+    display: flex;
+    color: black;
+    gap: 5px;
+    align-items: center;
+    padding: 0.5rem;
+    width: max-content;
+    font-size: 13px;
+    text-decoration: none;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.EachStudentPage .btn-to-student-page-btn svg {
+    --size: 17px;
+    width: var(--size);
+    height: var(--size);
+}
+
+.EachStudentPage .container {
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.EachStudentPage .container .profile-box {
+
+    gap: 10px;
+    width: 400px;
+}
+
+.EachStudentPage .profile-box .profile-row {
+    display: flex;
+    gap: 20px;
+}
+
+.EachStudentPage .info-box p:first-child {
+    margin-right: 30px;
+    width: 50px;
+}
+
+.EachStudentPage .avatar img {
+    border-radius: inherit;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.EachStudentPage .documents-section {
+    /* background: #000; */
+    padding: 1.5rem 1.2rem;
+}
+
+.EachStudentPage .documents-section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.EachStudentPage .document-card {
+    min-height: 60px;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 8px 10px;
+    font-size: 14px;
+    border: 1px solid #959292;
+    border-radius: 10px;
+}
+.EachStudentPage .document-card h4{
+    font-weight: 550;
+
+}
+.EachStudentPage .document-card .file-icon-con {
+    margin-top: auto;
+    --size: 45px;
+    width: var(--size);
+    height: 45px;
+    background-color: rgb(218 204 235);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.EachStudentPage .document-card .file-icon-con svg {
+    fill: #caa4ef;
+}
+
+.EachStudentPage .document-card a{
+    margin-left: auto;
+    border: 1px solid #959292;
+    display: flex;
+    color: black;
+    gap: 5px;
+    align-items: center;
+    padding: 0.3rem 0.5rem;
+    width: max-content;
+    font-size: 13px;
+    text-decoration: none;
+    border-radius: 10px;
+}
+.EachStudentPage .document-card a svg{
+    --size: 18px;
+    width: var(--size);
+    height: var(--size);
+}
 
 
 

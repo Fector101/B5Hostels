@@ -39,7 +39,9 @@ body section.display-none {
 .flex {
     display: flex;
 }
-
+.flex-spread{
+    flex: 1;
+}
 .overflow-hidden {
     overflow: hidden;
 }

@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../components/js/UserContext";
 import { toast } from "react-toastify";
 import { getInitials } from "../../components/js/helper";
+import { FileTextIcon } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
 function PopupRoomCard({ selected_room, setSelectedRoom, amenities, capacity, block, room_number, status, floor, occupants, i }) {
     function setCard(event) {
@@ -65,12 +67,13 @@ function PopupRoomCard({ selected_room, setSelectedRoom, amenities, capacity, bl
         </div>
     );
 }
-function StudentCard({ name, profile_pic,matric_no, email, preference, level, room, verified, payments, setMatricNo, setStudentName, assignRoom, setChoicesModal }) {
+function StudentCard({ name,pdfs_length, profile_pic, matric_no, email, preference, level, room, verified, payments, setMatricNo, setStudentName, assignRoom, setChoicesModal }) {
     // let state = 'all-students pending-verification-account verified-account paid'
     // pending verified paid
     // not verfing payment but student account
     let [verified__, setVerified__] = useState(() => verified)
     const { setStudents, StudentsData } = useContext(UserContext);
+    const navigate = useNavigate()
 
     useEffect(() => {
         setVerified__(verified)
@@ -116,10 +119,12 @@ function StudentCard({ name, profile_pic,matric_no, email, preference, level, ro
     };
 
     function Btns({ verified, room, payments_length }) {
+
         if (!verified) {
             return <>
                 <button onClick={() => verifyStudent(matric_no)} className="primary-btn verify-btn">Verify</button>
-                <button className="view-info-btn"> View Docs </button>
+                {/* <button className="view-info-btn"> View Docs </button> */}
+                <button className="red-color reject-room-btn"> Reject </button>
             </>
         } else if (!room && payments_length > 0) {
             return <>
@@ -154,20 +159,25 @@ function StudentCard({ name, profile_pic,matric_no, email, preference, level, ro
                     <p className="email">{email}</p>
                 </div>
             </div>
-            <div className="info">
-                <div className="row">
-                    <p className="dim-text">Status:</p>
-                    <p>{verified__ ? "Verified" : "Pending"}</p>
+            <div className="info flex">
+                <div className="flex-spread">
+                    <div className="row">
+                        <p className="dim-text">Status:</p>
+                        <p>{verified__ ? "Verified" : "Pending"}</p>
+                    </div>
+                    <div className="row">
+                        <p className="dim-text">Room:</p>
+                        <p>{room}</p>
+                    </div>
+                    <div className="row">
+                        <p className="dim-text">Preference:</p>
+                        <p className="preference">{preference}</p>
+                    </div>
                 </div>
-                <div className="row">
-                    <p className="dim-text">Room:</p>
-                    <p>{room}</p>
-                </div>
-
-                <div className="row">
-                    <p className="dim-text">Preference:</p>
-                    <p className="preference">{preference}</p>
-                </div>
+                <Link className="view-pdfs-btn" to={'/admin/student-docs?id='+matric_no}>
+                    <p>{pdfs_length}</p>
+                    <FileTextIcon />
+                </Link>
             </div>
             <div className="btns-box">
                 <Btns verified={verified__} room={room} payments_length={payments?.length} />
@@ -178,7 +188,7 @@ function StudentCard({ name, profile_pic,matric_no, email, preference, level, ro
 export default function Students() {
     const { RoomsData, StudentsData, setStudents } = useContext(UserContext);
 
-    const [rooms, SetRooms] = useState([]);
+    // const [rooms, SetRooms] = useState([]);
     const [students, SetStudents] = useState([]);
     const [choices_modal, setChoicesModal] = useState(false);
     const [matric_no, setMatricNo] = useState('');
@@ -221,7 +231,7 @@ export default function Students() {
         const av_rooms = RoomsData.filter(room => room.occupants.length < room.capacity)
         setAvailableRooms(av_rooms)
         setSelectedRoom(av_rooms?.[0]?.room_number)
-        SetRooms(RoomsData);
+        // SetRooms(RoomsData);
         SetStudents(StudentsData);
     }, [RoomsData, StudentsData]);
 
@@ -368,6 +378,7 @@ export default function Students() {
                             level={student.level}
                             room={student.room}
                             profile_pic={student.profile_pic}
+                            pdfs_length={student?.pdfs?.length || '0'}
                             setChoicesModal={setChoicesModal}
                             setMatricNo={setMatricNo}
                             setStudentName={setStudentName}

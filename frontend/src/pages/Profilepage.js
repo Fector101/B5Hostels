@@ -5,7 +5,7 @@ import GoToTop from "../components/js/GoToTop";
 import UploadPDF from "../components/ui/uploadPDF/UploadPDF";
 import { UserContext } from '../components/js/UserContext';
 import '../components/css/profilepage.css'
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 export default function Profilepage() {
@@ -266,8 +266,8 @@ export default function Profilepage() {
 
                             </div>
                     }
-                    <div>
-                        <button className="logout-btn" onClick={logOut}>Logout</button>
+                    <div className="flex margin-left-auto">
+                        <Link to='/complain' className="logout-btn">Sumbit a Complaint</Link>
                         <button className="logout-btn" onClick={logOut}>Logout</button>
                     </div>
                 </section>

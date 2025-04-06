@@ -13,6 +13,7 @@
     background-color: #242729eb;
     color: wheat;
 }
+
 .profile-page .modal.uploading-modal .spinner {
     position: static;
     margin-left: 50px;
@@ -414,14 +415,21 @@
 }
 
 .profile-page.page .logout-btn {
-    width: 80px;
+    /* width: 80px; */
     height: 35px;
+    padding: 0 10px;
     border-radius: 10px;
     background-color: transparent;
     border: 1px solid grey;
-    margin-left: auto;
-    margin-top: 15px;
     color: #2d2c2c;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    margin-right: 15px;
+    margin-top: 15px;
+
 }
 
 .profile-page.page .logout-btn:hover {

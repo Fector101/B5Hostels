@@ -30,6 +30,7 @@ export default function AdminComplaintsPage() {
             const data = await response.json();
 
             if (response.ok) {
+                toast(data.msg || "Successfully Refresh complaints.", { type: "success" });
                 setComplaints(data.complaints);
             } else {
                 toast(data.msg || "Failed to fetch complaints.", { type: "error" });

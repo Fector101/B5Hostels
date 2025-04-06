@@ -29,7 +29,7 @@ export default function Profilepage() {
     const handleFileChange = (event) => {
         console.log(event.target.files[0])
         setFile(() => {
-            if (event.target.files[0].size > 30 * 1024 * 1024) {
+            if (event.target.files[0].size > 3 * 1024 * 1024) {
                 toast('File size exceeds 3MB - too large', { type: 'warning' });
                 return
             }

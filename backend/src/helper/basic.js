@@ -100,10 +100,10 @@ function adminDataFormattedForRooms(rooms) {
 
     const total_rooms = rooms.length;
     const available_rooms = rooms.filter(
-        (room) => room.occupants < room.capacity
+        (room) => room.occupants.length < room.capacity
     ).length;
     const full_rooms = rooms.filter(
-        (room) => room.occupants === room.capacity
+        (room) => room.occupants.length === room.capacity
     ).length;
     const under_maintenance = rooms.filter(
         (room) => room.status === "maintenance"

@@ -45,7 +45,7 @@
     padding: 20px;
     padding-bottom: 15px;
     margin-block: 20px;
-    background: rgba(226, 167, 217, 0.44);
+    background: rgba(30, 58, 138, 0.1);
 }
 
 .room-details-page .preview-status h3 {
@@ -166,7 +166,7 @@
     height: var(--size);
 }
 .room-details-page .modal .content {
-    background: rgb(253, 236, 255);
+    background: #f0f4ff;
     /* width: max-content; */
     max-height: 100%;
     /* margin: auto; */

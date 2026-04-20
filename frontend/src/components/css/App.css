@@ -27,8 +27,8 @@ body>#root {
     color: var(--bod-color);
 
 
-    --primary-btn-bg:#e62eb0;
-    background: #fcd2fb;
+    --primary-btn-bg:#1e3a8a;
+    background: #f0f4ff;
     display: flex;
     /* overflow-y: hidden; */
     flex-direction: column;
@@ -83,7 +83,7 @@ body>#root {
     border-radius: 10px;
 }
 .primary-btn:hover{
-    background-color: #cf1898;
+    background-color: #111827;
 }
 
 .row {
